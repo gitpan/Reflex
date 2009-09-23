@@ -1,0 +1,351 @@
+==============================
+9999-99-99 99:99:99 +0000 HEAD
+==============================
+
+  commit a748b64bfb47d848f509472ed67b8a1f3168107b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 00:47:09 2009 -0400
+  
+    Fix a warning that META.yml was missing.
+
+  commit 6a40b550e077a4abe09b2ea0d047b53e15c32945
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 00:42:28 2009 -0400
+  
+    Add a quick round of documentation, and edit some code and examples
+    for brevity.
+
+  commit 334c0b866d07f92ebfea613cad0347bf3e1a8187
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 21 02:33:15 2009 -0400
+  
+    Begin documentation.
+
+    I've stopped for the moment to shave a yak with Dist::Zilla.
+
+  commit e0cf782b047d4da00a218268b973e1c31f41eb6b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 21 01:24:58 2009 -0400
+  
+    Allow setup attribute option to contain constructor parameters.
+
+    Reflex's setup may either build the object or contain constructor
+    parameters as a hashref. In the latter case, Reflex will build the
+    object itself.
+
+  commit e2c5e088e4814c852edfc0fbac9521c99c3aae96
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Sep 20 22:20:02 2009 -0400
+  
+    Update requirements from local, paper notes. Vim outliner says I'm
+    54% done. :)
+
+  commit 2aa55c2647d658c1752ec62048f6bb8f52ed039f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Sep 20 01:56:18 2009 -0400
+  
+    Give the fourth sortie a new name. It's 53% done now!
+
+  commit b64e34a427198aa43a1839507e42ce9a6ef0cdce
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Sep 18 02:40:21 2009 -0400
+  
+    Support POE components that require registration, such as
+    POE::Component::IRC.
+
+  commit 9bd513c381562e3cbc5f263168bdf7aa6b8375f3
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Sep 18 00:36:02 2009 -0400
+  
+    Support posting events to POE components from stages.
+
+  commit f868e68833bfda8ad8a7a35c85bbc04a3ac497e9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Sep 17 02:43:42 2009 -0400
+  
+    Rename example 11 to follow a new class of component interface
+    examples. The goal is to show how POE::Stage can talk to POE
+    components.
+
+  commit 1bcd1fb656cf4f588254d60a323f6914b32b1190
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 2 11:21:18 2009 -0400
+  
+    Postbacks solved. Mark it off the list.
+
+  commit 69fca061d14f4e0ff32499a0c8661f821571905a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 2 11:17:00 2009 -0400
+  
+    Support POE::Components that wish to be given postbacks.
+
+  commit 37e238f2a62860d4e521f9f1231c3f24c5746b56
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 2 11:16:23 2009 -0400
+  
+    Describe this example, and add stricture.
+
+  commit 3b628b6480b21110ff9bc5bf418a127b9a3552ce
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 2 02:18:26 2009 -0400
+  
+    Go into more detail about how to interface to existing POE
+    components, Sessions and Wheels.
+
+  commit 1d98fa3c6f8c0ae203f2dc8d0a6c29bc6011edfa
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Sep 1 23:17:31 2009 -0400
+  
+    Propose an alternate name. Consider the caveats of forking to start a
+    new session.
+
+  commit bebf8a11f7ca5f00c2dfee069ade7f8b44763aeb
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Aug 31 13:12:38 2009 -0400
+  
+    Note that MDNS may be used to find remote objects.
+
+  commit e37fb970426a7c0afc76efbd2c87656dd6aa2d99
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 29 19:24:31 2009 -0400
+  
+    Fix tab damage.
+
+  commit 632701e109b655c9b89ef19ccbea6ce1b8deb55b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 29 19:19:07 2009 -0400
+  
+    We're 41% complete so far.
+
+  commit 352e4d9166715a7ee29ddd9bdedb8391ee73f647
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 29 19:17:36 2009 -0400
+  
+    Create a "setup" attribute trait that works kinda like default, but
+    happens at BUILD time. Works around initializer, builder and default
+    constraints.
+
+  commit e56160cc776959792edb6239f4d2ed887555e35a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Aug 25 11:08:56 2009 -0400
+  
+    Port the TTL examples from poetalk to POE::Stage emitters and
+    observers. The new versions fail for the same reasons as before:
+    There is no clock to drive "electrical" signal propagation, so
+    non-trivial recursive circuits fire out of order. The results are
+    unstable and incorrect.
+
+  commit e8bce167f953231cc0bb16e998e92dde7033bfd7
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Aug 25 11:04:35 2009 -0400
+  
+    Cache event and role to avoid some overhead in repeated emit() calls.
+    Add (and comment out) experimental edge-detection code. This avoids
+    re-emitting a message when an emitter is set to its current value.
+
+  commit 7301d96c36673da8671129b3135f5e43f2106e9c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 22 22:27:14 2009 -0400
+  
+    Add the capability for an object member (attribute) to emit messages
+    when altered.
+
+  commit f7ac916cf9183f622446f9528fd557495d65cf1d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 22 22:26:45 2009 -0400
+  
+    Remove hardcoded 'child' attribute name. D'oh! Thanks again, Sartak.
+
+  commit 25bab74ed0403da3fba2288d4725b36caa04376b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 22 22:26:12 2009 -0400
+  
+    Cosmetic whitespace change.
+
+  commit 8a08c6292d3d762a514a2c4a27b414378be6d0a5
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Aug 22 22:25:27 2009 -0400
+  
+    Hide POE::Kernel->run() behind Stage->run_all().
+
+  commit 4cd6b0e8c674985031e6fe60623e720a0dfe5ef0
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Aug 18 03:08:46 2009 -0400
+  
+    Add an Observer trait. Stages are automatically observed when they
+    are stored in attributes with this trait. The observation role is the
+    attribute name by default.
+
+  commit c880a14c28cedc9c2eaf7b21c27b4db3e887be24
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 16 14:24:18 2009 -0400
+  
+    Fix a comment. D'oh.
+
+  commit 67e618a1a7b87b5945179bcf0673a20d002c2c4d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 16 14:20:18 2009 -0400
+  
+    Refactor to use call_gate() more. Hoist signal parameters outside the
+    delivery loop, thanks to Matt Trout.
+
+  commit b9341c03661fb9f2ce81275c0a40249fa3041934
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 16 04:20:55 2009 -0400
+  
+    Check off new accomplishments, and add new requirements that came up.
+
+  commit 05d2e40d383a68baaa46d4cbbeb539a24c4866b4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 16 03:58:44 2009 -0400
+  
+    Add a signal watcher class, and port POE::Wheel wrappers forward.
+
+  commit bdf5d7faf5f041b8f16c8367b514d26a666175da
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Aug 13 15:39:08 2009 -0400
+  
+    Track some of the recent accomplishments.
+
+  commit 7e1d837624f2643b6fff8925647b1f8e57050e14
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Aug 13 15:19:10 2009 -0400
+  
+    Replace the God structure of session watchers and observations with
+    members in each object. Predicate Session life on the presence of
+    watchers, not objects, which means POE::Kernel->run() may exit before
+    all objects destruct.
+
+  commit d6413ee96d91a46673ff6469b16e4079f8ef26f2
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Aug 13 01:34:26 2009 -0400
+  
+    Make a note to consider POE::Component::IKC for the message passing
+    backbone.
+
+  commit 8a18b7cd3bd913ed7acc98a8b67f2b6f04be998a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Aug 12 03:14:42 2009 -0400
+  
+    Update the requirements to reflect some things that were done today.
+
+  commit e9f9ed8b89b0c5092c2628664b566e75a5fb330f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Aug 12 00:11:40 2009 -0400
+  
+    Convert Stage and UdpPeer into roles, and then compose them into
+    concrete classes. Add an example to show role composition instead of
+    direct inheritance.
+
+  commit 6baefb0701cbb7484d1e6e35d3cdc193cbcd8ed1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Aug 11 04:40:43 2009 -0400
+  
+    Turn the requirements into a checklist, using vim outliner's
+    calculated checkboxes.
+
+  commit 2b3a9f8224a4ee6c639d71dd7259566ca5482371
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Aug 11 03:46:29 2009 -0400
+  
+    Typo fixes recommended by Chris Fedde.
+
+  commit ae7d2f2e7e005cce6b6f3573d9f3cd05a169cc3b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Aug 11 01:46:02 2009 -0400
+  
+    Create a compositional verson of eg-04-inheritance.pl, and debug
+    Stage destruct-time cleanup.
+
+  commit c1ddc4ddc5cc2db9eeddb58751539f3974d41955
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Aug 10 15:06:40 2009 -0400
+  
+    Increase the default max datagram size. Gcola in IRC suggested that
+    1024 was too small.
+
+  commit cbc138b82fdc32135433c4cafdb0387ad877c2e1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Aug 10 14:48:27 2009 -0400
+  
+    Remove some POE::Stage::Receiver code I'd been borrowing from.
+
+  commit 7a8e93c93b9beb3ed92ae76712754ff4e703eb50
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Aug 10 14:38:10 2009 -0400
+  
+    Add inheritance and I/O support. Emitted events can be handled by
+    subclasses.
+
+  commit f9126e83744025a2e9600ad8ed62420d2854d95e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 22:09:59 2009 -0400
+  
+    Clean up some code left over from previous design attempts.
+
+  commit f4d9a76c2c7b1d5d33da00071d6a2e245793cf13
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 21:46:47 2009 -0400
+  
+    Break the usecase.pl example into three discrete examples.
+
+  commit 69c154323b2ad9c79a954a3dda9fa5faa9ec05ae
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 21:46:13 2009 -0400
+  
+    Rename the "ding" event to "tick".
+
+  commit d1591b551ea2d82a7fcff25d2516bce800c9a802
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 21:45:45 2009 -0400
+  
+    Add role-based watching during Stage construction.
+
+  commit e5db8ba27439675006fbe1d0afaea287d2537383
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 21:45:06 2009 -0400
+  
+    New requirement: No strong metaphors.
+
+  commit 4e4a5e95b0737352cd4d94b8d84efc92ef7f15d0
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 21:44:45 2009 -0400
+  
+    Fix tab damage caused by experimenting with a vim plugin.
+
+  commit 770e6fc8e7b88c973698577af9717928f33b4410
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 20:11:20 2009 -0400
+  
+    Gave usecase.pl a specific name. Use cases are being split apart to
+    be used as tutorials later.
+
+  commit 54621754642b9006776d0be8a4530fef753d1cf8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 9 15:26:29 2009 -0400
+  
+    Create abstract observability and observing rather than constrain the
+    metaphor with containers and owners. This can lead to "spaghetti"
+    design, where objects may reach around owners, but I'm beginning to
+    question whether it's the framework's responsibility to prevent
+    people from shooting themselves in the feet.
+
+  commit 3e6cbe133b4986845ddee7e67155670e71c8bae3
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Aug 7 02:19:16 2009 -0400
+  
+    Revise and extend the requirements.
+
+  commit 56352520d08ea89e29824180ce3d2589a541d2d4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Aug 5 23:07:41 2009 -0400
+  
+    Documentation reorganization.
+
+    Set up directories for current and old docs. Revise currently
+    relevant documentation, add new documentation, and move old
+    documentation aside. 
+
+==============
+End of Excerpt
+==============

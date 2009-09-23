@@ -1,0 +1,104 @@
+Reflex(3)             User Contributed Perl Documentation            Reflex(3)
+
+
+
+NNAAMMEE
+       Reflex - Reactive classes for flexible programs.
+
+SSYYNNOOPPSSIISS
+               {
+                       package App;
+                       use Moose;
+                       extends 'Reflex::Object';
+                       use Reflex::Timer;
+
+                       has ticker => (
+                               isa     => 'Reflex::Timer',
+                               is      => 'rw',
+                               setup   => { interval => 1, auto_repeat => 1 },
+                               traits  => [ 'Reflex::Trait::Observer' ],
+                       );
+
+                       sub on_ticker_tick {
+                               print "tick at ", scalar(localtime), "...\n";
+                       }
+               }
+
+               exit App->new()->run_all();
+
+DDEESSCCRRIIPPTTIIOONN
+       Reflex is a suite of classes to help programmers write reactive
+       programs.  The project has some goals:
+
+       +o Be concise.
+
+       +o Be convenient.
+
+       +o Be portable.
+
+       +o Be fast.
+
+       +o Don't get in the way.
+
+       +o Release early, and release often.
+
+       Sorry for the lack of documentation.  It conflicted with releasing
+       early.  Contributions are very much welcome.  Give the project a reason
+       to release often.
+
+       TODO - Complete the documentation.
+
+GGEETTTTIINNGG HHEELLPP
+       See irc.perl.org #moose for help with Moose.
+
+       See irc.perl.org #poe for help with POE and Reflex.
+
+       Support is officially available from POE's mailing list as well.  Send
+       a blank message to poe-subscribe@perl.org to join.
+
+AACCKKNNOOWWLLEEDDGGEEMMEENNTTSS
+       irc.perl.org channel #moose and #poe.  The former for assisting in
+       learning their fine libraries, sometimes against everyone's better
+       judgement.  The latter for putting up with lengthy and sometimes
+       irrelevant design discussion for oh so long.
+
+SSEEEE AALLSSOO
+       Moose, POE, the Reflex namespace on CPAN.
+
+       TODO - Set up ohlo.
+
+       TODO - Set up CIA.
+
+       TODO - Set up home page.
+
+BBUUGGSS
+       We appreciate your feedback, bug reports, feature requests, patches and
+       kudos.  You may enter them into our request tracker by following the
+       instructions at <https://rt.cpan.org/Dist/Display.html?&Queue=Reflex>.
+
+       We also accept e-mail at bug-Reflex@rt.cpan.org.
+
+AAUUTTHHOORRSS
+       Rocco Caputo, and a (hopefully) growing cadre of contributors---
+       perhaps including you.  Reflex is open source, and we welcome
+       involvement.
+
+       OOTTHHEERR CCOONNTTRRIIBBUUTTOORRSS
+
+       Nobody yet.  As of this writing, Reflex has not yet been released.
+
+TTOODDOO
+       Please browse the source for the TODO marker.  Some are visible in the
+       documentation, and others are sprinlked around in the code's comments.
+
+CCOOPPYYRRIIGGHHTT AANNDD LLIICCCCEENNSSEE
+       Copyright 2009 by Rocco Caputo.
+
+       Reflex is free software.  You may redistribute and/or modify it under
+       the same terms as Perl itself.
+
+       TODO - Use the latest recommended best practice for licenses.
+
+
+
+perl v5.10.0                      2009-09-22                         Reflex(3)
