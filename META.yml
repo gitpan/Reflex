@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Reflex
-version:            0.002
+version:            0.003
 abstract:           Reactive classes for flexible programs.
 author:
     - Rocco Caputo <rcaputo@cpan.org>
@@ -17,7 +17,7 @@ requires:
     Test::More:    0.94
 resources:
     license:     http://dev.perl.org/licenses/
-    repository:  http://github.com/rcaputo/poe-stage/
+    repository:  http://github.com/rcaputo/reflex
 no_index:
     directory:
         - t
