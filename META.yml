@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Reflex
-version:            0.001
+version:            0.002
 abstract:           Reactive classes for flexible programs.
 author:
     - Rocco Caputo <rcaputo@cpan.org>

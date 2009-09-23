@@ -2,6 +2,31 @@
 9999-99-99 99:99:99 +0000 HEAD
 ==============================
 
+  commit d396f0e0a1582203df7ec727d69d0ae1e16a1d92
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 01:02:28 2009 -0400
+  
+    Bump the revision for release.
+
+  commit 9b240bb01b63001f3ca4501f682d957531a1ba5c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 01:00:21 2009 -0400
+  
+    Add the examples to the distribution, and ensure they run in their
+    new home.
+
+  commit 47bfce65892593ab6071e9bd38eba856b8e40a4d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 00:59:33 2009 -0400
+  
+    Restructured developer documentation and incomplete examples.
+
+  commit d85b4bfd426aeb1b7731b8b9cba38cc9188937fa
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 00:55:01 2009 -0400
+  
+    Put the examples in a directory just for them.
+
   commit a748b64bfb47d848f509472ed67b8a1f3168107b
   Author: Rocco Caputo <rcaputo@cpan.org>
   Date:   Wed Sep 23 00:47:09 2009 -0400
