@@ -1,4 +1,7 @@
 package Reflex::Signal;
+BEGIN {
+  $Reflex::Signal::VERSION = '0.004';
+}
 
 use Moose;
 extends qw(Reflex::Object);
@@ -100,16 +103,18 @@ sub DEMOLISH {
 	}
 }
 
-no Moose;
-__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::Signal - Generic signal observer and base class for specific ones.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -118,7 +123,7 @@ Reflex::PID, which extends it), but the API is not firm.
 
 =head1 DESCRIPTION
 
-Reflex::Signal is a generig signal observer.  Objects may use it to be
+Reflex::Signal is a general signal observer.  Objects may use it to be
 notified when the OS sends signals.  It may also be extended to handle
 nuanced semantics of more specific signals.
 

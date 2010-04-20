@@ -1,4 +1,7 @@
 package Reflex::Object;
+BEGIN {
+  $Reflex::Object::VERSION = '0.004';
+}
 
 use Moose;
 with 'Reflex::Role::Object';
@@ -6,16 +9,18 @@ with 'Reflex::Role::Object';
 # Composes the Reflex::Role::Object into a class.
 # Does nothing of its own.
 
-no Moose;
-__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::Object - Base class for reactive objects.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 

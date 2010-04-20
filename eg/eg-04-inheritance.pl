@@ -6,14 +6,14 @@ use lib qw(../lib);
 
 # An object's emitted events can also trigger methods in the subclass.
 # This example creates a UDP echo server using inheritance rather than
-# the composition archtectures in past examples.
+# the composition architectures in past examples.
 
 {
 	package Reflex::UdpPeer::Echo;
 	use Moose;
 	extends 'Reflex::UdpPeer';
 
-	sub on_my_datagram {
+	sub on_udppeer_datagram {
 		my ($self, $args) = @_;
 		my $data = $args->{datagram};
 
@@ -28,7 +28,7 @@ use lib qw(../lib);
 		);
 	}
 
-	sub on_my_error {
+	sub on_udppeer_error {
 		my ($self, $args) = @_;
 		warn "$args->{op} error $args->{errnum}: $args->{errstr}";
 		$self->destruct();

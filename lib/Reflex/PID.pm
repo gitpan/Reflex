@@ -1,4 +1,7 @@
 package Reflex::PID;
+BEGIN {
+  $Reflex::PID::VERSION = '0.004';
+}
 
 use Moose;
 extends qw(Reflex::Signal);
@@ -29,16 +32,18 @@ sub stop_watching {
 	$self->name(undef);
 }
 
-no Moose;
-__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::PID - Observe the exit of a subprocess, via handling SIGCHLD.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 

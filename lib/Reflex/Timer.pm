@@ -1,4 +1,7 @@
 package Reflex::Timer;
+BEGIN {
+  $Reflex::Timer::VERSION = '0.004';
+}
 
 use Moose;
 extends qw(Reflex::Object);
@@ -27,6 +30,7 @@ sub BUILD {
 sub repeat {
 	my $self = shift;
 
+	#return unless interval specified
 	return unless defined $self->interval() and $self->call_gate("repeat");
 
 	# Stop a previous alarm?
@@ -47,6 +51,7 @@ sub repeat {
 	);
 }
 
+#overriden method from Reflex::Object
 sub _deliver {
 	my $self = shift;
 	$self->alarm_id(0);
@@ -62,14 +67,12 @@ sub DEMOLISH {
 sub stop {
 	my $self = shift;
 
+	#return if it was a false "alarm" (pun intended)
 	return unless defined $self->alarm_id() and $self->call_gate("stop");
 
 	$POE::Kernel::poe_kernel->alarm_remove($self->alarm_id());
 	$self->alarm_id(undef);
 }
-
-no Moose;
-__PACKAGE__->meta()->make_immutable();
 
 1;
 
@@ -77,60 +80,71 @@ __END__
 
 =head1 NAME
 
-Reflex::Timer - Observe the passage of time.
+Reflex::Timer - An object that observes the passage of time.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
-# Not a complete program.  Many of the examples use Reflex::Timer.
-# You can't throw a stone without hitting one.
+	# Several examples in the eg directory use Reflex::Timer.
 
-	sub object_method {
-		my ($self, $args) = @_;
+	use warnings;
+	use strict;
 
-		$self->timer(
-			Reflex::Timer->new(
-				interval => 1,
-				auto_repeat => 1,
-			)
-		);
+	use lib qw(../lib);
+
+	use Reflex::Timer;
+
+	my $t = Reflex::Timer->new(
+		interval    => 1,
+		auto_repeat => 1,
 	);
+
+	while (my $event = $t->wait()) {
+		print "wait() returned an event (@$event)\n";
+	}
 
 =head1 DESCRIPTION
 
-Reflex::Timer emits events to mark the passage of time.
+Reflex::Timer emits events to mark the passage of time.  Its interface
+is new and small.  Please contact the Reflex project if you need other
+features, or send us a pull request at github or gitorious.
 
-TODO - Complete the API.  It's currently very incomplete.  It only
-handles relative delays via its "interval" constructor parameter, and
-automatic repeat via "auto_repeat".
+=head1 PUBLIC ATTRIBUTES
 
-TODO - Complete the documentation.
+=head2 interval
 
-=head1 GETTING HELP
+Define the interval between creation and the "tick" event's firing.
+If auto_repeat is also set, this becomes the interval between
+recurring "tick" events.
 
-L<Reflex/GETTING HELP>
+=head2 auto_repeat
 
-=head1 ACKNOWLEDGEMENTS
+A Boolean value.  When true, Reflex::Timer will repeatedly fire "tick"
+events every interval seconds.
 
-L<Reflex/ACKNOWLEDGEMENTS>
+=head1 PUBLIC EVENTS
+
+=head2 tick
+
+Reflex::Timer emits "tick" events.  We're looking for a better name,
+so this may change in the future.  Your suggestions can help solidify
+the interface quicker.
 
 =head1 SEE ALSO
 
-L<Reflex> and L<Reflex/SEE ALSO>
+L<Reflex>
 
-=head1 BUGS
-
+L<Reflex/ACKNOWLEDGEMENTS>
+L<Reflex/ASSISTANCE>
+L<Reflex/AUTHORS>
 L<Reflex/BUGS>
-
-=head1 CORE AUTHORS
-
-L<Reflex/CORE AUTHORS>
-
-=head1 OTHER CONTRIBUTORS
-
-L<Reflex/OTHER CONTRIBUTORS>
-
-=head1 COPYRIGHT AND LICENSE
-
-L<Reflex/COPYRIGHT AND LICENSE>
+L<Reflex/BUGS>
+L<Reflex/CONTRIBUTORS>
+L<Reflex/COPYRIGHT>
+L<Reflex/LICENSE>
+L<Reflex/TODO>
 
 =cut

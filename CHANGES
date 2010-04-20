@@ -1,3 +1,311 @@
-==============
-End of Excerpt
-==============
+================================
+2010-04-20 03:03:09 -0400 v0_004
+================================
+
+  commit 9a7526b99908a71cddabe25a06559bd19d11bb0d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Apr 20 03:03:09 2010 -0400
+  
+    Bump revision for release.
+
+  commit 3f1c48a08aaf3505d618fe3317844f9cb0d8a4de
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Apr 20 02:56:34 2010 -0400
+  
+    Write more documentation.
+
+  commit 6912ea19a2edda449c28f695494841ccd4d7b206
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 19 01:37:29 2010 -0400
+  
+    Move to Dist::Zilla!
+
+  commit 31f022b795575467749f3c8dcfa0809be13b11a7
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Apr 18 14:03:37 2010 -0400
+  
+    Document Reflex::Handle's stop().
+
+  commit 3e4b28d9e1122e352ded6a630f6e37c1dddd48cf
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Apr 18 13:55:42 2010 -0400
+  
+    Add documentation.
+
+  commit 75cf6c4de997c982a67e437cc80309283851a213
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Apr 18 02:38:23 2010 -0400
+  
+    Begin documenting in earnest.
+
+  commit 8e1d57d5ac29b5ef141894dfe41987c6bdc5a56b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Apr 17 04:52:59 2010 -0400
+  
+    Added Reflex.pm documentation.
+
+  commit 51d81727027d90461a0efe24a7249a66bf55cbaf
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Apr 17 03:56:52 2010 -0400
+  
+    Detect and break emit() recursion. These cycles tend to eat all
+    memory.
+
+  commit eb5cc0f960ed5eeebf1d27cc00b226ac08ac20fd
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Apr 16 00:36:15 2010 -0400
+  
+    Reflex::Collection manages a collection of objects so you don't have
+    to.
+
+  commit d80166b247d3d932675b3f869b1fa4210b0d2907
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Apr 15 20:23:26 2010 -0400
+  
+    Use "handles" and rethrow subs to flatten Reflex::Client's API.
+
+    See the diff of eg/eg-35-tcp-client.pl for what this means from
+    developers' points of view.
+
+  commit 5c01112efcfeec3e5adead1fa3bb21bb9465e04c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 14 10:02:21 2010 -0400
+  
+    Try to resolve on_my_foo not looking right. See eg 35 for newness.
+
+  commit 6c37951da874bbed8c4ea8ba006ccec651c25d21
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 12 03:31:39 2010 -0400
+  
+    Clean up the client cleanup a little.
+
+  commit f1b098dc64dae0bb9548b8752b9b84debb1b37e2
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 12 03:31:26 2010 -0400
+  
+    Progress was made this weekend. Document it.
+
+  commit e2587a7b19c579645e5740f26d7d9fd37311ebdc
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 12 03:14:09 2010 -0400
+  
+    Make stop() release the filehandle, too.
+
+  commit f4b981791519cb5e523d8bfa4586813a4a1b0b5c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 12 03:04:26 2010 -0400
+  
+    Abstract the client code into Reflex::Client. Update eg 35 to use it.
+
+  commit 36c08bd768544bca83fbc7556742b60e4bf1a3ba
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 12 02:04:46 2010 -0400
+  
+    Add a strawman tcp client implementation.
+
+  commit de14455620a1df3005cd609af130780b093f126f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Apr 10 22:45:25 2010 -0400
+  
+    Add the beginnings of a socket listener, a stream reader/writer, and
+    an example TCP server.
+
+  commit 4adc50c0afb92026836abf893eb6a904ea4125e8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Apr 9 00:14:50 2010 -0400
+  
+    Clean up Reflex.pm documentation. Update requirements with new
+    progress.
+
+  commit 6da75c74fd6c589c362a56325d94d56aa23148b4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Apr 8 22:22:30 2010 -0400
+  
+    Get all callbacks working in an approximation of a "good" way.
+
+  commit 6ecd8c104ad1a8fb098dc3a790995b5f6abf5c9d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Apr 8 13:06:35 2010 -0400
+  
+    Oops: Programs, not modules.
+
+  commit 6457f057514d77a5ee2ae03211167a12413d4c56
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Apr 8 00:32:52 2010 -0400
+  
+    Add support for a succinct promise syntax.
+
+  commit f4f25e896e8495a404f3c8e12c9870d9b36583d5
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 7 23:52:23 2010 -0400
+  
+    Hide some of the promise awkwardness in a Promise watcher.
+
+    It's a better solution, but it's not entirely satisfying. It will
+    change as something better comes along.
+
+  commit 0d5868460b96279a7167431df801abd09c30991a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 7 21:41:30 2010 -0400
+  
+    Get promises working. Use Reflex::Timer with a promise.
+
+  commit 3af6b5768ec50997f03def6d11f5bb64da1d4768
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 7 19:56:29 2010 -0400
+  
+    Initial Reflex::Callbacks integration into Reflex at large.
+
+    I'm not satisfied with the syntax, but the functionality is all
+    there.
+
+  commit 4f548a1f7606fc590be9430165496860f9dabf70
+  Merge: f1301df 02fa379
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Apr 5 23:02:37 2010 -0400
+  
+    Merge branch 'master' of git://github.com/Poincare/reflex
+
+  commit 02fa3794dc4c649d428e8e15176435cfa0ffcce8
+  Author: dhaivat <dhaivatpandya@gmail.com>
+  Date:   Sat Apr 3 19:34:53 2010 -0400
+  
+    Added documentation for setting event name in Timer.pm
+
+  commit d1f9bc747c955480c2439afcfc5f5449a7ba61bc
+  Author: dhaivat <dhaivatpandya@gmail.com>
+  Date:   Sat Apr 3 19:04:44 2010 -0400
+  
+    Added event name choice in Timer.pm
+
+  commit d09dc17e90f53bbc7bdddad4a359ef038a1bbd82
+  Author: dhaivat <dhaivatpandya@gmail.com>
+  Date:   Sat Apr 3 18:32:11 2010 -0400
+  
+    Added documentation to Reflex::Timer
+
+  commit f1301dfc438d224faafc9e5368589558fc4dd017
+  Author: Poincare <dhaivatpandya@gmail.com>
+  Date:   Sat Apr 3 14:36:15 2010 -0700
+  
+    "Added documentation about what Reflex is"
+
+  commit 5c56d9a0855df903c8f8eedfe57f195dab61bb4a
+  Author: Poincare <dhaivatpandya@gmail.com>
+  Date:   Sat Apr 3 14:36:15 2010 -0700
+  
+    "Added documentation about what Reflex is"
+
+  commit 5869c762f094f261f26923ee9f08a8f7154d992a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 14 03:43:29 2010 -0500
+  
+    Implement Reflex::Callbacks add_callback().
+
+    Whatever is actually holding the Reflex::Callbacks object will have
+    to call this.
+
+  commit bad68b45c86522ac9629d13779a2210137043f62
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 14 01:58:18 2010 -0500
+  
+    Take Nick Perez's suggestion to use Moose::Exporter instead of
+    Exporter.
+
+  commit afd7c10c1b56d8c88a38864670c311cda3733623
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Feb 13 03:36:06 2010 -0500
+  
+    Fix tab damage. No significant changes.
+
+  commit 701249a5d5afa35ad9bcf0fe998dcdaf8aba4177
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Feb 13 03:28:57 2010 -0500
+  
+    Initial implementation of promises, completing the callback types.
+
+  commit bc6cecff2e3bb2630b50dee9811bcce6d78e00f0
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Feb 13 02:18:37 2010 -0500
+  
+    Initial implementation of cb_role() syntax.
+
+  commit ce814c8ac75db3520d13ea18cc7ded5417d03a4c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Feb 13 01:36:51 2010 -0500
+  
+    Implement abstract class method callbacks.
+
+    Perl uses identical syntax for class and object method invocation.
+    The only difference is the invocant---either a class or an object.
+    Implemented class method callbacks in terms of object method
+    callbacks for now. The implementations may diverge in the future if
+    the semantics need to, but the interfaces should be forward
+    compatible.
+
+  commit 49d1ae16ab8185ccf1c8335d3b7d64e6a3c9bf1a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Feb 12 12:37:43 2010 -0500
+  
+    Implement three forms of object-based callback, via rcb_object().
+
+  commit 36d2b512456d25d407f7103c897ed3a40c34a991
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Feb 12 02:37:47 2010 -0500
+  
+    Initial stab at Reflex::Callback::Method.
+
+  commit f737956c4096b40c7d84e6ca509e04dfe2a387ee
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Feb 12 02:16:14 2010 -0500
+  
+    Initial stab at Reflex::Callbacks with generic coderef callbacks.
+
+  commit d869d9f9b4e8fc9794402269a1200d02361a2283
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Feb 12 01:21:55 2010 -0500
+  
+    Document some of the new requirements.
+
+  commit 48bf91e05ecb59946ba723f465ca485d1a26f18e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Feb 12 01:21:20 2010 -0500
+  
+    Rename eg_tell() to eg_say() to be more like Perl's new say().
+
+  commit 96dcb5f791049e1a6f52ed821c4e3903a40ba01c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Feb 12 01:16:09 2010 -0500
+  
+    Documentation tweaks, including crediting Chris Fedde for
+    contributions.
+
+  commit 8777e676e1165fcf175d524438985379625ade6d
+  Author: Chris Fedde <cfedde@cpan.org>
+  Date:   Fri Jan 29 00:35:23 2010 -0500
+  
+    Documentation and comment patches. Clarifications. Typo correction.
+    Patch provided by Chris Fedde. I'm also trying out the git-commit
+    --author flag.
+
+  commit 02b94019e798c8baee691f06899b107e1cf17f5b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Jan 29 00:12:05 2010 -0500
+  
+    Document documentation requirements, and make some decisions firm.
+
+  commit 1bf38d08d77d9570389ef45a07ae410c8d21b9ad
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 28 03:27:59 2009 -0400
+  
+    Note some potential optimizations.
+
+  commit 5dad355a0f8cb01fca8cd0d16f47041c4576605a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 23 13:10:51 2009 -0400
+  
+    Create some examples where Reflex is used without Moose. 
+
+===================================
+End of changes in the last 365 days
+===================================

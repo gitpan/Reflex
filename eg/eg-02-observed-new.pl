@@ -16,23 +16,21 @@ use lib qw(../lib);
 
 use Reflex::Object;
 use Reflex::Timer;
-use ExampleHelpers qw(tell);
+use ExampleHelpers qw(eg_say);
+use Reflex::Callbacks qw(cb_coderef);
 
-tell("starting watcher object");
+eg_say("starting watcher object");
 my $watcher = Reflex::Object->new( );
 
-tell("starting timer object with integrated observation");
+eg_say("starting timer object with integrated observation");
 my $timer = Reflex::Timer->new(
 	interval    => 1,
 	auto_repeat => 1,
 	observers   => [
-		{
-			observer  => $watcher,
-			event     => "tick",
-			callback  => sub {
-				tell("watcher sees 'tick' event");
-			},
-		},
+		[
+			$watcher,
+			tick => cb_coderef( sub { eg_say("watcher sees 'tick' event") } ),
+		],
 	],
 );
 

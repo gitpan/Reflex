@@ -1,109 +1,242 @@
-Reflex(3)             User Contributed Perl Documentation            Reflex(3)
+NAME
+    Reflex - Class library for flexible, reactive programs.
 
+VERSION
+    version 0.004
 
+SYNOPSIS
+            # See eg-18-synopsis-no-moose.pl if you don't like Moose.
+            # See eg-32-promise-tiny.pl if you prefer condvars.
+            # See eg-36-coderefs-tiny.pl if you prefer coderefs and/or closures.
 
-NNAAMMEE
-       Reflex - Reactive classes for flexible programs.
+            {
+                    package App;
+                    use Moose;
+                    extends 'Reflex::Object';
+                    use Reflex::Timer;
 
-SSYYNNOOPPSSIISS
-               {
-                       package App;
-                       use Moose;
-                       extends 'Reflex::Object';
-                       use Reflex::Timer;
+                    has ticker => (
+                            isa     => 'Reflex::Timer',
+                            is      => 'rw',
+                            setup   => { interval => 1, auto_repeat => 1 },
+                            traits  => [ 'Reflex::Trait::Observer' ],
+                    );
 
-                       has ticker => (
-                               isa     => 'Reflex::Timer',
-                               is      => 'rw',
-                               setup   => { interval => 1, auto_repeat => 1 },
-                               traits  => [ 'Reflex::Trait::Observer' ],
-                       );
+                    sub on_ticker_tick {
+                            print "tick at ", scalar(localtime), "...\n";
+                    }
+            }
 
-                       sub on_ticker_tick {
-                               print "tick at ", scalar(localtime), "...\n";
-                       }
-               }
+            exit App->new()->run_all();
 
-               exit App->new()->run_all();
+DESCRIPTION
+    Reflex is a library of classes that assist with writing reactive (AKA
+    event-driven) programs. Reflex uses Moose internally, but it doesn't
+    enforce programs to use Moose's syntax. However, Moose syntax brings
+    several useful features we hope will become indispensible.
 
-DDEESSCCRRIIPPTTIIOONN
-       Reflex is a suite of classes to help programmers write reactive
-       programs.  The project has some goals:
+    Reflex is considered "reactive" because it's an implementation of the
+    reactor pattern. http://en.wikipedia.org/wiki/Reactor_pattern
 
-       +o Be concise.
+  About Reactive Objects
+    Reactive objects provide responses to interesting (to them) stimuli. For
+    example, an object might be waiting for input from a client, a signal
+    from an administrator, a particular time of day, and so on. The App
+    object in the SYNOPSIS is waiting for timer ticks. It generates console
+    messages in response to those timer ticks.
 
-       +o Be convenient.
+  Example Reactive Objects
+    Here an Echoer class emits "pong" events in response to ping() commands.
+    It uses Moose's extends(), but it could about as easily use warnings,
+    strict, and base instead. Reflex::Object provides emit().
 
-       +o Be portable.
+            package Echoer;
+            use Moose;
+            extends 'Reflex::Object';
 
-       +o Be fast.
+            sub ping {
+                    my ($self, $args) = @_;
+                    print "Echoer was pinged!\n";
+                    $self->emit( event => "pong" );
+            }
 
-       +o Don't get in the way.
+    The next object uses Echoer. It creates an Echoer and pings it to get
+    started. It also reacts to "pong" events by pinging the Echoer again.
+    Reflex::Trait::Observer implicitly observes the object in echoer(),
+    mapping its "pong" event to the on_echoer_pong() method.
 
-       +o Release early, and release often.
+            package Pinger;
+            use Moose;
+            extends 'Reflex::Object';
 
-       Sorry for the lack of documentation.  It conflicted with releasing
-       early.  Contributions are very much welcome.  Give the project a reason
-       to release often.
+            has echoer => (
+                    is      => 'ro',
+                    isa     => 'Echoer',
+                    default => sub { Echoer->new() },
+                    traits  => ['Reflex::Trait::Observer'],
+            );
 
-       TODO - Complete the documentation.
+            sub BUILD {
+                    my $self = shift;
+                    $self->echoer->ping();
+            }
 
-GGEETTTTIINNGG HHEELLPP
-       See irc.perl.org #moose for help with Moose.
+            sub on_echoer_pong {
+                    my $self = shift;
+                    print "Pinger got echoer's pong!\n";
+                    $self->echoer->ping();
+            }
 
-       See irc.perl.org #poe for help with POE and Reflex.
+    Then the Pinger would be created and run.
 
-       Support is officially available from POE's mailing list as well.  Send
-       a blank message to poe-subscribe@perl.org to join.
+            Pinger->new()->run_all();
 
-AACCKKNNOOWWLLEEDDGGEEMMEENNTTSS
-       irc.perl.org channel #moose and #poe.  The former for assisting in
-       learning their fine libraries, sometimes against everyone's better
-       judgement.  The latter for putting up with lengthy and sometimes
-       irrelevant design discussion for oh so long.
+    A complete, runnable version of this example is in the distribution as
+    eg/eg-37-ping-pong.pl.
 
-SSEEEE AALLSSOO
-       Moose, POE, the Reflex namespace on CPAN.
+  Coderef Callbacks
+    Reflex supports any conceivable callback type, even the simple ones:
+    plain old coderefs. In other words, you don't need to write objects to
+    handle events.
 
-       TODO - Set up ohlo.
+    Here we'll start a periodic timer and handle its ticks with a simple
+    callback. The program is still reactive. Every second it prints "timer
+    ticked" in response Reflex::Timer's events.
 
-       TODO - Set up CIA.
+            use Reflex::Timer;
+            use ExampleHelpers qw(eg_say);
+            use Reflex::Callbacks qw(cb_coderef);
 
-       TODO - Set up home page.
+            my $t = Reflex::Timer->new(
+                    interval    => 1,
+                    auto_repeat => 1,
+                    on_tick     => cb_coderef { eg_say("timer ticked") },
+            );
 
-BBUUGGSS
-       We appreciate your feedback, bug reports, feature requests, patches and
-       kudos.  You may enter them into our request tracker by following the
-       instructions at <https://rt.cpan.org/Dist/Display.html?&Queue=Reflex>.
+            $t->run_all();
 
-       We also accept e-mail at bug-Reflex@rt.cpan.org.
+    cb_coderef() is explicit placeholder syntax until a final syntax is
+    decided upon.
 
-AAUUTTHHOORRSS
-       Rocco Caputo, and a (hopefully) growing cadre of contributors---
-       perhaps including you.  Reflex is open source, and we welcome
-       involvement.
+    A complete, runnable version of the above example is available as
+    eg/eg-36-tiny-coderefs.pl in the distribution.
 
-       OOTTHHEERR CCOONNTTRRIIBBUUTTOORRSS
+  Condvars Instead of Callbacks
+    Callback haters are not left out. Reflex objects may also be used as
+    condvars. The following example is identical in function to the previous
+    coderef callback example, but it doesn't use callbacks at all.
 
-       Nobody yet.  As of this writing, Reflex has only just been released.
-       The repository is publicly available for your hacking pleasure:
+    It may not be obvious, but the same emit() method drives all of Reflex's
+    forms of callback. Reflex::Timer below is identical to the Reflex::Timer
+    used differently elsewhere.
 
-       +o <https://github.com/rcaputo/reflex>
+            use Reflex::Timer;
+            use ExampleHelpers qw(eg_say);
 
-       +o <http://gitorious.org/reflex>
+            my $t = Reflex::Timer->new(
+                    interval => 1,
+                    auto_repeat => 1,
+            );
 
-TTOODDOO
-       Please browse the source for the TODO marker.  Some are visible in the
-       documentation, and others are sprinlked around in the code's comments.
+            while (my $event = $t->wait()) {
+                    eg_say("wait() returned an event (@$event)");
+            }
 
-CCOOPPYYRRIIGGHHTT AANNDD LLIICCCCEENNSSEE
-       Copyright 2009 by Rocco Caputo.
+BUNDLED CLASSES AND DOCUMENTATION INDEX
+    Reflex bundles a number of helpful base classes to get things started.
 
-       Reflex is free software.  You may redistribute and/or modify it under
-       the same terms as Perl itself.
+      Reflex::Role::Object - Reflex object role
+      | Reflex::Object - Base class for Reflex objects
+      | | Reflex::Handle - filehandle watcher
+      | | | Reflex::Connector - client socket connector
+      | | | | Reflex::Client - socket client with buffered I/O
+      | | | Reflex::Listener - server socket listener/acceptor
+      | | | Reflex::Stream - asynchronous I/O stream
+      | | Reflex::Signal - signal watcher
+      | | | Reflex::PID - SIGCHLD watcher
+      | | Reflex::Timer - time watcher
+      | | Reflex::POE::Session - POE::Session watcher
+      | | Reflex::POE::Wheel - POE::Wheel watcher
+      | | | Reflex::POE::Wheel::Run - POE::Wheel::Run wrapped in Reflex
+      | | Reflex::Collection - automates object destruction
+      | Reflex::Role::UdpPeer - UDP socket receiver/sender role
+      |   Reflex::UdpPeer - UDP sockets base class
+      Reflex::Callbacks - helpful callback functions
+      Reflex::Callback - base class for Reflex callbacks
+      | Reflex::Callback::CodeRef - simple coderef callback adapter
+      | Reflex::Callback::Method - adapts callbacks to methods
+      | Reflex::Callback::Promise - adapts callbacks to condvars
+      Reflex::POE::Event - represents POE events in Reflex
+      Reflex::POE::Postback - represents POE postbacks in Reflex
+      Reflex::Trait::Emitter - emit events when a member's value changes
+      Reflex::Trait::Observer - observe events emitted by a member object
+      Reflex - helper functions and documentation
 
-       TODO - Use the latest recommended best practice for licenses.
+ASSISTANCE
+    See irc.perl.org #reflex for help with Reflex.
 
+    See irc.perl.org #moose for help with Moose.
 
+    See irc.perl.org #poe for help with POE and Reflex.
 
-perl v5.10.0                      2009-09-23                         Reflex(3)
+    Support is officially available from POE's mailing list as well. Send a
+    blank message to poe-subscribe@perl.org <mailto:poe-subscribe@perl.org>
+    to join.
+
+    The Reflex package also has helpful examples which may serve as a
+    tutorial until Reflex is documented more.
+
+ACKNOWLEDGEMENTS
+    irc.perl.org channel #moose <irc://irc.perl.org/moose> and #poe
+    <irc://irc.perl.org/poe>. The former for assisting in learning their
+    fine libraries, sometimes against everyone's better judgement. The
+    latter for putting up with lengthy and sometimes irrelevant design
+    discussion for oh so long.
+
+SEE ALSO
+    Moose, POE, the Reflex namespace on CPAN.
+
+    TODO - Set up ohlo.
+
+    TODO - Set up CIA.
+
+    TODO - Set up home page.
+
+BUGS
+    We appreciate your feedback, bug reports, feature requests, patches and
+    kudos. You may enter them into our request tracker by following the
+    instructions at <https://rt.cpan.org/Dist/Display.html?&Queue=Reflex>.
+
+    We also accept e-mail at bug-Reflex@rt.cpan.org
+    <mailto:bug-Reflex@rt.cpan.org>.
+
+AUTHORS
+    Rocco Caputo, RCAPUTO on CPAN.
+
+  CONTRIBUTORS
+    Reflex is open source, and we welcome involvement.
+
+    Chris Fedde, CFEDDE on CPAN
+
+    * <https://github.com/rcaputo/reflex>
+
+    * <http://gitorious.org/reflex>
+
+TODO
+    Please browse the source for the TODO marker. Some are visible in the
+    documentation, and others are sprinlked around in the code's comments.
+
+    Also see "requirements.otl" in docs in the distribution. This is a Vim
+    Outliner file with the current roadmap and progress.
+
+    Set up Dist::Zilla to reduce technical debt and make releasing code fun
+    again.
+
+COPYRIGHT AND LICCENSE
+    Copyright 2009-2010 by Rocco Caputo.
+
+    Reflex is free software. You may redistribute and/or modify it under the
+    same terms as Perl itself.
+
+    TODO - Use the latest recommended best practice for licenses.
+

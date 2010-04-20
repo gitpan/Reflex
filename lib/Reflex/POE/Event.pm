@@ -1,4 +1,7 @@
 package Reflex::POE::Event;
+BEGIN {
+  $Reflex::POE::Event::VERSION = '0.004';
+}
 
 use Moose;
 use Carp qw(croak);
@@ -47,12 +50,17 @@ sub deliver {
 }
 
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::POE::Event - Communicate with POE components expecting events.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 

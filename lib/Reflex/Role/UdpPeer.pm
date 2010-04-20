@@ -1,4 +1,7 @@
 package Reflex::Role::UdpPeer;
+BEGIN {
+  $Reflex::Role::UdpPeer::VERSION = '0.004';
+}
 use Moose::Role;
 with 'Reflex::Role::Object';
 use Reflex::Handle;
@@ -36,7 +39,7 @@ after 'BUILD' => sub {
 	undef;
 };
 
-sub on_remote_read {
+sub on_remote_readable {
 	my ($self, $args) = @_;
 
 	my $remote_address = recv(
@@ -64,6 +67,7 @@ sub send {
 		[ ],
 	);
 
+	# Success!
 	return if send(
 		$self->handle()->handle(), # TODO - Ugh!
 		$args->{datagram},
@@ -86,16 +90,18 @@ sub destruct {
 	$self->handle(undef);
 }
 
-no Moose;
-#__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::Role::UdpPeer - Turn an object into a UDP network peer.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -104,7 +110,7 @@ Reflex::Role::UdpPeer - Turn an object into a UDP network peer.
 		use Moose;
 		with 'Reflex::Role::UdpPeer';
 
-		sub on_my_datagram {
+		sub on_udppeer_datagram {
 			my ($self, $args) = @_;
 			my $data = $args->{datagram};
 
@@ -119,7 +125,7 @@ Reflex::Role::UdpPeer - Turn an object into a UDP network peer.
 			);
 		}
 
-		sub on_my_error {
+		sub on_udppeer_error {
 			my ($self, $args) = @_;
 			warn "$args->{op} error $args->{errnum}: $args->{errstr}";
 			$self->destruct();

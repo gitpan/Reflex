@@ -1,20 +1,26 @@
 package Reflex::UdpPeer;
+BEGIN {
+  $Reflex::UdpPeer::VERSION = '0.004';
+}
 use Moose;
+extends 'Reflex::Object';
 with 'Reflex::Role::UdpPeer';
 
 # Composes Reflex::Role::udpPeer into a class.
 # Does nothing of its own.
 
-no Moose;
-__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::UdpPeer - Base class for UDP networking peers.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -25,7 +31,7 @@ Inherit it.
 		use Moose;
 		extends 'Reflex::UdpPeer';
 
-		sub on_my_datagram {
+		sub on_udppeer_datagram {
 			my ($self, $args) = @_;
 			my $data = $args->{datagram};
 
@@ -40,7 +46,7 @@ Inherit it.
 			);
 		}
 
-		sub on_my_error {
+		sub on_udppeer_error {
 			my ($self, $args) = @_;
 			warn "$args->{op} error $args->{errnum}: $args->{errstr}";
 			$self->destruct();
@@ -100,32 +106,17 @@ Reflex::UdpPeer is a base class for UDP network peers.
 
 TODO - Complete the documentation.
 
-=head1 GETTING HELP
-
-L<Reflex/GETTING HELP>
-
-=head1 ACKNOWLEDGEMENTS
-
-L<Reflex/ACKNOWLEDGEMENTS>
-
 =head1 SEE ALSO
 
-L<Reflex> and L<Reflex/SEE ALSO>
-
-=head1 BUGS
-
+L<Reflex>
+L<Reflex/ACKNOWLEDGEMENTS>
+L<Reflex/ASSISTANCE>
+L<Reflex/AUTHORS>
 L<Reflex/BUGS>
-
-=head1 CORE AUTHORS
-
-L<Reflex/CORE AUTHORS>
-
-=head1 OTHER CONTRIBUTORS
-
-L<Reflex/OTHER CONTRIBUTORS>
-
-=head1 COPYRIGHT AND LICENSE
-
-L<Reflex/COPYRIGHT AND LICENSE>
+L<Reflex/BUGS>
+L<Reflex/CONTRIBUTORS>
+L<Reflex/COPYRIGHT>
+L<Reflex/LICENSE>
+L<Reflex/TODO>
 
 =cut

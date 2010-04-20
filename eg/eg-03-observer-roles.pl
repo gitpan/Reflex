@@ -19,7 +19,8 @@ use lib qw(../lib);
 	use Moose;
 	extends 'Reflex::Object';
 	use Reflex::Timer;
-	use ExampleHelpers qw(tell);
+	use ExampleHelpers qw(eg_say);
+	use Reflex::Callbacks qw(cb_role);
 
 	has timer => (
 		isa => 'Reflex::Timer',
@@ -29,34 +30,28 @@ use lib qw(../lib);
 	sub BUILD {
 		my $self = $_[0];
 
-		tell("watcher creates a timer with the waitron role");
+		eg_say("watcher creates a timer with the waitron role");
 		$self->timer(
 			Reflex::Timer->new(
-				interval => 1,
+				interval    => 1,
 				auto_repeat => 1,
 				observers   => [
-					{
-						observer  => $self,
-						role      => "waitron",
-					}
-				],
+					[ $self => cb_role($self, "waitron") ],
+				]
 			),
 		);
 
 		# It's possible to mix and match.
-		tell("observing timer as the waitroff role, too");
-		$self->observe_role(
-			observed  => $self->timer(),
-			role      => "waitroff",
-		);
+		eg_say("observing timer as the waitroff role, too");
+		$self->observe($self->timer() => cb_role($self, "waitroff"));
 	}
 
 	sub on_waitron_tick {
-		tell("on_waitron_tick called back");
+		eg_say("on_waitron_tick called back");
 	}
 
 	sub on_waitroff_tick {
-		tell("on_waitroff_tick called back");
+		eg_say("on_waitroff_tick called back");
 	}
 }
 

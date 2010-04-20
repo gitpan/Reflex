@@ -1,4 +1,7 @@
 package Reflex::POE::Postback;
+BEGIN {
+  $Reflex::POE::Postback::VERSION = '0.004';
+}
 
 # TODO - Not Moose, unless Moose allows us to create blessed coderefs.
 
@@ -33,8 +36,8 @@ sub new {
 	# alter the class and thwart DESTROY.
 	#
 	# TODO - POE::Session only does this when Tk is loaded.  I opted
-	# against it because the set of libraries that bless their callbacks
-	# may grow over time.
+	# against it here because the set of libraries that bless their
+	# callbacks may grow over time.
 
 	return sub { $self->(@_) };
 }
@@ -52,12 +55,17 @@ sub DESTROY {
 }
 
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::POE::Postback - Communicate with POE components expecting postbacks.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -74,8 +82,8 @@ TODO - Needs a better example.
 
 =head1 DESCRIPTION
 
-Reflex::POE::Postback creates an object that's compatible with POE
-postbacks.  They may be given to POE components that require them to
+Reflex::POE::Postback creates an object that's compatible with the POE
+postback.  These may be given to POE components that require postbacks to
 work.
 
 TODO - Complete the documentation.

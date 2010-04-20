@@ -1,4 +1,7 @@
 package Reflex::POE::Wheel::Run;
+BEGIN {
+  $Reflex::POE::Wheel::Run::VERSION = '0.004';
+}
 use Moose;
 extends 'Reflex::POE::Wheel';
 use POE::Wheel::Run;
@@ -107,10 +110,8 @@ sub on_sigchld_signal {
 	);
 }
 
-no Moose;
-__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
@@ -118,48 +119,52 @@ __END__
 
 Reflex::POE::Wheel::Run - Allow a Reflex class to represent POE::Wheel::Run.
 
+=head1 VERSION
+
+version 0.004
+
 =head1 SYNOPSIS
 
 # Not a complete example.  Please see eg-07-wheel-run.pl or even
 # better eg-08-observer-trait.pl for working examples.
 
-  has child => (
-    traits  => ['Reflex::Trait::Observer'],
-    isa     => 'Reflex::POE::Wheel::Run|Undef',
-    is      => 'rw',
-  );
+	has child => (
+		traits  => ['Reflex::Trait::Observer'],
+		isa     => 'Reflex::POE::Wheel::Run|Undef',
+		is      => 'rw',
+	);
 
-  sub BUILD {
-    my $self = shift;
-    $self->child(
-      Reflex::POE::Wheel::Run->new(
-        Program => "$^X -wle 'print qq[pid(\$\$) moo(\$_)] for 1..10; exit'",
-      )
-    );
-  }
+	sub BUILD {
+		my $self = shift;
+		$self->child(
+			Reflex::POE::Wheel::Run->new(
+				Program => "$^X -wle 'print qq[pid(\$\$) moo(\$_)] for 1..10; exit'",
+			)
+		);
+	}
 
-  sub on_child_stdout {
-    my ($self, $args) = @_;
-    print "stdout: $args->{output}\n";
-  }
+	sub on_child_stdout {
+		my ($self, $args) = @_;
+		print "stdout: $args->{output}\n";
+	}
 
-  sub on_child_close {
-    my ($self, $args) = @_;
-    print "child closed all output\n";
-  }
+	sub on_child_close {
+		my ($self, $args) = @_;
+		print "child closed all output\n";
+	}
 
-  sub on_child_signal {
-    my ($self, $args) = @_;
-    print "child $args->{pid} exited: $args->{exit}\n";
-    $self->child(undef);
-  }
+	sub on_child_signal {
+		my ($self, $args) = @_;
+		print "child $args->{pid} exited: $args->{exit}\n";
+		$self->child(undef);
+	}
 
 TODO - Needs a better example.
 
 =head1 DESCRIPTION
 
 Reflex::POE::Wheel::Run represents an enhanced POE::Wheel::Run object.
-Currently, the sole enhancement is to also wait for SIGCHLD and notify
+Currently, the sole enhancement is to wait for SIGCHLD and notify
 observers when the child process exits.
 
 TODO - Further improvement would be to defer the SIGCHLD notification

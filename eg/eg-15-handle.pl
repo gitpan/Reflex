@@ -36,7 +36,7 @@ use lib qw(../lib);
 		undef;
 	};
 
-	sub on_remote_read {
+	sub on_remote_readable {
 		my ($self, $args) = @_;
 
 		my $remote_address = recv(
@@ -60,4 +60,6 @@ use lib qw(../lib);
 	}
 }
 
-exit UdpPeer->new( port => 12345 )->run_all();
+my $port = 12345;
+print "Starting UDP echo service on port $port.\n";
+exit UdpPeer->new( port => $port )->run_all();

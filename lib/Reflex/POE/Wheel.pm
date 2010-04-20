@@ -1,4 +1,7 @@
 package Reflex::POE::Wheel;
+BEGIN {
+  $Reflex::POE::Wheel::VERSION = '0.004';
+}
 use Moose;
 extends 'Reflex::Object';
 use Scalar::Util qw(weaken);
@@ -87,16 +90,18 @@ sub _deliver {
 	);
 }
 
-no Moose;
-__PACKAGE__->meta()->make_immutable();
-
 1;
+# TODO - Document.
 
 __END__
 
 =head1 NAME
 
 Reflex::POE::Wheel - Base class for POE::Wheel wrappers.
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -108,13 +113,13 @@ TODO - Need an example.
 =head1 DESCRIPTION
 
 Reflex::POE::Wheel is a base class for POE::Wheel wrappers.
-Subclasses configure Reflex::POE::Wheel to provide the proper
+Subclasses will configure Reflex::POE::Wheel to provide the proper
 POE::Wheel constructor parameters.  Additional configuration converts
 the POE::Wheel events into Reflex::Object events.
 
 Methods are not yet converted automatically.  It seems more sensible
 to provide a native Reflex::Object interface, although one could
-certainly use Moose's "handles" attribute optioni to pass the wheel's
+certainly use Moose's "handles" attribute option to pass the wheel's
 methods through the wrapper.
 
 TODO - Complete the documentation.
