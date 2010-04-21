@@ -1,6 +1,6 @@
 package Reflex::Role::Object;
 BEGIN {
-  $Reflex::Role::Object::VERSION = '0.004';
+  $Reflex::Role::Object::VERSION = '0.005';
 }
 
 use Moose::Role;
@@ -594,7 +594,7 @@ Reflex::Role::Object - Give an object reflexive roles.
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

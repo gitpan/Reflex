@@ -1,6 +1,6 @@
 package Reflex::Role::UdpPeer;
 BEGIN {
-  $Reflex::Role::UdpPeer::VERSION = '0.004';
+  $Reflex::Role::UdpPeer::VERSION = '0.005';
 }
 use Moose::Role;
 with 'Reflex::Role::Object';
@@ -101,7 +101,7 @@ Reflex::Role::UdpPeer - Turn an object into a UDP network peer.
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

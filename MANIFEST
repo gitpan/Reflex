@@ -50,6 +50,7 @@ eg/eg-34-tcp-server-echo.pl
 eg/eg-35-tcp-client.pl
 eg/eg-36-tiny-coderefs.pl
 eg/eg-37-ping-pong.pl
+eg/eg-38-promise-client.pl
 eg/ttl/Ttl/Adder.pm
 eg/ttl/Ttl/And.pm
 eg/ttl/Ttl/Bin.pm

@@ -1,4 +1,33 @@
 ================================
+2010-04-21 01:29:43 -0400 v0_005
+================================
+
+  commit cd734cf1a96797a0ee1811629f6cf038bb41a06f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 21 01:29:43 2010 -0400
+  
+    Document Reflex::Stream.
+
+  commit 0a9a05be7ac6059ad4bd19e5f55c8155b1f6cf9d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 21 01:00:06 2010 -0400
+  
+    Document Reflex::Client.
+
+  commit 4fb52d978ceb378b2e59f474b6fc337811005aab
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 21 00:28:58 2010 -0400
+  
+    Try some automated dzil/git interaction, but it was too yak-shavey
+    for now.
+
+  commit 64695f714b2a5968186a5713b227ea7520501ad1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 21 00:28:39 2010 -0400
+  
+    Document Reflex::Connector and Reflex::Listener. 
+
+================================
 2010-04-20 03:03:09 -0400 v0_004
 ================================
 

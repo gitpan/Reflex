@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel;
 BEGIN {
-  $Reflex::POE::Wheel::VERSION = '0.004';
+  $Reflex::POE::Wheel::VERSION = '0.005';
 }
 use Moose;
 extends 'Reflex::Object';
@@ -101,7 +101,7 @@ Reflex::POE::Wheel - Base class for POE::Wheel wrappers.
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

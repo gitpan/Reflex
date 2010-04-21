@@ -2,7 +2,7 @@
 
 package Reflex::Handle;
 BEGIN {
-  $Reflex::Handle::VERSION = '0.004';
+  $Reflex::Handle::VERSION = '0.005';
 }
 
 use Moose;
@@ -146,7 +146,7 @@ Reflex::Handle - Watch a filehandle for read- and/or writability.
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

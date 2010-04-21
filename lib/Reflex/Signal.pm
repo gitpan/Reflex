@@ -1,6 +1,6 @@
 package Reflex::Signal;
 BEGIN {
-  $Reflex::Signal::VERSION = '0.004';
+  $Reflex::Signal::VERSION = '0.005';
 }
 
 use Moose;
@@ -114,7 +114,7 @@ Reflex::Signal - Generic signal observer and base class for specific ones.
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 
