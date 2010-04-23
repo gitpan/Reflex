@@ -1,6 +1,6 @@
 package Reflex::Stream;
 BEGIN {
-  $Reflex::Stream::VERSION = '0.005';
+  $Reflex::Stream::VERSION = '0.010';
 }
 
 use Moose;
@@ -148,7 +148,7 @@ Reflex::Stream - Buffered, translated I/O on non-blocking handles.
 
 =head1 VERSION
 
-version 0.005
+version 0.010
 
 =head1 SYNOPSIS
 

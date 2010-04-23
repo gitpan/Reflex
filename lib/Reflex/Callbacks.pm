@@ -1,6 +1,6 @@
 package Reflex::Callbacks;
 BEGIN {
-  $Reflex::Callbacks::VERSION = '0.005';
+  $Reflex::Callbacks::VERSION = '0.010';
 }
 
 # Reflex::Callbacks is a callback manager.  It encapsulates the
@@ -78,7 +78,7 @@ sub cb_object {
 	my ($object, $methods) = @_;
 
 	# They passed us a scalar.  Emulate cb_methods().
-	return($methods => cb_method(@_)) unless ref $methods;
+	return("on_$methods" => cb_method($object, $methods)) unless ref $methods;
 
 	# Events match method names.
 	return( map { ("on_$_" => cb_method($object, $_)) } @$methods ) if (
@@ -191,7 +191,7 @@ Reflex::Callbacks - Convenience functions for creating and using callbacks
 
 =head1 VERSION
 
-version 0.005
+version 0.010
 
 =head1 SYNOPSIS
 

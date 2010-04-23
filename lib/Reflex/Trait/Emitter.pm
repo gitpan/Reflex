@@ -1,9 +1,14 @@
 package Reflex::Trait::Emitter;
 BEGIN {
-  $Reflex::Trait::Emitter::VERSION = '0.005';
+  $Reflex::Trait::Emitter::VERSION = '0.010';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
+
+has setup => (
+	isa     => 'CodeRef|HashRef',
+	is      => 'ro',
+);
 
 has trigger => (
 	is => 'ro',
@@ -78,7 +83,7 @@ has event => (
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Emitter;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Emitter::VERSION = '0.005';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Emitter::VERSION = '0.010';
 }
 sub register_implementation { 'Reflex::Trait::Emitter' }
 
@@ -92,7 +97,7 @@ Reflex::Trait::Emitter - Emit an event when an attribute's value changes.
 
 =head1 VERSION
 
-version 0.005
+version 0.010
 
 =head1 SYNOPSIS
 
@@ -127,6 +132,21 @@ to emit "count" events.
 The "default" option can be used to override the default event emitted
 by the Reflex::Trait::Emitter trait.  That default, by the way, is the
 name of the attribute.
+
+=head2 setup
+
+The "setup" option provides default constructor parameters for the
+attribute.  In the above example, clock() will by default contain
+
+	Reflex::Timer->new(interval => 1, auto_repeat => 1);
+
+In other words, it will emit the Reflex::Timer event ("tick") once per
+second until destroyed.
+
+=head1 CAVEATS
+
+The "setup" option is a work-around for unfortunate default timing.
+It will be deprecated if default can be made to work instead.
 
 =head1 SEE ALSO
 

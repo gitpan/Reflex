@@ -3,7 +3,7 @@
 
 package Reflex::Connector;
 BEGIN {
-  $Reflex::Connector::VERSION = '0.005';
+  $Reflex::Connector::VERSION = '0.010';
 }
 use Moose;
 extends 'Reflex::Handle';
@@ -110,7 +110,7 @@ Reflex::Connector - Connect to a server without blocking.
 
 =head1 VERSION
 
-version 0.005
+version 0.010
 
 =head1 SYNOPSIS
 

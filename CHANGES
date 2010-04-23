@@ -1,4 +1,41 @@
 ================================
+2010-04-23 02:38:10 -0400 v0_010
+================================
+
+  commit 72d32d4e34db606117d115634b307790427b11b6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Apr 23 02:38:10 2010 -0400
+  
+    Bump the revision for release. Make little fixes here and there so
+    all the examples work.
+
+  commit 297a698cb5fe16f7b1747feb10c247bdbcba0cb8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Apr 23 01:32:50 2010 -0400
+  
+    Add preliminary documentation to the last three modules.
+
+  commit e932bd744ec55b67217780130df3d7747ad01e53
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Apr 22 23:56:41 2010 -0400
+  
+    Document UDP peers and a coupe of the POE adapter classes.
+
+  commit d204ea6e35362a62c2d81ca0a6b91ab8e44a9182
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Apr 22 00:12:48 2010 -0400
+  
+    Document signal handler classes, and create an example from which to
+    excerpt.
+
+  commit fae7c01a895ebaf327aea0be46620d95893da539
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Apr 21 22:44:51 2010 -0400
+  
+    Document Reflex::Role::Object and its composer (consumer?)
+    Reflex::Object. 
+
+================================
 2010-04-21 01:29:43 -0400 v0_005
 ================================
 
