@@ -1,7 +1,7 @@
 # A self-managing collection of objects.
 package Reflex::Collection;
 BEGIN {
-  $Reflex::Collection::VERSION = '0.010';
+  $Reflex::Collection::VERSION = '0.011';
 }
 use Moose;
 use Reflex::Callbacks qw(cb_method);
@@ -42,7 +42,7 @@ Reflex::Collection - Autmatically manage a collection of Reflex objects
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 

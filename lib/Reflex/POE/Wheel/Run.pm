@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel::Run;
 BEGIN {
-  $Reflex::POE::Wheel::Run::VERSION = '0.010';
+  $Reflex::POE::Wheel::Run::VERSION = '0.011';
 }
 use Moose;
 extends 'Reflex::POE::Wheel';
@@ -110,6 +110,11 @@ sub on_sigchld_signal {
 	);
 }
 
+sub kill {
+	my $self = shift;
+	$self->wheel()->kill(@_);
+}
+
 1;
 
 __END__
@@ -120,7 +125,7 @@ Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
@@ -172,8 +177,13 @@ details.
 
 =head2 Public Methods
 
-This class adds no public methods to those of its base class,
-Reflex::POE::Wheel.
+This class adds public methods specific to POE::Wheel::Run's
+operation.  However, common methods like put() are both implemented
+and documented in the base L<Reflex::POE::Wheel> class.
+
+=head3 kill
+
+kill() passes its arguments to POE::Wheel::Run's kill() method.
 
 =head2 Public Events
 

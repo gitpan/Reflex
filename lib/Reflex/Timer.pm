@@ -1,6 +1,6 @@
 package Reflex::Timer;
 BEGIN {
-  $Reflex::Timer::VERSION = '0.010';
+  $Reflex::Timer::VERSION = '0.011';
 }
 
 use Moose;
@@ -84,7 +84,7 @@ Reflex::Timer - An object that observes the passage of time.
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 

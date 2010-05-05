@@ -1,6 +1,6 @@
 package Reflex::Role::Object;
 BEGIN {
-  $Reflex::Role::Object::VERSION = '0.010';
+  $Reflex::Role::Object::VERSION = '0.011';
 }
 
 use Moose::Role;
@@ -593,7 +593,7 @@ Reflex::Role::Object - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel;
 BEGIN {
-  $Reflex::POE::Wheel::VERSION = '0.010';
+  $Reflex::POE::Wheel::VERSION = '0.011';
 }
 use Moose;
 extends 'Reflex::Object';
@@ -48,6 +48,11 @@ sub create_wheel {
 sub wheel_id {
 	my $self = shift;
 	return $self->wheel()->ID();
+}
+
+sub put {
+	my $self = shift;
+	$self->wheel()->put(@_);
 }
 
 sub DEMOLISH {
@@ -100,7 +105,7 @@ Reflex::POE::Wheel - Base class for POE::Wheel wrappers.
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
@@ -137,6 +142,12 @@ C<< $foo->wheel()->ID() >> can also be used instead.
 
 Cause the internal wheel to be demolished.  Provided as a method since
 some wheels may require special handling.
+
+=head3 put
+
+put() sends its parameters to the POE::Wheel's put() method.
+
+	$reflex_poe_wheel->put("one", "two");
 
 =head2 Required Subclass Methods
 

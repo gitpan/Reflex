@@ -1,6 +1,6 @@
 package Reflex::Role::UdpPeer;
 BEGIN {
-  $Reflex::Role::UdpPeer::VERSION = '0.010';
+  $Reflex::Role::UdpPeer::VERSION = '0.011';
 }
 use Moose::Role;
 with 'Reflex::Role::Object';
@@ -100,7 +100,7 @@ Reflex::Role::UdpPeer - Add non-blocking UDP networking to an object.
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 

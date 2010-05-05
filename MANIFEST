@@ -11,7 +11,6 @@ docs/manual.otl
 docs/patterns.otl
 docs/requirements.otl
 docs/syntax.pm
-eg/.eg-32-promise-tiny.pl.swp
 eg/EchoStream.pm
 eg/ExampleHelpers.pm
 eg/PoCoEvent.pm
@@ -75,7 +74,6 @@ eg/ttl/Ttl/Xor.pm
 eg/ttl/fail-ttl-counter.pl
 eg/ttl/fail-ttl-simple.pl
 lib/Reflex.pm
-lib/Reflex/.Callbacks.pm.swp
 lib/Reflex/Callback.pm
 lib/Reflex/Callback/CodeRef.pm
 lib/Reflex/Callback/Method.pm

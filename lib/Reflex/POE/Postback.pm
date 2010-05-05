@@ -1,6 +1,6 @@
 package Reflex::POE::Postback;
 BEGIN {
-  $Reflex::POE::Postback::VERSION = '0.010';
+  $Reflex::POE::Postback::VERSION = '0.011';
 }
 
 # TODO - Not Moose, unless Moose allows us to create blessed coderefs.
@@ -64,7 +64,7 @@ Reflex::POE::Postback - Communicate with POE components expecting postbacks.
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
