@@ -7,45 +7,45 @@
 
 package Ttl::FlipFlop::D;
 use Moose;
-extends 'Reflex::Object';
+extends 'Reflex::Base';
 use Ttl::TriNand;
-use Reflex::Trait::Observer;
-use Reflex::Trait::Emitter;
+use Reflex::Trait::Observed;
+use Reflex::Trait::EmitsOnChange;
 
 has clear => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 has clock => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 has d => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 has preset => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 has q => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 has not_q => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 sub BUILD {
@@ -132,37 +132,37 @@ sub on_tri6_out {
 has tri1 => (
   isa     => 'Ttl::TriNand',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
 );
 
 has tri2 => (
   isa     => 'Ttl::TriNand',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
 );
 
 has tri3 => (
   isa     => 'Ttl::TriNand',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
 );
 
 has tri4 => (
   isa     => 'Ttl::TriNand',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
 );
 
 has tri5 => (
   isa     => 'Ttl::TriNand',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
 );
 
 has tri6 => (
   isa     => 'Ttl::TriNand',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
 );
 
 1;

@@ -5,7 +5,7 @@ use lib qw(../lib);
 {
 	package Echoer;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 
 	sub ping {
 		my ($self, $args) = @_;
@@ -17,13 +17,13 @@ use lib qw(../lib);
 {
 	package Pinger;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 
 	has echoer => (
 		is      => 'ro',
 		isa     => 'Echoer',
 		default => sub { Echoer->new() },
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	sub BUILD {

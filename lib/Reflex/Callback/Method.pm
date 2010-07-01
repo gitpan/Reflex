@@ -1,6 +1,6 @@
 package Reflex::Callback::Method;
 BEGIN {
-  $Reflex::Callback::Method::VERSION = '0.011';
+  $Reflex::Callback::Method::VERSION = '0.050';
 }
 
 use Moose;
@@ -28,7 +28,7 @@ Reflex::Callback::Method - Callback adapter for class and object methods
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -36,7 +36,7 @@ Used within Reflex:
 
 	package MethodHandler;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Callbacks qw(cb_method);
 	use ExampleHelpers qw(eg_say);
 

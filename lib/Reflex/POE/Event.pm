@@ -1,6 +1,6 @@
 package Reflex::POE::Event;
 BEGIN {
-  $Reflex::POE::Event::VERSION = '0.011';
+  $Reflex::POE::Event::VERSION = '0.050';
 }
 
 use Moose;
@@ -8,7 +8,7 @@ use Carp qw(croak);
 
 has object => (
 	is        => 'ro',
-	isa       => 'Reflex::Object',
+	isa       => 'Reflex::Base',
 	required  => 1,
 );
 
@@ -34,7 +34,7 @@ sub BUILD {
 	) {
 		croak(
 			"When interfacing with POE at large, ", __PACKAGE__, " must\n",
-			"be created within a Reflex::Object's session.  Perhaps invoke it\n",
+			"be created within a Reflex::Base's session.  Perhaps invoke it\n",
 			"within the object's run_within_session() method",
 		);
 	}
@@ -62,7 +62,7 @@ Reflex::POE::Event - Communicate with POE components expecting events.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -89,9 +89,9 @@ service from a POE component by posting an event.
   }
 
 App's constructor runs within its creator's session, which may not be
-the right one to send the event.  run_within_session() guarantees that
-Reflex::POE::Event is sent from the App, so that responses will reach
-the App later.
+the correct one to be sending the event.  run_within_session()
+guarantees that Reflex::POE::Event is sent from the App, so that
+responses will reach the App later.
 
 An optional context (or continuation) may be stored with the event.
 It will be returned to the callback as its "context" parameter.

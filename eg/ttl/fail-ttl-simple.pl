@@ -7,15 +7,15 @@ use lib qw(lib);
 {
 	package Breadboard;
 	use Moose;
-	extends 'Reflex::Object';
-	use Reflex::Trait::Observer;
+	extends 'Reflex::Base';
+	use Reflex::Trait::Observed;
 
 	use Ttl::And;
 
 	has ander => (
 		isa => 'Ttl::And',
 		is  => 'rw',
-		traits => ['Reflex::Trait::Observer'],
+		traits => ['Reflex::Trait::Observed'],
 	);
 
 	sub BUILD {
@@ -32,5 +32,5 @@ use lib qw(lib);
 }
 
 my $b = Breadboard->new();
-Reflex::Object->run_all();
+Reflex->run_all();
 exit;

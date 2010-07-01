@@ -3,7 +3,7 @@
 
 package Reflex::Connector;
 BEGIN {
-  $Reflex::Connector::VERSION = '0.011';
+  $Reflex::Connector::VERSION = '0.050';
 }
 use Moose;
 extends 'Reflex::Handle';
@@ -42,7 +42,7 @@ sub BUILD {
 
 	my $packed_address;
 	if ($handle->isa("IO::Socket::INET")) {
-		# TODO - Non-bollocking resolver.
+		# TODO - Need a non-bollocking resolver.
 		my $inet_address = inet_aton($self->remote_addr());
 		$packed_address = pack_sockaddr_in($self->remote_port(), $inet_address);
 	}
@@ -110,7 +110,7 @@ Reflex::Connector - Connect to a server without blocking.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -133,11 +133,11 @@ source for a more complete example.
 		$self->stop();
 	}
 
-Reflex objects may also be used in condvar-like ways.  This excerpts
-from eg/eg-38-promise-client.pl in the distribution.
+Reflex objects may also be used as promises.  This excerpts from
+eg/eg-38-promise-client.pl in the distribution.
 
 	my $connector = Reflex::Connector->new(remote_port => 12345);
-	my $event = $connector->wait();
+	my $event = $connector->next();
 
 	if ($event->{name} eq "failure") {
 		eg_say("connection error $event->{arg}{errnum}: $event->{arg}{errstr}");
@@ -148,6 +148,14 @@ from eg/eg-38-promise-client.pl in the distribution.
 	# Do something with $event->{arg}{socket}.
 
 =head1 DESCRIPTION
+
+Reflex::Connector is scheduled for substantial changes.  Its base
+class, Reflex::Handle, will be deprecated in favor of
+Reflex::Role::Readable and Reflex::Role::Writable.  Hopefully
+Reflex::Connector's interfaces won't change much as a result, but
+there are no guarantees.
+Your ideas and feedback for Reflex::Connector's future implementation
+are welcome.
 
 Reflex::Connector performs a non-blocking connect() object on a plain
 socket.  It extends Reflex::Handle to wait for the connection without
@@ -216,8 +224,8 @@ It will return a "socket", the value of which is the connected socket.
 L<Reflex::Client> extends Reflex::Connector to include a
 Reflex::Stream when the socket is connected.
 
-eg/eg-38-promise-client.pl shows how to use Reflex::Connector in a
-condvar-like fashion.
+eg/eg-38-promise-client.pl shows how to use Reflex::Connector may be
+used as a promise.
 
 =head1 SEE ALSO
 

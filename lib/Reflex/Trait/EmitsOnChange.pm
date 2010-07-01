@@ -1,6 +1,6 @@
-package Reflex::Trait::Emitter;
+package Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Reflex::Trait::Emitter::VERSION = '0.011';
+  $Reflex::Trait::EmitsOnChange::VERSION = '0.050';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
@@ -81,11 +81,11 @@ has event => (
 	},
 );
 
-package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Emitter;
+package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Emitter::VERSION = '0.011';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.050';
 }
-sub register_implementation { 'Reflex::Trait::Emitter' }
+sub register_implementation { 'Reflex::Trait::EmitsOnChange' }
 
 1;
 
@@ -93,11 +93,11 @@ __END__
 
 =head1 NAME
 
-Reflex::Trait::Emitter - Emit an event when an attribute's value changes.
+Reflex::Trait::EmitsOnChange - Emit an event when an attribute's value changes.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -106,11 +106,11 @@ version 0.011
 
 	package Counter;
 	use Moose;
-	extends 'Reflex::Object';
-	use Reflex::Trait::Emitter;
+	extends 'Reflex::Base';
+	use Reflex::Trait::EmitsOnChange;
 
 	has count   => (
-		traits    => ['Reflex::Trait::Emitter'],
+		traits    => ['Reflex::Trait::EmitsOnChange'],
 		isa       => 'Int',
 		is        => 'rw',
 		default   => 0,
@@ -118,8 +118,8 @@ version 0.011
 
 =head1 DESCRIPTION
 
-An attribute with the Reflex::Trait::Emitter trait emit an event on
-behalf of its object whenever its value changes.  The event will be
+An attribute with the Reflex::Trait::EmitsOnChange trait emit an event
+on behalf of its object whenever its value changes.  The event will be
 named after the attribute by default.  It will be accompanied by a
 "value" parameter, the value of which is the attribute's new value at
 the time of the change.
@@ -130,8 +130,8 @@ to emit "count" events.
 =head2 event
 
 The "default" option can be used to override the default event emitted
-by the Reflex::Trait::Emitter trait.  That default, by the way, is the
-name of the attribute.
+by the Reflex::Trait::EmitsOnChange trait.  That default, by the way,
+is the name of the attribute.
 
 =head2 setup
 
@@ -151,7 +151,7 @@ It will be deprecated if default can be made to work instead.
 =head1 SEE ALSO
 
 L<Reflex>
-L<Reflex::Trait::Observer>
+L<Reflex::Trait::Observed>
 
 L<Reflex/ACKNOWLEDGEMENTS>
 L<Reflex/ASSISTANCE>

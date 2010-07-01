@@ -1,10 +1,10 @@
 package Reflex::Callbacks;
 BEGIN {
-  $Reflex::Callbacks::VERSION = '0.011';
+  $Reflex::Callbacks::VERSION = '0.050';
 }
 
 # Reflex::Callbacks is a callback manager.  It encapsulates the
-# callbacks for an object.  Via send(), it maps event names to the
+# callbacks for an object.  Via deliver(), it maps event names to the
 # corresponding callbacks, then invokes them through the underlying
 # callback system.
 #
@@ -172,7 +172,7 @@ sub gather_cb {
 	return Reflex::Callbacks->new( callback_map => \%return );
 }
 
-sub send {
+sub deliver {
 	my ($self, $event, $arg) = @_;
 	$arg //= {};
 
@@ -191,7 +191,7 @@ Reflex::Callbacks - Convenience functions for creating and using callbacks
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -223,7 +223,7 @@ directory in Reflex's distribution.
 
 cb_object() converts the specification of multiple callbacks into a
 list of callback parameter names and their Reflex::Callback::Method
-objects.  The returned list is in a form suitable for a Reflex::Object
+objects.  The returned list is in a form suitable for a Reflex::Base
 constructor.
 
 cb_object() takes two positional parameters.  The first is the object
@@ -350,11 +350,11 @@ cb_promise() takes a scalar reference.  This reference will be
 populated with a Reflex::Callback::Promise object.
 
 cb_promise() returns two values that are suitable to insert onto a
-Reflex::Object's constructor.  The first value is a special event
-name, "on_promise", that tells Reflex::Object objects they may be used
-as promises or in a condvar-like context.  The second return value is
-the same Reflex::Callback::Promise object that was inserted into
-cb_promise()'s parameter.
+Reflex::Base's constructor.  The first value is a special event name,
+"on_promise", that tells Reflex::Base objects they may be used inline
+as promises.  The second return value is the same
+Reflex::Callback::Promise object that was inserted into cb_promise()'s
+parameter.
 
 	use Reflex::Callbacks qw(cb_promise);
 	my $promise;
@@ -373,7 +373,7 @@ returns a single value: a Reflex::Callback::Coderef object that will
 deliver events to the callback.
 
 cb_coderef() neither takes nor returns an event name.  As such, the
-Reflex::Object parameter name must be supplied outside cb_coderef().
+Reflex::Base parameter name must be supplied outside cb_coderef().
 
 	my $timer = Reflex::Timer->new(
 		interval    => 1,
@@ -418,20 +418,20 @@ parameters matching C</^on_/>.
 
 	sub run {
 		my $self = shift;
-		$self->cb()->send( event => {} );
+		$self->cb()->deliver( event => {} );
 	}
 
-=head1 send
+=head1 deliver
 
-send() is a method of Reflex::Callback, not a function.  It takes two
-parameters: the name of an event to send, and a hash reference
+deliver() is a method of Reflex::Callback, not a function.  It takes
+two parameters: the name of an event to deliver, and a hash reference
 containing named values to include with the event.
 
-send() finds the callback that corresponds to its event.  It then
+deliver() finds the callback that corresponds to its event.  It then
 delivers the event to that callback.  The callback must have been
 collected by gather_cb().
 
-See the example for gather_cb(), which also invokes send().
+See the example for gather_cb(), which also invokes deliver().
 
 =head1 SEE ALSO
 

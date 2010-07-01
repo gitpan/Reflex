@@ -1,6 +1,6 @@
 package Reflex::Callback::Promise;
 BEGIN {
-  $Reflex::Callback::Promise::VERSION = '0.011';
+  $Reflex::Callback::Promise::VERSION = '0.050';
 }
 
 use Moose;
@@ -18,13 +18,15 @@ sub deliver {
 	push @{$self->queue()}, { name => $event, arg => $arg };
 }
 
-sub wait {
+sub next {
 	my $self = shift;
 
 	my $queue = $self->queue();
 
-	# TODO - Probably should bail out if the event loop ends.
-	$POE::Kernel::poe_kernel->run_one_timeslice() while @$queue < 1;
+	# Run while the queue is empty and POE has things to do.
+	1 while (
+		@$queue < 1 and $POE::Kernel::poe_kernel->run_one_timeslice()
+	);
 
 	return shift @$queue;
 }
@@ -35,11 +37,11 @@ __END__
 
 =head1 NAME
 
-Reflex::Callback::Promise - Condvar-like non-callback adapter
+Reflex::Callback::Promise - Non-callback, inline Promise adapter
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -53,7 +55,7 @@ Used within Reflex:
 		auto_repeat => 1,
 	);
 
-	while (my $event = $pt->wait()) {
+	while (my $event = $pt->next()) {
 		eg_say("promise timer returned an event (@$event)");
 	}
 
@@ -64,30 +66,51 @@ Low-level usage:
 	my $cb = Reflex::Callback::Promise->new();
 	$cb->deliver( greet => { name => "world" } );
 
-	my $event = $cb->wait();
+	my $event = $cb->next();
 	print "event '$event->{name}': hello, $event->{arg}{name}\n";
 
 =head1 DESCRIPTION
 
-Reflex::Callback::Promise maps the generic Reflex::Callback interface
-to non-callback promises, which are kind of like condvars.  In most
-cases, Reflex::Callbacks' cb_promise() or other syntactic sweeteners
-will be used instead of raw Reflex::Callback::Promise objects.
+"In computer science, future, promise, and delay refer to constructs
+used for synchronization in some concurrent programming languages.
+They describe an object that acts as a proxy for a result that is
+initially not known, usually because the computation of its value has
+not yet completed." --
+http://en.wikipedia.org/wiki/Promise_%28programming%29
+
+Reflex::Callback::Promise enables Reflex objects to be used as inline
+event streams.  Reflex::Callback::Promise and Reflex::Role::Reactive
+transparently handle the conversion.  Reflex objects do not need
+special code to be used this way.
+
+In most cases, Reflex::Callbacks::cb_promise() or other syntactic
+sweeteners will be used instead of raw Reflex::Callback::Promise
+objects.  For example, promises are implicitly enabled if no callbacks
+are defined:
+
+	my $t = Reflex::Timer->new(
+		interval    => 1,
+		auto_repeat => 1,
+	);
+
+	while (my $event = $t->next()) {
+		print "next() returned an event\n";
+	}
 
 =head2 new
 
 Reflex::Callback::Promise's constructor takes no parameters.  It
 creates a promise queue that is populated by deliver() and drained by
-wait().  Furthermore, wait() will block as necessary until it can
+next().  Furthermore, next() will block as necessary until it can
 return an event.  This requires the help of some form of concurrency,
 currently hardcoded to use POE.
 
 A future version may delegate the POE dependency to a subclass.
 
-=head2 wait
+=head2 next
 
-Reflex::Callback::Promise's wait() method retrieves the next pending
-event held in the object's queue.  If the queue is empty, wait() will
+Reflex::Callback::Promise's next() method retrieves the next pending
+event held in the object's queue.  If the queue is empty, next() will
 dispatch other events until some asynchronous code enqueues a new event
 in the promise's queue.
 

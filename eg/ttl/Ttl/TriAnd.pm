@@ -18,29 +18,29 @@
 
 package Ttl::TriAnd;
 use Moose;
-extends 'Reflex::Object';
+extends 'Reflex::Base';
 use Ttl::And;
-use Reflex::Trait::Observer;
-use Reflex::Trait::Emitter;
+use Reflex::Trait::Observed;
+use Reflex::Trait::EmitsOnChange;
 
 has and_ab => (
   isa     => 'Ttl::And',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
   handles => [qw(a b)],
 );
 
 has and_c => (
   isa     => 'Ttl::And',
   is      => 'rw',
-  traits  => ['Reflex::Trait::Observer'],
+  traits  => ['Reflex::Trait::Observed'],
   handles => { c => 'b' },
 );
 
 has out => (
 	isa     => 'Bool',
 	is      => 'rw',
-	traits  => ['Reflex::Trait::Emitter'],
+	traits  => ['Reflex::Trait::EmitsOnChange'],
 );
 
 sub BUILD {

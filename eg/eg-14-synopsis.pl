@@ -7,14 +7,14 @@ use lib qw(../lib);
 {
 	package App;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Timer;
 
 	has ticker => (
 		isa     => 'Reflex::Timer',
 		is      => 'rw',
 		setup   => { interval => 1, auto_repeat => 1 },
-		traits  => [ 'Reflex::Trait::Observer' ],
+		traits  => [ 'Reflex::Trait::Observed' ],
 	);
 
 	sub on_ticker_tick {

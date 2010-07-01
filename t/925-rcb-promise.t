@@ -15,14 +15,16 @@
 
 use warnings;
 use strict;
-use lib qw(../lib);
+use lib qw(t/lib);
+
+use Test::More tests => 3;
 
 # Create a thing that will invoke callbacks.
 
 {
 	package PromiseThing;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Timer;
 	use Reflex::Callbacks qw(gather_cb);
 
@@ -30,7 +32,7 @@ use lib qw(../lib);
 		isa     => 'Reflex::Timer',
 		is      => 'rw',
 		setup   => { interval => 1, auto_repeat => 1 },
-		traits  => [ 'Reflex::Trait::Observer' ],
+		traits  => [ 'Reflex::Trait::Observed' ],
 	);
 
 	has cb => ( is => 'rw', isa => 'Reflex::Callbacks' );
@@ -47,11 +49,12 @@ use lib qw(../lib);
 }
 
 use Reflex::Callbacks qw(cb_promise);
-use ExampleHelpers qw(eg_say);
 
 my $promise;
 my $pt = PromiseThing->new( cb_promise(\$promise) );
 
-while (my $event = $promise->wait()) {
-	eg_say("wait() returned an event ($event->{name})");
+for (1..3) {
+	my $event = $promise->next();
+	last unless $event;
+	pass("next($_) returned an event ($event->{name})");
 }

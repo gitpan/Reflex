@@ -1,7 +1,8 @@
 #!/usr/bin/env perl
 
 # This is pretty close to the final syntax.
-# TODO - Provide a way to wait() on multiple objects at once.
+# TODO - Provide a way to next() on multiple objects at once.
+# ...... maybe by next() on a collection?
 # TODO - Clean out all previous promise-like examples.
 
 use warnings;
@@ -26,7 +27,7 @@ my $ct = Reflex::Timer->new(
 {
 	package MethodHandler;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Callbacks qw(cb_method);
 	use ExampleHelpers qw(eg_say);
 
@@ -60,7 +61,7 @@ my $mh = MethodHandler->new();
 {
 	package ObjectHandler;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Callbacks qw(cb_object);
 	use ExampleHelpers qw(eg_say);
 
@@ -92,7 +93,7 @@ my $oh = ObjectHandler->new();
 {
 	package RoleHandler;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Callbacks qw(cb_role);
 	use ExampleHelpers qw(eg_say);
 
@@ -119,15 +120,15 @@ my $oh = ObjectHandler->new();
 
 my $rh = RoleHandler->new();
 
-### Poll for events with a condvar-like promise construct.  Goes last
-### because the while() loop will "block".  Meanwhile, wait() is also
-### allowing the other timers to run.
+### Poll for events with promises.  Goes last because the while() loop
+### will "block".  Meanwhile, next() is also allowing the other timers
+### to run.
 
 my $pt = Reflex::Timer->new(
 	interval    => 1 + rand(),
 	auto_repeat => 1,
 );
 
-while (my $event = $pt->wait()) {
+while (my $event = $pt->next()) {
 	eg_say("promise timer returned an event ($event->{name})");
 }

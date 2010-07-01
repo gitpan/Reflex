@@ -1,10 +1,10 @@
 package Reflex::Signal;
 BEGIN {
-  $Reflex::Signal::VERSION = '0.011';
+  $Reflex::Signal::VERSION = '0.050';
 }
 
 use Moose;
-extends qw(Reflex::Object);
+extends qw(Reflex::Base);
 use Scalar::Util qw(weaken);
 
 # A session may only watch a distinct signal once.
@@ -54,7 +54,7 @@ sub stop_watching {
 	$self->name(undef);
 }
 
-sub _deliver {
+sub deliver {
 	my ($class, $signal_name, @signal_args) = @_;
 
 	# If nobody's watching us, then why did we do it in the road?
@@ -109,11 +109,11 @@ __END__
 
 =head1 NAME
 
-Reflex::Signal - Generic signal observer and base class for specific ones.
+Reflex::Signal - Generic signal watcher and base class for specific ones.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -130,16 +130,16 @@ As a callback:
 As a promise:
 
 	my $usr2 = Reflex::Signal->new( name => "USR2" );
-	while ($usr2->wait()) {
+	while ($usr2->next()) {
 		print "Got SIGUSR2.\n";
 	}
 
-May also be used with observers, and Reflex::Trait::Observer, but
+May also be used with watchers, and Reflex::Trait::Observed, but
 those use cases aren't shown here.
 
 =head1 DESCRIPTION
 
-Reflex::Signal is a general signal observer.  It may be used to notify
+Reflex::Signal is a general signal watcher.  It may be used to notify
 programs when they are sent a signal via kill.
 
 =head2 Public Attributes

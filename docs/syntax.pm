@@ -2,19 +2,19 @@ Documenting Reflex syntax evolution.
 
 =head1 Gathering callbacks.
 
-Reflex::Role::Object
+Reflex::Role::Reactive
 	Has the cb() member.
 	BUILD
 		Maps constructor parameters to callbacks.
-		Maps callback types to observers:
-			discrete callbacks = discrete observers
-			role callbacks = role observers
-			no callbacks = unobserved (promise?)
+		Maps callback types to watchers:
+			discrete callbacks = discrete watchers
+			role callbacks = role watchers
+			no callbacks = unwatched (promise?)
 
-=head1 Reflex::Role::Object::BUILD calls cb_gather()
+=head1 Reflex::Role::Reactive::BUILD calls cb_gather()
 
 emit() syntax is preserved.
-1. Role::Object handles it normally.
+1. Role::Reactive handles it normally.
 2. Local delivery is through the callback object.
 
 $self->emit( event => \%args );
@@ -61,11 +61,11 @@ my $timer = Reflex::Timer->new(
 	# cb_promise
 );
 
-while (my $event = $timer->wait()) {
+while (my $event = $timer->next()) {
 	...;
 }
 
-=head1 Observer.
+=head1 Watcher.
 
 =cut
 
@@ -75,8 +75,8 @@ my $timer = Reflex::Timer->new(
 	promise => 1,
 );
 
-$self->observe(
-	observed => $timer,
+$self->watch(
+	watcher   => $timer,
 	event     => "tick",
 	callback  => ANY_RCB_EXCEPT_PROMISE,
 );
@@ -85,9 +85,9 @@ $self->observe(
 
 The current syntax is too verbose.
 
-$watcher has no purpose except to call observe().
+$watcher has no purpose except to call watch().
 
-Perhaps $watcher could be replaced by a Promise class that observes
+Perhaps $watcher could be replaced by a Promise class that watches
 and then returns events?  Similar to PromiseThing in
 eg-25-rcb-promise.pl?
 
@@ -104,7 +104,7 @@ use Reflex::Timer;
 use Reflex::Callbacks qw(cb_promise);
 use ExampleHelpers qw(eg_say);
 
-my $watcher = Reflex::Object->new();
+my $watcher = Reflex::Base->new();
 
 my $promise;
 my $timer = Reflex::Timer->new(
@@ -112,8 +112,8 @@ my $timer = Reflex::Timer->new(
 	auto_repeat => 1,
 );
 
-$watcher->observe($timer, cb_promise(\$promise));
+$watcher->watch($timer, cb_promise(\$promise));
 
-while (my $event = $promise->wait()) {
-	eg_say("wait() returned an event (@$event)");
+while (my $event = $promise->next()) {
+	eg_say("next() returned an event (@$event)");
 }

@@ -1,13 +1,26 @@
 package Reflex::UdpPeer;
 BEGIN {
-  $Reflex::UdpPeer::VERSION = '0.011';
+  $Reflex::UdpPeer::VERSION = '0.050';
 }
 use Moose;
-extends 'Reflex::Object';
-with 'Reflex::Role::UdpPeer';
+extends 'Reflex::Base';
 
-# Composes Reflex::Role::udpPeer into a class.
-# Does nothing of its own.
+has socket => (
+	is        => 'rw',
+	isa       => 'Maybe[FileHandle]',
+	required  => 1,
+);
+
+with 'Reflex::Role::Recving' => {
+	handle => 'socket',
+
+	# Expose role methods with more sensible names for a class.
+	-alias    => {
+		send_socket => 'send',
+		stop_socket => 'stop',
+	},
+	-excludes => [ qw(send_socket stop_socket) ],
+};
 
 1;
 
@@ -19,22 +32,24 @@ Reflex::UdpPeer - Base class for non-blocking UDP networking peers.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
+TODO - Rewritten.  Need to rewrite docs, too.
+
 Inherit it.
 
-	package Reflex::UdpPeer::Echo;
+	package Reflex::Udp::Echo;
 	use Moose;
 	extends 'Reflex::UdpPeer';
 
-	sub on_udppeer_datagram {
+	sub on_socket_datagram {
 		my ($self, $args) = @_;
 		my $data = $args->{datagram};
 
 		if ($data =~ /^\s*shutdown\s*$/) {
-			$self->destruct();
+			$self->stop_socket_readable();
 			return;
 		}
 
@@ -44,7 +59,7 @@ Inherit it.
 		);
 	}
 
-	sub on_udppeer_error {
+	sub on_socket_error {
 		my ($self, $args) = @_;
 		warn "$args->{op} error $args->{errnum}: $args->{errstr}";
 		$self->destruct();
@@ -52,23 +67,25 @@ Inherit it.
 
 Use it as a helper.
 
-	package Reflex::UdpPeer::Echo;
+	package Reflex::Udp::Echo;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::UdpPeer;
 
-	has port => (
-		isa     => 'Int',
-		is      => 'ro',
-	);
+	has port => ( isa => 'Int', is => 'ro' );
 
 	has peer => (
-		isa     => 'Reflex::UdpPeer|Undef',
+		isa     => 'Maybe[Reflex::UdpPeer]',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 		setup   => sub {
 			my $self = shift;
-			Reflex::UdpPeer->new(port => $self->port());
+			Reflex::UdpPeer->new(
+				socket => IO::Socket::INET->new(
+					LocalPort => $self->port(),
+					Proto     => 'udp',
+				)
+			)
 		},
 	);
 
@@ -95,7 +112,7 @@ Use it as a helper.
 
 Compose objects with its base role.
 
-	# See L<Reflex::Role::UdpPeer>.
+	# See L<Reflex::Role::Recving>.
 
 Use it as a promise (like a condvar), or set callbacks in its
 constructor.
@@ -119,7 +136,7 @@ you know.
 L<Moose::Manual::Concepts>
 
 L<Reflex>
-L<Reflex::Object>
+L<Reflex::Base>
 L<Reflex::Role::UdpPeer>
 
 L<Reflex/ACKNOWLEDGEMENTS>

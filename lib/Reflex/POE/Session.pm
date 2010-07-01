@@ -1,10 +1,10 @@
 package Reflex::POE::Session;
 BEGIN {
-  $Reflex::POE::Session::VERSION = '0.011';
+  $Reflex::POE::Session::VERSION = '0.050';
 }
 
 use Moose;
-extends 'Reflex::Object';
+extends 'Reflex::Base';
 use Scalar::Util qw(weaken);
 use POE::Session; # for ARG0
 
@@ -54,7 +54,7 @@ Reflex::POE::Session - Observe events from a POE::Session object.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -88,8 +88,8 @@ exists in eg-13-irc-bot.pl, in the tarball's eg directory.
 
 =head1 DESCRIPTION
 
-Reflex::POE::Session allows a Reflex::Object to receive events from a
-specific POE::Session instance, identified by the session's ID.
+Reflex::POE::Session allows a Reflex::Base object to receive events
+from a specific POE::Session instance, identified by the session's ID.
 
 Authors are encouraged to encapsulate POE sessions within Reflex
 objects.  Most users should not need use Reflex::POE::Session (or

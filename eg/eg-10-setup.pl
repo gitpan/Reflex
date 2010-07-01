@@ -4,29 +4,30 @@ use warnings;
 use strict;
 use lib qw(../lib);
 
-# Exercise the new "setup" option for Emitter and Observer traits.
+# Exercise the new "setup" option for EmitsOnChange and Observed
+# traits.
 
 {
 	package Counter;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Timer;
-	use Reflex::Trait::Observer;
-	use Reflex::Trait::Emitter;
+	use Reflex::Trait::Observed;
+	use Reflex::Trait::EmitsOnChange;
 
 	has count   => (
-		traits    => ['Reflex::Trait::Emitter'],
+		traits    => ['Reflex::Trait::EmitsOnChange'],
 		isa       => 'Int',
 		is        => 'rw',
 		default   => 0,
 	);
 
 	has ticker  => (
-		traits    => ['Reflex::Trait::Observer'],
+		traits    => ['Reflex::Trait::Observed'],
 		isa       => 'Reflex::Timer',
 		is        => 'rw',
 		setup     => sub {
-			Reflex::Timer->new( interval => 1, auto_repeat => 1 )
+			Reflex::Timer->new( interval => 0.1, auto_repeat => 1 )
 		},
 	);
 
@@ -39,10 +40,10 @@ use lib qw(../lib);
 {
 	package Watcher;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 
 	has counter => (
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 		isa     => 'Counter|Undef',
 		is      => 'rw',
 		setup   => sub { Counter->new() },
@@ -59,5 +60,5 @@ use lib qw(../lib);
 # Main.
 
 my $w = Watcher->new();
-Reflex::Object->run_all();
+Reflex->run_all();
 exit;

@@ -10,7 +10,7 @@ use lib qw(../lib);
 {
 	package Runner;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::POE::Wheel::Run;
 	use Reflex::Callbacks qw(cb_role);
 
@@ -25,9 +25,7 @@ use lib qw(../lib);
 		$self->wheel(
 			Reflex::POE::Wheel::Run->new(
 				Program => "$^X -wle 'print qq[pid(\$\$) moo(\$_)] for 1..10; exit'",
-				observers => [
-					[ $self, cb_role($self, "child") ],
-				],
+				cb_role($self, "child"),
 			)
 		);
 	}
@@ -67,5 +65,5 @@ use lib qw(../lib);
 # Main.
 
 my $runner = Runner->new();
-Reflex::Object->run_all();
+Reflex->run_all();
 exit;

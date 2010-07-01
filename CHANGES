@@ -1,4 +1,305 @@
 ================================
+2010-07-01 00:55:25 -0400 v0_050
+================================
+
+  commit 156542b1d8bf595663a5e26ba7ee774098d80000
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 1 00:55:25 2010 -0400
+  
+    Add deprecation warnings to Reflex::Handle and its subclasses.
+
+  commit a6d52ce9bc046eb356aff5f28a36b52c38763d78
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 1 00:50:15 2010 -0400
+  
+    Replace the hierarchical class tree with categorized lists.
+
+    Nadim Khemir provided great ASCII tree diagrams for the old class
+    hierarchy. Through no fault of his however, they can't be used.
+    Reflex is moving away from hierarchical design and more towards
+    roles. Classes are increasingly becoming composed of multiple roles,
+    which can't adequately be represented by simple trees.
+
+  commit 1eda21a4c66d18e3d53eca83e565c15dd237109a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 1 00:07:51 2010 -0400
+  
+    Add Reflex::Role::Collectible to work with Reflex::Collection.
+
+  commit affe378bd386d347f435cc8cd6ffe0d31c251b47
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jun 28 13:26:37 2010 -0400
+  
+    Replace method name declarations with a helper function.
+
+  commit 7f5d4db10cc950e22658392aeee4f9ff891bab1c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jun 28 13:04:51 2010 -0400
+  
+    Focus on promises rather than condvars.
+
+  commit 2fe7ce2387134a52173f4dfd57f4ce80a241d82f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 27 14:07:37 2010 -0400
+  
+    Make a note to enable SIGCHLD for great justice (and speed).
+
+  commit ca75de20907d99303a70a9c6c416898ae8bb4c25
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 27 13:56:27 2010 -0400
+  
+    Sanitize (as in make SANE) Reflex::Stream callback names.
+
+  commit 1f5ed2736c54e3718dc55f754f984a7bf2f7a12d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 27 13:40:50 2010 -0400
+  
+    Rename Reflex::Role::Object to Reflex::Role::Reactive; Reflex::Object
+    to Reflex::Base.
+
+  commit e5c57fb3e0a891ecd948b6cb68342e05b13f6679
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jun 26 22:49:46 2010 -0400
+  
+    Deprecate the roles directory since the roles are first class now.
+
+  commit e45ebba890259fb4449b75f256fb03071f8e8a13
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jun 26 22:48:09 2010 -0400
+  
+    These example roles are defunct since we'll be writing real ones.
+
+  commit 9fa1ac16482cbe13f66eda1b4791240bb3c87e13
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jun 26 22:47:19 2010 -0400
+  
+    Several examples are nonexistent now, so the placeholder is silly.
+
+  commit 08bafbd2b824ae0ceed83ea9e70757929899527d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jun 26 20:19:41 2010 -0400
+  
+    Massive redoing of Reflex roles and some of the objects that use
+    them.
+
+    For example, Reflex::Handle is deprecated in favor of Reflex::Stream,
+    which is implemented now in terms of Reflex::Role::Streaming.
+
+  commit c1c573eeaa75008ff35e9d8d272bfc8807b1ccd6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Jun 23 20:34:51 2010 -0400
+  
+    Rename the role.
+
+  commit 1d3eded20ba41b7046ae2e2d9cf5d902c3685b57
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Jun 23 20:32:52 2010 -0400
+  
+    Parameterize Reflex::Role::UdpPeer. Can EmitHelper in favor of
+    Reflex::Util::Methods.
+
+  commit 803943773d48c994b6d91c816daf728073d95533
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 22 02:53:02 2010 -0400
+  
+    Document the new roles.
+
+  commit ea712d886c630b8b16d50b505f059bc25135a301
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 20 21:25:42 2010 -0400
+  
+    Begin bringing parameterized roles into the main distro.
+
+  commit 3aadb31da4ccd888ece2451621ab83b71942ae35
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jun 19 16:38:31 2010 -0400
+  
+    Rename EmitHelper's helper to emit_by_default().
+
+  commit 4c4a60b7b4f6fd84a4696206b2b9dfce59eaadca
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Jun 16 03:44:10 2010 -0400
+  
+    Normalize on deliver() for event delivery.
+
+  commit ab4ea4a216d1abe909f366c6893fa51f2cb56b28
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 23:18:25 2010 -0400
+  
+    Rename trait class file to match its new package name.
+
+  commit bf5f35fef2bfaf387a970d270b4df67d33941590
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 23:17:54 2010 -0400
+  
+    Rename uses of Reflex::Trait::Emitter to ::EmitsOnChange.
+
+  commit fba8fa8d7b54293163fabfb4b41a4fcc5128ef61
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 23:08:25 2010 -0400
+  
+    Rename the file to match its new class.
+
+  commit 28ec466574dd3250307b54ebac433bab38f555cd
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 23:07:37 2010 -0400
+  
+    Rename uses of Reflex::Trait::Observer to Reflex::Trait::Observed.
+
+  commit 18e46a94278f2776e380c8b248f06a27e74e229e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 22:59:23 2010 -0400
+  
+    Rename callback send() to deliver() to match deliver() used
+    everywhere else.
+
+  commit 5f9458c064965a1e86d4ac43f93ef3bc50b95056
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 22:37:50 2010 -0400
+  
+    Rename observe() to watch(). Rename wait() to next().
+
+  commit 15add2525852df61c2b3c8c6c62d392f36a14689
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 20:30:55 2010 -0400
+  
+    Fix library paths to find common test helper libraries.
+
+  commit 54bef2d8e22d94d72c9a76f2dc9980f92c25ab5b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 20:25:28 2010 -0400
+  
+    Move the new tests into place.
+
+  commit 0b515ca08383f66e6539d2227aaa8487e57037b9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 20:23:51 2010 -0400
+  
+    Convert the callback examples into tests.
+
+  commit c00d09678aaa8f51950feaeca94f19618a316e4e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 15 18:52:00 2010 -0400
+  
+    Revise discussion of tests 901 and 902.
+
+  commit 6f77f44a5983e51d130ae0fd25e08e204ee8e1b4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 23:58:53 2010 -0400
+  
+    Move tests into test directory.
+
+  commit 4b63c090daec1deb4cf733c518c52d159563aac0
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 23:57:16 2010 -0400
+  
+    Convert another example into a test.
+
+  commit 8364e2eb7dea3aca73400ef46c1fc1b8e43b7b44
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 14:58:25 2010 -0400
+  
+    Clean up the tests a little more.
+
+  commit d8bf8e339e973dbde6c0687342382f16ac280bff
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 14:47:33 2010 -0400
+  
+    Promote check_args() to public method. ignore() syntax matches
+    observe() now.
+
+  commit d84161fc49b6bce7e1f058f492cb0868fd98f2d8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 14:15:14 2010 -0400
+  
+    Discard the observed constructor parameter now that we have
+    Reflex::Callbacks.
+
+  commit 48546334f04175c8d4abd312ff7572d3fd719955
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 14:10:42 2010 -0400
+  
+    Convert this example into a test.
+
+  commit 880e1f67d71ef9cf698ee3960fdb2d2720a46122
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jun 13 14:09:10 2010 -0400
+  
+    Add goals for making the names of things more coherent.
+
+  commit b19db8851b34b4b96ef40ed73cfece51140ddc86
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat May 15 02:44:40 2010 -0400
+  
+    Simplified default callbacks that emit events. Added stubs for other
+    necessary roles.
+
+  commit 7a303d3ee6db295f396e35ec4988e944a19ea77c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon May 10 23:54:06 2010 -0400
+  
+    Fix Streamable's error reporting, and make Stream fire events by
+    default.
+
+  commit c5e0e08f949a3c187eb9978e086b921537a2758c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon May 10 12:18:42 2010 -0400
+  
+    Get the Stream/Proxy example working.
+
+    Removed knobs entirely. They're a lovely interface with inherent
+    state, but the side effects appear to make them too clever for Moose
+    right now. They also violate one of my peeves about Perl, and that's
+    to implement polymorphism as runtime checks... when the caller knows
+    damned well what they intend to do! But I digress. The important
+    part? It woooorrrrrks!
+
+  commit e64e2b57e35bb0e1993698174f14c852860876dd
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon May 10 03:34:57 2010 -0400
+  
+    Reify the Streamable role as a Stream object.
+
+    However, it seems there's a problem with initialization timing. The
+    handle's not set by the time the knob is altered.
+
+  commit 7390907148ef4e295b85ed52aa479d6d90f0400b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun May 9 15:39:11 2010 -0400
+  
+    Port put() from Reflex::Stream to the test role Streamable.
+
+  commit fc29ff1402bcb37d052133e7edf089c22b8207af
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat May 8 22:24:37 2010 -0400
+  
+    Get Writable working, and add a Streamble role that composes Readable
+    and Writable.
+
+  commit 7681a67c7572511ef52528094bbd085b90e27bef
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat May 8 04:07:30 2010 -0400
+  
+    Extend core support for parameterized callbacks.
+
+  commit 5a31aba6ab0a544b4135e725c9b2bd399fd6d04e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat May 8 04:07:14 2010 -0400
+  
+    RJBS found a typo; fix it.
+
+  commit b1d42910c519ec68b24adaa82cec829eb024b34e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat May 8 04:05:26 2010 -0400
+  
+    Begin exploring parameterized Moose roles for static composition.
+
+    Should be faster and more Moose-friendly than Reflex dynamic roles,
+    although dynamic roles may still be useful for managing collections.
+    Pure Moose roles should also be cleaner for people who like that sort
+    of thing. 
+
+================================
 2010-05-04 21:45:45 -0400 v0_011
 ================================
 

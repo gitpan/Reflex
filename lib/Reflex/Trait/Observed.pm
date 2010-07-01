@@ -1,6 +1,6 @@
-package Reflex::Trait::Observer;
+package Reflex::Trait::Observed;
 BEGIN {
-  $Reflex::Trait::Observer::VERSION = '0.011';
+  $Reflex::Trait::Observed::VERSION = '0.050';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
@@ -32,7 +32,7 @@ has trigger => (
 
 			return unless defined $value;
 
-			$self->observe(
+			$self->watch(
 				$value,
 				cb_role(
 					$self,
@@ -44,7 +44,7 @@ has trigger => (
 	}
 );
 
-# Initializer seems to catch the observation from default.  Nifty!
+# Initializer seems to catch the interest from default.  Nifty!
 
 has initializer => (
 	is => 'ro',
@@ -53,7 +53,7 @@ has initializer => (
 		return sub {
 			my ($self, $value, $callback, $attr) = @_;
 			if (defined $value) {
-				$self->observe(
+				$self->watch(
 					$value,
 					cb_role(
 						$self,
@@ -87,7 +87,7 @@ has setup => (
 
 # TODO - Clearers don't invoke triggers, because clearing is different
 # from setting.  I would love to support $self->clear_thingy() with
-# the side-effect of unobserving the object, but I don't yet know how
+# the side-effect of ignoring the object, but I don't yet know how
 # to set an "after" method for a clearer that (a) has a dynamic name,
 # and (b) hasn't yet been defined.  I think I can do some meta magic
 # for (a), but (b) remains tough.
@@ -101,11 +101,11 @@ has setup => (
 #	},
 #);
 
-package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observer;
+package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observer::VERSION = '0.011';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.050';
 }
-sub register_implementation { 'Reflex::Trait::Observer' }
+sub register_implementation { 'Reflex::Trait::Observed' }
 
 1;
 
@@ -113,11 +113,11 @@ __END__
 
 =head1 NAME
 
-Reflex::Trait::Observer - Automatically observe Reflex objects.
+Reflex::Trait::Observed - Automatically watch Reflex objects.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -127,19 +127,19 @@ version 0.011
 	has clock => (
 		isa     => 'Reflex::Timer',
 		is      => 'rw',
-		traits  => [ 'Reflex::Trait::Observer' ],
+		traits  => [ 'Reflex::Trait::Observed' ],
 		setup   => { interval => 1, auto_repeat => 1 },
 	);
 
 =head1 DESCRIPTION
 
-Reflex::Trait::Observer allows one Reflex::Object to automatically
-observe other another it has stored in an attribute.  In the SYNOPSIS,
-storing a Reflex::Timer in the clock() attribute allows the owner to
-observe the timer's events.
+Reflex::Trait::Observed modifies a member to automatically observe any
+Reflex::Base object stored within it.  In the SYNOPSIS, storing a
+Reflex::Timer in the clock() attribute allows the owner to watch the
+timer's events.
 
-This trait is a bit of Moose-based syntactic sugar for
-Reflex::Object's more explict observe() and observe_role() methods.
+This trait is a bit of Moose-based syntactic sugar for Reflex::Base's
+more explict watch() and watch_role() methods.
 
 =head2 setup
 
@@ -158,7 +158,7 @@ role-based callback convention.  For example, Reflex will look for an
 on_clock_tick() method to handle "tick" events from an object with the
 'clock" role.
 
-The "role" option allows roles to be set or overridden.  An observer
+The "role" option allows roles to be set or overridden.  A watcher
 attribute's name is its default role.
 
 =head1 CAVEATS
@@ -169,7 +169,7 @@ It will be deprecated if default can be made to work instead.
 =head1 SEE ALSO
 
 L<Reflex>
-L<Reflex::Trait::Emitter>
+L<Reflex::Trait::EmitsOnChange>
 
 L<Reflex/ACKNOWLEDGEMENTS>
 L<Reflex/ASSISTANCE>

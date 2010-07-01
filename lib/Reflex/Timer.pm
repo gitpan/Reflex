@@ -1,10 +1,10 @@
 package Reflex::Timer;
 BEGIN {
-  $Reflex::Timer::VERSION = '0.011';
+  $Reflex::Timer::VERSION = '0.050';
 }
 
 use Moose;
-extends qw(Reflex::Object);
+extends qw(Reflex::Base);
 use Scalar::Util qw(weaken);
 
 has interval => (
@@ -51,8 +51,8 @@ sub repeat {
 	);
 }
 
-#overriden method from Reflex::Object
-sub _deliver {
+# Overriden method from Reflex::Base.
+sub deliver {
 	my $self = shift;
 	$self->alarm_id(0);
 	$self->emit( event => "tick" );
@@ -80,11 +80,11 @@ __END__
 
 =head1 NAME
 
-Reflex::Timer - An object that observes the passage of time.
+Reflex::Timer - An object that watches the passage of time.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -102,8 +102,8 @@ version 0.011
 		auto_repeat => 1,
 	);
 
-	while (my $event = $t->wait()) {
-		print "wait() returned an event (@$event)\n";
+	while (my $event = $t->next()) {
+		print "next() returned an event (@$event)\n";
 	}
 
 =head1 DESCRIPTION

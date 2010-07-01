@@ -8,10 +8,10 @@ use lib qw(../lib);
 
 {
 	package App;
-	use Reflex::Object;
+	use Reflex::Base;
 	use Reflex::Timer;
 	use Reflex::Callbacks qw(cb_role);
-	use base qw(Reflex::Object);
+	use base qw(Reflex::Base);
 
 	sub BUILD {
 		my $self = shift;
@@ -21,7 +21,7 @@ use lib qw(../lib);
 			auto_repeat => 1,
 		);
 
-		$self->observe($self->{ticker}, cb_role($self, "ticker"));
+		$self->watch($self->{ticker}, cb_role($self, "ticker"));
 	}
 
 	sub on_ticker_tick {

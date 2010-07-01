@@ -7,11 +7,11 @@ use lib qw(lib);
 {
 	package Counter;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Ttl::FlipFlop::T;
 	use Ttl::HexDecoder;
-	use Reflex::Trait::Emitter;
-	use Reflex::Trait::Observer;
+	use Reflex::Trait::EmitsOnChange;
+	use Reflex::Trait::Observed;
 
 	# Create a four-bit counter using T flip-flops.
 	# The counter schematic comes from Don Lancaster's _TTL Cookbook_.
@@ -20,38 +20,38 @@ use lib qw(lib);
 	has t1 => (
 		isa     => 'Ttl::FlipFlop::T',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 		handles => ['clock'],
 	);
 
 	has t2 => (
 		isa     => 'Ttl::FlipFlop::T',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	has t4 => (
 		isa     => 'Ttl::FlipFlop::T',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	has t8 => (
 		isa     => 'Ttl::FlipFlop::T',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	has decoder => (
 		isa     => 'Ttl::HexDecoder',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	has out => (
 		isa     => 'Str',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Emitter'],
+		traits  => ['Reflex::Trait::EmitsOnChange'],
 	);
 
 	sub on_t1_q {
@@ -104,19 +104,19 @@ use lib qw(lib);
 {
 	package Driver;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Timer;
 
 	has counter => (
 		isa     => 'Counter',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	has clock => (
 		isa     => 'Reflex::Timer',
 		is      => 'rw',
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 	);
 
 	sub BUILD {
@@ -140,5 +140,5 @@ use lib qw(lib);
 ### Main.
 
 my $counter = Driver->new();
-Reflex::Object->run_all();
+Reflex->run_all();
 exit;

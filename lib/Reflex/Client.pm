@@ -6,7 +6,7 @@
 
 package Reflex::Client;
 BEGIN {
-  $Reflex::Client::VERSION = '0.011';
+  $Reflex::Client::VERSION = '0.050';
 }
 use Moose;
 use Reflex::Stream;
@@ -22,7 +22,7 @@ has protocol => (
 has connection => (
 	is      => 'rw',
 	isa     => 'Maybe[Reflex::Stream]',
-	traits  => ['Reflex::Trait::Observer'],
+	traits  => ['Reflex::Trait::Observed'],
 	# Maps $self->put() to $self->connection()->put().
 	# TODO - Would be nice to have something like this for outbout
 	# events.  See on_connection_data() later in this module for more.
@@ -90,7 +90,7 @@ Reflex::Client - A non-blocking socket client.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -127,9 +127,17 @@ eg/eg-35-tcp-client.pl available at the time of this writing.
 
 =head1 DESCRIPTION
 
+Reflex::Client is scheduled for substantial changes.  One of its base
+classes, Reflex::Handle, will be deprecated in favor of
+Reflex::Role::Readable and Reflex::Role::Writable.  Hopefully
+Reflex::Client's interfaces won't change much as a result, but
+there are no guarantees.
+Your ideas and feedback for Reflex::Client's future implementation
+are welcome.
+
 Reflex::Client is a high-level base class for non-blocking socket
-clients.  As with other Reflex::Object classes, this one may be
-subclassed, composed with "has", or driven with condvar-like syntax.
+clients.  As with other Reflex::Base classes, this one may be
+subclassed, composed with "has", or driven inline with promises.
 
 =head2 Attributes
 

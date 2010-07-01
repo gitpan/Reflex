@@ -1,13 +1,13 @@
 package Reflex::POE::Wheel::Run;
 BEGIN {
-  $Reflex::POE::Wheel::Run::VERSION = '0.011';
+  $Reflex::POE::Wheel::Run::VERSION = '0.050';
 }
 use Moose;
 extends 'Reflex::POE::Wheel';
 use POE::Wheel::Run;
 
 # These are class methods, returning static class data.
-# TODO - How does Moose do this?
+# TODO - What's the proper way to do this with Moose?
 
 sub event_to_index {
 	return(
@@ -89,7 +89,7 @@ use Reflex::PID;
 has sigchild_watcher => (
 	isa    => 'Reflex::PID|Undef',
 	is     => 'rw',
-	traits => ['Reflex::Trait::Observer'],
+	traits => ['Reflex::Trait::Observed'],
 	role   => 'sigchld',
 );
 
@@ -125,7 +125,7 @@ Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -135,7 +135,7 @@ eg-08-observer-trait.pl in the distribution's eg directory for longer
 but fully executable ones.
 
 	has child => (
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 		isa     => 'Reflex::POE::Wheel::Run|Undef',
 		is      => 'rw',
 	);

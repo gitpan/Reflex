@@ -1,9 +1,9 @@
 package Reflex::POE::Wheel;
 BEGIN {
-  $Reflex::POE::Wheel::VERSION = '0.011';
+  $Reflex::POE::Wheel::VERSION = '0.050';
 }
 use Moose;
-extends 'Reflex::Object';
+extends 'Reflex::Base';
 use Scalar::Util qw(weaken);
 use POE::Wheel;
 
@@ -67,7 +67,7 @@ sub demolish_wheel {
 	$self->wheel(undef);
 }
 
-sub _deliver {
+sub deliver {
 	my ($class, $event_idx, @event_args) = @_;
 
 	# Map parameter offsets to named parameters.
@@ -80,7 +80,7 @@ sub _deliver {
 
 	my $wheel_id = $event_args{wheel_id};
 
-	# Get the Reflex::Object that owns this wheel.
+	# Get the Reflex::Base object that owns this wheel.
 
 	my $self = $wheel_id_to_object{$wheel_id};
 	die unless $self;
@@ -105,7 +105,7 @@ Reflex::POE::Wheel - Base class for POE::Wheel wrappers.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -116,7 +116,7 @@ L<Reflex::POE::Wheel::Run> may serve as an example.
 =head1 DESCRIPTION
 
 Reflex::POE::Wheel is a base class for Reflex objects that wrap and
-observe POE::Wheel objects.  Subclasses define a handful of methods
+watch POE::Wheel objects.  Subclasses define a handful of methods
 that describe the wheels they wrap.  Reflex::POE::Wheel will use the
 configuration to validate constructor parameters, map wheel events to
 Reflex events, and map positional callback parameters to named ones.
@@ -268,7 +268,7 @@ something shorter and more widely recognized, perhaps stop().  The
 jury is still out, however.
 
 Methods are not yet converted automatically.  It seems more sensible
-to provide a native Reflex::Object interface.  On the other hand, it
+to provide a native Reflex::Base interface.  On the other hand, it
 may be possible for Moose's "handles" attribute option to pass the
 wheel's methods through the wrapper.  More investigation is required.
 

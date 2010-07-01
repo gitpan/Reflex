@@ -2,11 +2,11 @@
 
 package Reflex::Handle;
 BEGIN {
-  $Reflex::Handle::VERSION = '0.011';
+  $Reflex::Handle::VERSION = '0.050';
 }
 
 use Moose;
-extends 'Reflex::Object';
+extends 'Reflex::Base';
 use Scalar::Util qw(weaken);
 
 has handle => (
@@ -119,7 +119,7 @@ sub stop {
 }
 
 # Part of the POE/Reflex contract.
-sub _deliver {
+sub deliver {
 	my ($self, $handle, $mode) = @_;
 	$self->emit(
 		event => $mode,
@@ -146,7 +146,7 @@ Reflex::Handle - Watch a filehandle for read- and/or writability.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
@@ -186,6 +186,11 @@ version 0.011
 	1;
 
 =head1 DESCRIPTION
+
+Reflex::Handle is scheduled to be deprecated.
+Please see Reflex::Role::Readable and Reflex::Role::Writable, which
+allow the creation of read- and write-only classes.
+Your ideas and feedback for Reflex::Handle's replacement are welcome.
 
 Reflex::Handle watches a filehandle and emits events when it has data
 to be read, is ready to be written upon, or has some exceptional

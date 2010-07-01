@@ -9,20 +9,20 @@ use lib qw(../lib);
 {
 	package Counter;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 	use Reflex::Timer;
-	use Reflex::Trait::Observer;
-	use Reflex::Trait::Emitter;
+	use Reflex::Trait::Observed;
+	use Reflex::Trait::EmitsOnChange;
 
 	has count   => (
-		traits    => ['Reflex::Trait::Emitter'],
+		traits    => ['Reflex::Trait::EmitsOnChange'],
 		isa       => 'Int',
 		is        => 'rw',
 		default   => 0,
 	);
 
 	has ticker  => (
-		traits    => ['Reflex::Trait::Observer'],
+		traits    => ['Reflex::Trait::Observed'],
 		isa       => 'Reflex::Timer|Undef',
 		is        => 'rw',
 	);
@@ -32,7 +32,7 @@ use lib qw(../lib);
 
 		$self->ticker(
 			Reflex::Timer->new(
-				interval    => 1,
+				interval    => 0.1,
 				auto_repeat => 1,
 			)
 		);
@@ -47,10 +47,10 @@ use lib qw(../lib);
 {
 	package Watcher;
 	use Moose;
-	extends 'Reflex::Object';
+	extends 'Reflex::Base';
 
 	has counter => (
-		traits  => ['Reflex::Trait::Observer'],
+		traits  => ['Reflex::Trait::Observed'],
 		isa     => 'Counter',
 		is      => 'rw',
 	);
@@ -69,5 +69,5 @@ use lib qw(../lib);
 # Main.
 
 my $w = Watcher->new();
-Reflex::Object->run_all();
+Reflex->run_all();
 exit;

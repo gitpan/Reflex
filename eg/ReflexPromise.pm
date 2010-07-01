@@ -1,12 +1,12 @@
 package ReflexPromise;
 
 use Moose;
-extends 'Reflex::Object';
+extends 'Reflex::Base';
 
 use Reflex::Callbacks qw(cb_promise);
 
 has object => (
-	isa => 'Reflex::Object',
+	isa => 'Reflex::Base',
 	is  => 'ro',
 );
 
@@ -18,12 +18,12 @@ has promise => (
 
 sub BUILD {
 	my $self = shift;
-	$self->observe($self->object(), cb_promise($self->promise()));
+	$self->watch($self->object(), cb_promise($self->promise()));
 }
 
-sub wait {
+sub next {
 	my $self = shift;
-	return ${$self->promise()}->wait();
+	return ${$self->promise()}->next();
 }
 
 1;

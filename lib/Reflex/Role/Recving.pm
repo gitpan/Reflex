@@ -1,94 +1,108 @@
-package Reflex::Role::UdpPeer;
+package Reflex::Role::Recving;
 BEGIN {
-  $Reflex::Role::UdpPeer::VERSION = '0.011';
+  $Reflex::Role::Recving::VERSION = '0.050';
 }
-use Moose::Role;
-with 'Reflex::Role::Object';
-use Reflex::Handle;
+use MooseX::Role::Parameterized;
+use Reflex::Util::Methods qw(emit_an_event method_name);
 
-has port => (
-	isa => 'Int',
-	is  => 'ro',
+parameter handle => (
+	isa     => 'Str',
+	default => 'socket',
 );
 
-has handle => (
-	isa     => 'Reflex::Handle|Undef',
-	is      => 'rw',
-	traits  => ['Reflex::Trait::Observer'],
-	role    => 'remote',
-);
+parameter cb_datagram => method_name("on", "handle", "datagram");
+parameter cb_error    => method_name("on", "handle", "error");
+parameter method_send => method_name("send", "handle", undef);
+parameter method_stop => method_name("stop", "handle", undef);
 
-has max_datagram_size => (
+parameter max_datagram_size => (
 	isa     => 'Int',
 	is      => 'rw',
 	default => 16384,
 );
 
-after 'BUILD' => sub {
-	my $self = shift;
+role {
+	my $p = shift;
 
-	$self->handle(
-		Reflex::Handle->new(
-			handle => IO::Socket::INET->new(
-				Proto     => 'udp',
-				LocalPort => $self->port(),
-			),
-			rd => 1,
-		)
-	);
-	undef;
+	my $h           = $p->handle();
+	my $cb_datagram = $p->cb_datagram();
+	my $cb_error    = $p->cb_error();
+	my $max_dg_size = $p->max_datagram_size();
+
+	with 'Reflex::Role::Readable' => {
+		handle => $h,
+	};
+
+	method $p->method_stop() => sub {
+		my $self = shift;
+		$self->$h(undef);
+	};
+
+	method "on_${h}_readable" => sub {
+		my ($self, $args) = @_;
+
+		my $remote_address = recv(
+			$args->{handle},
+			my $datagram = "",
+			$max_dg_size,
+			0
+		);
+
+		unless (defined $remote_address) {
+			$self->$cb_error(
+				{
+					errfun  => "recv",
+					errnum  => $! + 0,
+					errstr  => "$!",
+				},
+			);
+			return;
+		}
+
+		$self->$cb_datagram(
+			{
+				datagram    => $datagram,
+				remote_addr => $remote_address,
+			},
+		);
+	};
+
+	method $p->method_send() => sub {
+		my ($self, @args) = @_;
+
+		my $args = $self->check_args(
+			\@args,
+			[ 'datagram', 'remote_addr' ],
+			[ ],
+		);
+
+		# Success!
+		return if send(
+			$self->$h,
+			$args->{datagram},
+			0,
+			$args->{remote_addr},
+		) == length($args->{datagram});
+
+		$self->$cb_error(
+			{
+				errfun  => "send",
+				errnum  => $! + 0,
+				errstr  => "$!",
+			},
+		);
+	};
+
+	# Default callbacks that re-emit their parameters.
+	method $cb_datagram => emit_an_event("datagram");
+	method $cb_error    => emit_an_event("error");
 };
 
-sub on_remote_readable {
-	my ($self, $args) = @_;
+1;
 
-	my $remote_address = recv(
-		$args->{handle},
-		my $datagram = "",
-		$self->max_datagram_size(),
-		0
-	);
+__END__
 
-	$self->emit(
-		event => "datagram",
-		args => {
-			datagram    => $datagram,
-			remote_addr => $remote_address,
-		},
-	);
-}
 
-sub send {
-	my ($self, @args) = @_;
-
-	my $args = $self->_check_args(
-		\@args,
-		[ 'datagram', 'remote_addr' ],
-		[ ],
-	);
-
-	# Success!
-	return if send(
-		$self->handle()->handle(), # TODO - Ugh!
-		$args->{datagram},
-		0,
-		$args->{remote_addr},
-	) == length($args->{datagram});
-
-	$self->emit(
-		event => "error",
-		args  => {
-			errfun  => "send",
-			errnum  => $! + 0,
-			errstr  => "$!",
-		},
-	);
-}
-
-sub destruct {
-	my $self = shift;
-	$self->handle(undef);
-}
 
 1;
 
@@ -96,16 +110,18 @@ __END__
 
 =head1 NAME
 
-Reflex::Role::UdpPeer - Add non-blocking UDP networking to an object.
+Reflex::Role::Recving - Mix standard send/recv code into a class.
 
 =head1 VERSION
 
-version 0.011
+version 0.050
 
 =head1 SYNOPSIS
 
 This UDP echo service comes from a more complete program,
 eg/eg-06-moose-roles.pl in Reflex's tarball.
+
+TODO - New!
 
 	package Reflex::UdpPeer::Echo;
 	use Moose;
@@ -224,7 +240,7 @@ eg/eg-06-moose-roles.pl composes an ojbect with Reflex::Role::UdpPeer.
 L<Moose::Manual::Concepts>
 
 L<Reflex>
-L<Reflex::Object>
+L<Reflex::Base>
 L<Reflex::UdpPeer>
 
 L<Reflex/ACKNOWLEDGEMENTS>
