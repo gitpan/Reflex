@@ -1,6 +1,6 @@
 package Reflex::Util::Methods;
 BEGIN {
-  $Reflex::Util::Methods::VERSION = '0.050';
+  $Reflex::Util::Methods::VERSION = '0.055';
 }
 
 use warnings;
@@ -49,7 +49,7 @@ Reflex::Util::Methods - helper functions to generate methods
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 

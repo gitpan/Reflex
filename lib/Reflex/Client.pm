@@ -6,11 +6,11 @@
 
 package Reflex::Client;
 BEGIN {
-  $Reflex::Client::VERSION = '0.050';
+  $Reflex::Client::VERSION = '0.055';
 }
 use Moose;
 use Reflex::Stream;
-use Reflex::Connector;
+
 extends 'Reflex::Connector';
 
 has protocol => (
@@ -29,10 +29,8 @@ has connection => (
 	handles => ['put'],
 );
 
-sub on_connector_success {
+sub on_connection {
 	my ($self, $args) = @_;
-
-	$self->stop();
 
 	$self->connection(
 		$self->protocol()->new(
@@ -44,23 +42,22 @@ sub on_connector_success {
 	$self->emit(event => "connected", args => {});
 }
 
-sub on_connector_failure {
+sub on_error {
 	my ($self, $args) = @_;
-	$self->stop();
 	# TODO - Emit rather than warn.
 	warn "$args->{errfun} error $args->{errnum}: $args->{errstr}\n";
 }
 
 sub on_connection_closed {
 	my ($self, $args) = @_;
-	$self->stop();
+	$self->connection()->stop();
 	# TODO - Emit rather than warn.
 	warn "server closed connection.\n";
 }
 
 sub on_connection_failure {
 	my ($self, $args) = @_;
-	$self->stop();
+	$self->connection()->stop();
 	# TODO - Emit rather than warn.
 	warn "$args->{errfun} error $args->{errnum}: $args->{errstr}\n";
 }
@@ -75,7 +72,7 @@ sub on_connection_data {
 	$self->emit( event => "data", args => $args );
 }
 
-after stop => sub {
+sub stop {
 	my $self = shift;
 	$self->connection(undef);
 };
@@ -90,7 +87,7 @@ Reflex::Client - A non-blocking socket client.
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 

@@ -1,104 +1,34 @@
-# A socket connector.
-# TODO - This is an intitial strawman implementation.
-
 package Reflex::Connector;
 BEGIN {
-  $Reflex::Connector::VERSION = '0.050';
+  $Reflex::Connector::VERSION = '0.055';
 }
+
 use Moose;
-extends 'Reflex::Handle';
+extends 'Reflex::Base';
 
-use Errno qw(EWOULDBLOCK EINPROGRESS);
-use Socket qw(SOL_SOCKET SO_ERROR inet_aton pack_sockaddr_in);
+has socket => (
+	is        => 'rw',
+	isa       => 'FileHandle',
+);
 
-has remote_addr => (
+has port => (
+	is => 'ro',
+	isa => 'Int',
+);
+
+has address => (
 	is      => 'ro',
 	isa     => 'Str',
 	default => '127.0.0.1',
 );
 
-# TODO - Make it an integer.  Coerce from string by resolving
-# service name.
-has remote_port => (
-	is       => 'ro',
-	isa      => 'Str',
-	required => 1,
-);
-
-has '+handle' => (
-	default => sub { IO::Socket::INET->new(Proto => 'tcp') }
-);
-
-sub BUILD {
-	my ($self, $args) = @_;
-
-	# TODO - See POE::Wheel::SocketFactory for platform issues.
-	#
-	# TODO - Verify this makes the connect() non-blocking.  Need to
-	# make the socket non-blocking if we connect() first.
-	$self->wr(1);
-
-	my $handle = $self->handle();
-
-	my $packed_address;
-	if ($handle->isa("IO::Socket::INET")) {
-		# TODO - Need a non-bollocking resolver.
-		my $inet_address = inet_aton($self->remote_addr());
-		$packed_address = pack_sockaddr_in($self->remote_port(), $inet_address);
-	}
-	else {
-		die "unknown socket class: ", ref($handle);
-	}
-
-	unless (connect($self->handle(), $packed_address)) {
-		if ($! and ($! != EINPROGRESS) and ($! != EWOULDBLOCK)) {
-			$self->emit(
-				event => "failure",
-				args  => {
-					socket  => undef,
-					errnum  => ($!+0),
-					errstr  => "$!",
-					errfun  => "connect",
-				},
-			);
-
-			$self->wr(0);
-			$self->handle(undef);
-
-			return;
-		}
-	}
-}
-
-sub on_handle_writable {
-	my ($self, $args) = @_;
-
-	# Not watching anymore.
-	$self->wr(0);
-	$self->handle(undef);
-
-	# Throw a failure if the connection failed.
-	$! = unpack('i', getsockopt($args->{handle}, SOL_SOCKET, SO_ERROR));
-	if ($!) {
-		$self->emit(
-			event => "failure",
-			args  => {
-				socket  => undef,
-				errnum  => ($!+0),
-				errstr  => "$!",
-				errfun  => "connect",
-			},
-		);
-		return;
-	}
-
-	$self->emit(
-		event => "success",
-		args  => {
-			socket  => $args->{handle},
-		},
-	);
-}
+with 'Reflex::Role::Connecting' => {
+	connector     => 'socket',      # Default!
+	address       => 'address',     # Default!
+	port          => 'port',        # Default!
+	cb_success    => 'on_connection',
+	cb_error      => 'on_error',
+};
 
 1;
 
@@ -106,131 +36,110 @@ __END__
 
 =head1 NAME
 
-Reflex::Connector - Connect to a server without blocking.
+Reflex::Connector - non-blocking client socket connector
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 
-This is an incomplete excerpt from Reflex::Client.  See that module's
-source for a more complete example.
+This is a partial excerpt from eg/eg-38-promise-client.pl
 
-	package SomeKindaClient;
-	use Moose;
-	extends 'Reflex::Connector';
+	use Reflex::Connector;
+	use Reflex::Stream;
 
-	sub on_connector_success {
-		my ($self, $args) = @_;
+	my $connector = Reflex::Connector->new(port => 12345);
 
-		# Do something with $arg->{socket} here.
-	}
-
-	sub on_connector_failure {
-		my ($self, $args) = @_;
-		warn "$args->{errfun} error $args->{errnum}: $args->{errstr}\n";
-		$self->stop();
-	}
-
-Reflex objects may also be used as promises.  This excerpts from
-eg/eg-38-promise-client.pl in the distribution.
-
-	my $connector = Reflex::Connector->new(remote_port => 12345);
 	my $event = $connector->next();
-
 	if ($event->{name} eq "failure") {
-		eg_say("connection error $event->{arg}{errnum}: $event->{arg}{errstr}");
-		exit;
+		die("error $event->{arg}{errnum}: $event->{arg}{errstr}");
 	}
 
-	eg_say("Connected.");
-	# Do something with $event->{arg}{socket}.
+	my $stream = Reflex::Stream->new(
+		handle => $event->{arg}{socket},
+	);
 
 =head1 DESCRIPTION
 
-Reflex::Connector is scheduled for substantial changes.  Its base
-class, Reflex::Handle, will be deprecated in favor of
-Reflex::Role::Readable and Reflex::Role::Writable.  Hopefully
-Reflex::Connector's interfaces won't change much as a result, but
-there are no guarantees.
-Your ideas and feedback for Reflex::Connector's future implementation
-are welcome.
+Reflex::Connector asynchronously establishes a client connection.  It
+is almost entirely implemented in Reflex::Role::Connecting.  That
+role's documentation contains important details that won't be covered
+here.
 
-Reflex::Connector performs a non-blocking connect() object on a plain
-socket.  It extends Reflex::Handle to wait for the connection without
-blocking the rest of a program.
+=head2 Public Attributes
 
-By default, it will create its own TCP socket.  A program can provide
-a specially prepared socket via the inherited "handle" attribute.
+=head3 address
 
-Two other attributes, "remote_addr" and "remote_port" specify where to
-connect the socket.
+C<address> defines the remote address to which Reflex::Connector will
+attempt a connection.  It defaults to "127.0.0.1".
+See Reflex::Role::Connecting for more details.
 
-This connector was written with TCP in mind, but it's intended to also
-be useful for other connected sockets.
+=head3 port
 
-=head2 Attributes
+C<port> defines the remote port to which Reflex::Connector will
+attempt a connection.  It has no default.
+See Reflex::Role::Connecting for more details.
 
-Reflex::Connector supplies its own attributes in addition to those
-provided by Reflex::Handle.
+=head3 socket
 
-=head3 remote_addr
+Reflex::Connector will provide its own socket by default.  It also
+accepts a C<socket> that may be configured in custom ways.
 
-The "remote_addr" attribute specifies the address of a remote server.
-It defaults to "127.0.0.1".
+See C<connector> in Reflex::Role::Connecting for more details.
 
-=head3 remote_port
+=head2 Public Methods
 
-The "remote_port" attribute sets the port of the server to which it
-will attempt a connection.  The remote port may be an integer or the
-symbolic port name from /etc/services.
+None.
 
-=head2 Methods
+=head2 Callbacks
 
-Reflex::Connector inherits its methods from Reflex::Handle.  It
-doesn't add new methods at this time.
+=head3 on_connection
 
-=head2 Events
+C<on_connection> is called when Reflex::Connector establishes a
+connection.
+Reflex::Role::Connecting explains the data returned with
+C<on_connection>.
+If necessary, that role will also define a default C<on_connection>
+handler that emits "success" event.  (TODO - Does this make sense?)
 
-Reflex::Connector emits some events, which may be mapped to a
-subclass' methods, or to handlers in a container object.  Please see
-L<Reflex> and L<Reflex::Callbacks> for more information.
+=head3 on_error
 
-=head3 failure
+C<on_error> is called whenever a connection fails for some reason.
+returns an error.  Reflex::Role::Connecting explains the data returned
+with C<on_error>.  If necessary, that role will also define a default
+C<on_error> handler that emits an "error" event.
 
-Revlex::Connector emits a "failure" event if it can't establish a
-connection.  Failure events include a few, fairly standard parameters:
+=head2 Public Events
 
-=over 2
-
-=item * socket - Undefined, since a connection could not be made.
-
-=item * errnum - The numeric value of $! at the time of error.
-
-=item * errstr - The string value of $! at the time of error.
-
-=item * errfun - A brief description of the function call that failed.
-
-=back
+Reflex::Connector emits events related to establishing clinet
+connections.  These events are defined by Reflex::Role::Connecting,
+and they will be explained there.
 
 =head3 success
 
-The "success" event is emitted if a connection has been established.
-It will return a "socket", the value of which is the connected socket.
+If no C<on_connection> handler is set, then Reflex::Connector will
+emit a "success" event if the connection is successfuly established.
+Reflex::Role::Connecting explains this event in more detail.
 
-=head2 EXAMPLES
+=head3 error
 
-L<Reflex::Client> extends Reflex::Connector to include a
-Reflex::Stream when the socket is connected.
+If no C<on_error> handler is set, then Reflex::Connector will emit an
+"error" event whenever a connection fails to establish.
+Reflex::Role::Connecting explains this event in more detail.
 
-eg/eg-38-promise-client.pl shows how to use Reflex::Connector may be
-used as a promise.
+=head1 EXAMPLES
+
+The SYNOPSIS is a partial excerpt from eg/eg-38-promise-client.pl
+
+eg/eg-35-tcp-client.pl is a more callbacky client.
 
 =head1 SEE ALSO
 
 L<Reflex>
-L<Reflex::Client>
+L<Reflex::Role::Connecting>
+L<Reflex::Role::Accepting>
+L<Reflex::Acceptor>
 
 L<Reflex/ACKNOWLEDGEMENTS>
 L<Reflex/ASSISTANCE>

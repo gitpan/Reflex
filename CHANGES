@@ -1,4 +1,65 @@
 ================================
+2010-07-04 05:24:55 -0400 v0_055
+================================
+
+  commit 67a0f33f3e5c11b5c54088ac6bc7c49bc50ace93
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 05:24:55 2010 -0400
+  
+    Document the ongoing naming/rolling refactor.
+
+  commit 1d107adef8a5231989723523e59351e085dd7f57
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 05:22:44 2010 -0400
+  
+    Document new roles and role-based classes.
+
+  commit 9f894605ce5da18b22ad77ca3b3f6e7f635f05c7
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 04:00:18 2010 -0400
+  
+    Get Reflex::Client working with new role-based Connector and Stream.
+
+  commit 25571ea05acad249a469f2af23f16bb794eec0bc
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 03:09:36 2010 -0400
+  
+    Write a rudimentary socket connecting role, and get one of the
+    examples to work.
+
+  commit eaa6eaf2f61ff6b21520a3018ffb8628f96f7a8f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 02:17:55 2010 -0400
+  
+    Remove Reflex::Handle so things that need it will die, helping
+    deprecations stand out.
+
+  commit 39bad1955e2fb847f1020d9b86ee12cfafeebda6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 02:15:27 2010 -0400
+  
+    Fix some fundamental thinkos to make things actually work.
+
+  commit f1eefec09dd8c03bdcbd300062a5f786f43a6c95
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 02:13:36 2010 -0400
+  
+    Document a philosophy about roles.
+
+  commit ccc3a37439b0b2e7229cf0e580ed079175b5c0a2
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 02:12:49 2010 -0400
+  
+    Replace Reflex::Listener with Reflex::Role::Accepting and
+    Reflex::Acceptor.
+
+  commit 786494bcec111fef45ee85f5909b8dfa0d441ab7
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 1 12:01:22 2010 -0400
+  
+    Replace perldoc's utf8 hyphens with plain old hyphens. 
+
+================================
 2010-07-01 00:55:25 -0400 v0_050
 ================================
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Streaming;
 BEGIN {
-  $Reflex::Role::Streaming::VERSION = '0.050';
+  $Reflex::Role::Streaming::VERSION = '0.055';
 }
 use MooseX::Role::Parameterized;
 use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
@@ -16,6 +16,7 @@ parameter cb_data     => method_name("on", "handle", "data");
 parameter cb_error    => method_name("on", "handle", "error");
 parameter cb_closed   => method_name("on", "handle", "closed");
 parameter method_put  => method_name("put", "handle", undef);
+parameter method_stop => method_name("stop", "handle", undef);
 
 role {
 	my $p = shift;
@@ -42,6 +43,9 @@ role {
 		default => sub { my $x = ""; \$x },
 	);
 
+	my $resume_writable = "resume_${h}_writable";
+	my $pause_writable  = "pause_${h}_writable";
+
 	method "on_${h}_readable" => sub {
 		my ($self, $arg) = @_;
 
@@ -60,13 +64,40 @@ role {
 		}
 
 		# Quelle erreur!
-		$self->cb_error(
+		$self->$cb_error(
 			{
 				errnum => ($! + 0),
 				errstr => "$!",
 				errfun => "sysread",
 			}
 		);
+	};
+
+	method "on_${h}_writable" => sub {
+		my ($self, $arg) = @_;
+
+		my $out_buffer = $self->out_buffer();
+		my $octet_count = syswrite($self->$h(), $$out_buffer);
+
+		# Hard error.
+		unless (defined $octet_count) {
+			$self->$cb_error(
+				{
+					errnum => ($! + 0),
+					errstr => "$!",
+					errfun => "syswrite",
+				}
+			);
+			return;
+		}
+
+		# Remove what we wrote.
+		substr($$out_buffer, 0, $octet_count, "");
+
+		# Pause writes if it all was flushed.
+		return if length $$out_buffer;
+		$self->$pause_writable();
+		return;
 	};
 
 	method $p->method_put() => sub {
@@ -107,7 +138,7 @@ role {
 			$$out_buffer = substr($next, $octet_count);
 			$$out_buffer .= $_ foreach @chunks;
 
-			$self->resume_handle_writable();
+			$self->$resume_writable();
 			return length $$out_buffer;
 		}
 
@@ -119,6 +150,12 @@ role {
 	method $cb_data   => emit_an_event("data");
 	method $cb_error  => emit_and_stopped("error");
 	method $cb_closed => emit_and_stopped("closed");
+
+	method $p->method_stop() => sub {
+		my $self = shift;
+		$self->stop_handle_readable();
+		$self->stop_handle_writable();
+	};
 };
 
 1;
@@ -131,7 +168,7 @@ Reflex::Role::Streaming - add streaming I/O behavior to a class
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 
@@ -180,7 +217,7 @@ you just find Moose syntax difficult to handle.
 The C<handle> parameter must contain the name of the attribute that
 contains the handle to stream.  The name indirection allows the role
 to generate methods that are unique to the handle.  For example, a
-handle named "XYZ" would generates these methods by default:
+handle named "XYZ" would generate these methods by default:
 
 	cb_closed   => "on_XYZ_closed",
 	cb_data     => "on_XYZ_data",

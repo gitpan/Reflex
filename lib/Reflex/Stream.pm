@@ -1,20 +1,21 @@
 package Reflex::Stream;
 BEGIN {
-  $Reflex::Stream::VERSION = '0.050';
+  $Reflex::Stream::VERSION = '0.055';
 }
 
 use Moose;
 extends 'Reflex::Base';
 
 has handle => (
-	is => 'rw',
-	isa => 'FileHandle',
-	required => 1
+	is        => 'rw',
+	isa       => 'FileHandle',
+	required  => 1
 );
 
 with 'Reflex::Role::Streaming' => {
 	handle      => 'handle',
 	method_put  => 'put',
+	method_stop => 'stop',
 	cb_error    => 'on_error',
 	cb_data     => 'on_data',
 	cb_closed   => 'on_closed',
@@ -30,7 +31,7 @@ Reflex::Stream - Buffered, translated I/O on non-blocking handles.
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 

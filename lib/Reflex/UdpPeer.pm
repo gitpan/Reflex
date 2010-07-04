@@ -1,6 +1,6 @@
 package Reflex::UdpPeer;
 BEGIN {
-  $Reflex::UdpPeer::VERSION = '0.050';
+  $Reflex::UdpPeer::VERSION = '0.055';
 }
 use Moose;
 extends 'Reflex::Base';
@@ -12,14 +12,11 @@ has socket => (
 );
 
 with 'Reflex::Role::Recving' => {
-	handle => 'socket',
-
-	# Expose role methods with more sensible names for a class.
-	-alias    => {
-		send_socket => 'send',
-		stop_socket => 'stop',
-	},
-	-excludes => [ qw(send_socket stop_socket) ],
+	handle      => 'socket',
+	method_send => 'send',
+	method_stop => 'stop',
+	cb_datagram => 'on_datagram',
+	cb_error    => 'on_error',
 };
 
 1;
@@ -32,7 +29,7 @@ Reflex::UdpPeer - Base class for non-blocking UDP networking peers.
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 

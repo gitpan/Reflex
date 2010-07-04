@@ -2,7 +2,7 @@ NAME
     Reflex - Class library for flexible, reactive programs.
 
 VERSION
-    version 0.050
+    version 0.055
 
 SYNOPSIS
             # See eg-18-synopsis-no-moose.pl if you don't like Moose.
@@ -159,79 +159,79 @@ BUNDLED MODULES AND DOCUMENTATION INDEX
   Core Modules
     The basic modules upon which most everything else is built.
 
-    Reflex − Class library for flexible, reactive programs.
-    Reflex::Base − Base class for reactive (aka, event driven) objects.
-    Reflex::Role::Reactive − Make an object reactive (aka, event driven).
+    Reflex - Class library for flexible, reactive programs.
+    Reflex::Base - Base class for reactive (aka, event driven) objects.
+    Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
   Callback Adapters
     Reflex provides adapters for nearly every kind of callback that exists,
     including condvar-like promises that allow Reflex objects to be used
     inline without callbacks at all.
 
-    Reflex::Callback − Generic callback adapters to simplify calling back
-    Reflex::Callback::CodeRef − Callback adapter for plain code references
-    Reflex::Callback::Method − Callback adapter for class and object
-    Reflex::Callback::Promise − Non−callback, inline Promise adapter
-    Reflex::Callbacks − Convenience functions for creating and using
+    Reflex::Callback - Generic callback adapters to simplify calling back
+    Reflex::Callback::CodeRef - Callback adapter for plain code references
+    Reflex::Callback::Method - Callback adapter for class and object
+    Reflex::Callback::Promise - Non-callback, inline Promise adapter
+    Reflex::Callbacks - Convenience functions for creating and using
 
   POE Adapters
     POE provides over 400 modules for various useful things. Reflex can work
     with them using these adapters.
 
-    Reflex::POE::Event − Communicate with POE components expecting events.
-    Reflex::POE::Postback − Communicate with POE components expecting
-    Reflex::POE::Session − Observe events from a POE::Session object.
-    Reflex::POE::Wheel − Base class for POE::Wheel wrappers.
-    Reflex::POE::Wheel::Run − Represent POE::Wheel::Run as a Reflex class.
+    Reflex::POE::Event - Communicate with POE components expecting events.
+    Reflex::POE::Postback - Communicate with POE components expecting
+    Reflex::POE::Session - Observe events from a POE::Session object.
+    Reflex::POE::Wheel - Base class for POE::Wheel wrappers.
+    Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
   Object Collections
     It's often useful to manage collections of like-typed modules, such as
     connections or jobs.
 
-    Reflex::Role::Collectible − add manageability by Reflex::Collection
-    Reflex::Collection − Autmatically manage a collection of collectible
+    Reflex::Role::Collectible - add manageability by Reflex::Collection
+    Reflex::Collection - Autmatically manage a collection of collectible
 
   I/O
     Event driven programs most often react to I/O of some sort. These
     modules provide reactive I/O support.
 
-    Reflex::Client − A non−blocking socket client.
-    Reflex::Connector − Connect to a server without blocking.
-    Reflex::Handle − Watch a filehandle for read− and/or writability.
-    Reflex::Listener − Generate connected client sockets from a listening
-    Reflex::Role::Readable − add readable−watching behavior to a class
-    Reflex::Role::Recving − Mix standard send/recv code into a class.
-    Reflex::Role::Streaming − add streaming I/O behavior to a class
-    Reflex::Role::Writable − add writable−watching behavior to a class
-    Reflex::Stream − Buffered, translated I/O on non−blocking handles.
-    Reflex::UdpPeer − Base class for non−blocking UDP networking peers.
+    Reflex::Acceptor - non-blocking client socket acceptor
+    Reflex::Client - A non-blocking socket client.
+    Reflex::Connector - non-blocking client socket connector
+    Reflex::Role::Accepting - add connection accepting to a class
+    Reflex::Role::Connecting - add non-blocking client connecting to a class
+    Reflex::Role::Readable - add readable-watching behavior to a class
+    Reflex::Role::Recving - Mix standard send/recv code into a class.
+    Reflex::Role::Streaming - add streaming I/O behavior to a class
+    Reflex::Role::Writable - add writable-watching behavior to a class
+    Reflex::Stream - Buffered, translated I/O on non-blocking handles.
+    Reflex::UdpPeer - Base class for non-blocking UDP networking peers.
 
   Signals and Child Processes
     Modules that provide signal support, including SIGCHLD for child process
     management.
 
-    Reflex::PID − Observe the exit of a subprocess by its SIGCHLD signal.
-    Reflex::Signal − Generic signal watcher and base class for specific
+    Reflex::PID - Observe the exit of a subprocess by its SIGCHLD signal.
+    Reflex::Signal - Generic signal watcher and base class for specific
 
   Timers
     Timer management has been relatively overlooked so far. We'll get to it
     eventually, and you're welcome to help.
 
-    Reflex::Timer − An object that watches the passage of time.
+    Reflex::Timer - An object that watches the passage of time.
 
   Breadboarding Traits
     Reflex also implements signal/slot style object interaction, through
     emit() and watch() methods. These traits were inspired by Smalltalk's
     observable object attributes.
 
-    Reflex::Trait::EmitsOnChange − Emit an event when an attribute’s
-    value
-    Reflex::Trait::Observed − Automatically watch Reflex objects.
+    Reflex::Trait::EmitsOnChange - Emit an event when an attribute’s value
+    Reflex::Trait::Observed - Automatically watch Reflex objects.
 
   Generic Utilities
     Miscellaneous helper functions.
 
-    Reflex::Util::Methods − helper functions to generate methods
+    Reflex::Util::Methods - helper functions to generate methods
 
 ASSISTANCE
     See irc.perl.org #reflex for help with Reflex.

@@ -8,6 +8,7 @@ README.mkdn
 dist.ini
 docs/continuation-passing.otl
 docs/manual.otl
+docs/new-names.otl
 docs/patterns.otl
 docs/requirements.otl
 docs/style.otl
@@ -68,6 +69,7 @@ eg/ttl/Ttl/Xor.pm
 eg/ttl/fail-ttl-counter.pl
 eg/ttl/fail-ttl-simple.pl
 lib/Reflex.pm
+lib/Reflex/Acceptor.pm
 lib/Reflex/Base.pm
 lib/Reflex/Callback.pm
 lib/Reflex/Callback/CodeRef.pm
@@ -77,15 +79,15 @@ lib/Reflex/Callbacks.pm
 lib/Reflex/Client.pm
 lib/Reflex/Collection.pm
 lib/Reflex/Connector.pm
-lib/Reflex/Handle.pm
-lib/Reflex/Listener.pm
 lib/Reflex/PID.pm
 lib/Reflex/POE/Event.pm
 lib/Reflex/POE/Postback.pm
 lib/Reflex/POE/Session.pm
 lib/Reflex/POE/Wheel.pm
 lib/Reflex/POE/Wheel/Run.pm
+lib/Reflex/Role/Accepting.pm
 lib/Reflex/Role/Collectible.pm
+lib/Reflex/Role/Connecting.pm
 lib/Reflex/Role/Reactive.pm
 lib/Reflex/Role/Readable.pm
 lib/Reflex/Role/Recving.pm
@@ -98,7 +100,6 @@ lib/Reflex/Trait/EmitsOnChange.pm
 lib/Reflex/Trait/Observed.pm
 lib/Reflex/UdpPeer.pm
 lib/Reflex/Util/Methods.pm
-new-names.otl
 t/000-info.t
 t/000-report-versions.t
 t/901-discrete-observer.t

@@ -1,9 +1,9 @@
 package Reflex::Role::Recving;
 BEGIN {
-  $Reflex::Role::Recving::VERSION = '0.050';
+  $Reflex::Role::Recving::VERSION = '0.055';
 }
 use MooseX::Role::Parameterized;
-use Reflex::Util::Methods qw(emit_an_event method_name);
+use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
 
 parameter handle => (
 	isa     => 'Str',
@@ -35,7 +35,8 @@ role {
 
 	method $p->method_stop() => sub {
 		my $self = shift;
-		$self->$h(undef);
+		my $method = "stop_${h}_readable";
+		$self->$method();
 	};
 
 	method "on_${h}_readable" => sub {
@@ -95,7 +96,7 @@ role {
 
 	# Default callbacks that re-emit their parameters.
 	method $cb_datagram => emit_an_event("datagram");
-	method $cb_error    => emit_an_event("error");
+	method $cb_error    => emit_and_stopped("error");
 };
 
 1;
@@ -114,7 +115,7 @@ Reflex::Role::Recving - Mix standard send/recv code into a class.
 
 =head1 VERSION
 
-version 0.050
+version 0.055
 
 =head1 SYNOPSIS
 
