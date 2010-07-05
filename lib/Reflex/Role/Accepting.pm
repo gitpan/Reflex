@@ -1,6 +1,6 @@
 package Reflex::Role::Accepting;
 BEGIN {
-  $Reflex::Role::Accepting::VERSION = '0.055';
+  $Reflex::Role::Accepting::VERSION = '0.056';
 }
 use MooseX::Role::Parameterized;
 use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
@@ -73,7 +73,7 @@ Reflex::Role::Accepting - add connection accepting to a class
 
 =head1 VERSION
 
-version 0.055
+version 0.056
 
 =head1 SYNOPSIS
 

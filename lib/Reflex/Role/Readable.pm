@@ -1,6 +1,6 @@
 package Reflex::Role::Readable;
 BEGIN {
-  $Reflex::Role::Readable::VERSION = '0.055';
+  $Reflex::Role::Readable::VERSION = '0.056';
 }
 use MooseX::Role::Parameterized;
 use Reflex::Util::Methods qw(emit_an_event method_name);
@@ -41,10 +41,10 @@ role {
 		# Must be run in the right POE session.
 		return unless $self->call_gate($setup_name, $arg);
 
-		my $envelope = [ $self ];
+		my $envelope = [ $self, $cb_name ];
 		weaken $envelope->[0];
 		$POE::Kernel::poe_kernel->select_read(
-			$self->$h(), 'select_ready', $envelope, $cb_name,
+			$self->$h(), 'select_ready', $envelope,
 		);
 
 		return if $active;
@@ -67,21 +67,21 @@ role {
 		$POE::Kernel::poe_kernel->select_read($self->$h(), undef);
 	};
 
+	# Work around a Moose edge case.
+	sub BUILD {}
+
 	after BUILD => sub {
 		my ($self, $arg) = @_;
 		$self->$setup_name($arg);
 	};
 
+	# Work around a Moose edge case.
+	sub DEMOLISH {}
+
 	# Turn off watcher during destruction.
 	after DEMOLISH => sub {
 		my $self = shift;
 		$POE::Kernel::poe_kernel->select_read($self->$h(), undef);
-	};
-
-	# Part of the POE/Reflex contract.
-	method deliver => sub {
-		my ($self, $handle, $cb_member) = @_;
-		$self->$cb_member( { handle => $handle, } );
 	};
 
 	# Default callbacks that re-emit their parameters.
@@ -98,7 +98,7 @@ Reflex::Role::Readable - add readable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.055
+version 0.056
 
 =head1 SYNOPSIS
 

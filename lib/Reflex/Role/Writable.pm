@@ -1,6 +1,6 @@
 package Reflex::Role::Writable;
 BEGIN {
-  $Reflex::Role::Writable::VERSION = '0.055';
+  $Reflex::Role::Writable::VERSION = '0.056';
 }
 use MooseX::Role::Parameterized;
 use Reflex::Util::Methods qw(emit_an_event method_name);
@@ -45,10 +45,10 @@ role {
 		# Must be run in the right POE session.
 		return unless $self->call_gate($method_start, $arg);
 
-		my $envelope = [ $self ];
+		my $envelope = [ $self, $cb_name ];
 		weaken $envelope->[0];
 		$POE::Kernel::poe_kernel->select_write(
-			$self->$h(), 'select_ready', $envelope, $cb_name,
+			$self->$h(), 'select_ready', $envelope,
 		);
 	};
 
@@ -70,21 +70,21 @@ role {
 		$POE::Kernel::poe_kernel->select_write($self->$h(), undef);
 	};
 
+	# Work around a Moose edge case.
+	sub BUILD {}
+
 	after BUILD => sub {
 		my ($self, $arg) = @_;
 		$self->$method_start() if $active;
 	};
 
+	# Work around a Moose edge case.
+	sub DEMOLISH {}
+
 	# Turn off watcher during destruction.
 	after DEMOLISH => sub {
 		my $self = shift;
 		$self->method_stop();
-	};
-
-	# Part of the POE/Reflex contract.
-	method deliver => sub {
-		my ($self, $handle, $cb_member) = @_;
-		$self->$cb_member( { handle => $handle, } );
 	};
 
 	# Default callbacks that re-emit their parameters.
@@ -101,7 +101,7 @@ Reflex::Role::Writable - add writable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.055
+version 0.056
 
 =head1 SYNOPSIS
 

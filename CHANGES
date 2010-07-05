@@ -1,4 +1,43 @@
 ================================
+2010-07-04 22:40:56 -0400 v0_056
+================================
+
+  commit a12f9734ee6df7833131e1c5a91d5fdff0c470b3
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 22:34:12 2010 -0400
+  
+    Add Reflex::Role::SigCatcher and Reflex::SigCatcher to reify it.
+
+  commit 51d8dc11fc83733843d9c5d99c0e5766cdf52ffa
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 22:34:12 2010 -0400
+  
+    Add Reflex::Role::SigCatcher and Reflex::SigCatcher to reify it.
+
+  commit 53ab166f41bd61d7e4fd2d3d8ffa47104ce976fb
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 20:06:55 2010 -0400
+  
+    Lighten up the assistance section of the docs.
+
+  commit b2668e4148976e781afb91fd54a23a4f6faf79d9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 19:24:45 2010 -0400
+  
+    Set up CIA and Ohlo projects.
+
+  commit a39695bb1934ac456632a6c1785774d50960ce71
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 4 18:50:10 2010 -0400
+  
+    Remove a level of indirection on I/O dispatch.
+
+    Kind of needed since all the roles can't use the same deliver()
+    callback anymore. It makes a bit of sense for Reflex::Role::Reactive
+    to deliver callbacks itself, rather than go through a redirect method
+    in each role. 
+
+================================
 2010-07-04 05:24:55 -0400 v0_055
 ================================
 

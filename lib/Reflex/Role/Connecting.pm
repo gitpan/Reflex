@@ -1,6 +1,6 @@
 package Reflex::Role::Connecting;
 BEGIN {
-  $Reflex::Role::Connecting::VERSION = '0.055';
+  $Reflex::Role::Connecting::VERSION = '0.056';
 }
 use MooseX::Role::Parameterized;
 use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
@@ -42,6 +42,9 @@ role {
 	with 'Reflex::Role::Writable' => {
 		handle  => $socket,
 	};
+
+	# Work around a Moose edge case.
+	sub BUILD {}
 
 	after BUILD => sub {
 		my ($self, $args) = @_;
@@ -133,7 +136,7 @@ Reflex::Role::Connecting - add non-blocking client connecting to a class
 
 =head1 VERSION
 
-version 0.055
+version 0.056
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Reactive;
 BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.055';
+  $Reflex::Role::Reactive::VERSION = '0.056';
 }
 
 use Moose::Role;
@@ -59,14 +59,15 @@ my $singleton_session_id = POE::Session->create(
 		### I/O manipulators and callbacks.
 
 		select_ready => sub {
-			my ($handle, $envelope, $mode) = @_[ARG0, ARG2, ARG3];
-			$envelope->[0]->deliver($handle, $mode, @_[ARG4..$#_]);
+			my ($handle, $envelope, $mode) = @_[ARG0, ARG2];
+			my ($cb_object, $cb_method) = @$envelope;
+			$cb_object->$cb_method({ handle => $handle });
 		},
 
 		### Signals.
 
 		signal_happened => sub {
-			Reflex::Signal->deliver(@_[ARG0..$#_]);
+			Reflex::Role::SigCatcher->deliver(@_[ARG0..$#_]);
 		},
 
 		### Cross-session emit() is converted into these events.
@@ -580,7 +581,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.055
+version 0.056
 
 =head1 SYNOPSIS
 
