@@ -1,6 +1,6 @@
 package Reflex::POE::Event;
 BEGIN {
-  $Reflex::POE::Event::VERSION = '0.056';
+  $Reflex::POE::Event::VERSION = '0.060';
 }
 
 use Moose;
@@ -62,7 +62,7 @@ Reflex::POE::Event - Communicate with POE components expecting events.
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

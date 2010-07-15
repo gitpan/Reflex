@@ -1,13 +1,14 @@
 package Reflex::PID;
 BEGIN {
-  $Reflex::PID::VERSION = '0.056';
+  $Reflex::PID::VERSION = '0.060';
 }
 
 use Moose;
 extends qw(Reflex::Signal);
 
-has '+name' => (
-	default => 'CHLD',
+has '+signal' => (
+	required  => 0,
+	default   => 'CHLD',
 );
 
 has 'pid' => (
@@ -19,17 +20,16 @@ has 'pid' => (
 
 __PACKAGE__->_register_signal_params(qw(pid exit));
 
-sub start_watching {
+sub resume {
 	my $self = shift;
-	return unless $self->call_gate("start_watching");
+	return unless $self->call_gate("resume");
 	$POE::Kernel::poe_kernel->sig_child($self->pid(), "signal_happened");
 }
 
-sub stop_watching {
+sub pause {
 	my $self = shift;
-	return unless $self->call_gate("stop_watching");
+	return unless $self->call_gate("pause");
 	$POE::Kernel::poe_kernel->sig_child($self->pid(), undef);
-	$self->name(undef);
 }
 
 1;
@@ -42,7 +42,7 @@ Reflex::PID - Observe the exit of a subprocess by its SIGCHLD signal.
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

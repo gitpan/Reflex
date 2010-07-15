@@ -1,4 +1,140 @@
 ================================
+2010-07-15 00:00:17 -0400 v0_060
+================================
+
+  commit 122cbcc1b1c67738ad7ab3775982051210fd7d73
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 15 00:00:17 2010 -0400
+  
+    Document! Oh, gods, it burns!
+
+  commit 376ab5faeee2721c23a02cbca1b1c1e5d8473da0
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Jul 14 15:46:47 2010 -0400
+  
+    Expose a reset() method from Reflex::Role::Interval.
+
+  commit 7c9265927e465bd06a184d2234d9e9158186b2bf
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Jul 14 00:38:46 2010 -0400
+  
+    Document Reflex::Role::Reading and Reflex::Role::Writing.
+
+  commit 3e2469f61c060128d9b9dbf65580c0e12df8ffcf
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jul 13 02:52:44 2010 -0400
+  
+    Document the basic Reflex::Role.
+
+  commit 18993bfac16f7725dc7f297789509257c83f8b87
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jul 12 02:19:04 2010 -0400
+  
+    The extra "name" parameters weren't needed. Begin documenting the new
+    timers. About 97% done with the renaming.
+
+  commit ce7ee1a35d28d8e30ae5c5113b7e6ce9a6a7445f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 11 15:12:39 2010 -0400
+  
+    Add wakeup timers (alarms) and fix some bugs in the other timers.
+
+  commit 849cac2d1ee4a50a73e1afe56b21b7a8a59a1d0e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 11 14:38:06 2010 -0400
+  
+    Add Reflex::Role::Timeout and Reflex::Timeout.
+
+  commit bbf149dcc5831191165d5ae06bb0e2c2047e2e31
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jul 11 03:05:10 2010 -0400
+  
+    Create Reflex::Role::Interval, and reify it as Reflex::Interval.
+    Needed to change a lot of code and docs that used Reflex::Timer,
+    which has bee deleted.
+
+  commit 5cf73d961a7239647f65407d2867d1616696c855
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 10 20:10:15 2010 -0400
+  
+    Propagate the new Reflex::Role usage to old users of
+    Reflex::Util::Methods. I still don't like the function names, but
+    they're good placeholders for now.
+
+  commit 116be402c755d77aae88927fab6c607dfcd04539
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 10 20:00:08 2010 -0400
+  
+    Reflex::Handle is gone, so remove the example for it. Also removed
+    Reflex::Util::Methods because Reflex::Role will take that over.
+
+  commit e6e2bf6ad099a61bc64d7eb8d7298d898a9d3ddd
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 10 16:40:23 2010 -0400
+  
+    Reflex::Role takes over for Reflex::Util::Methods.
+
+    It expands Reflex::Role::Parameterized with additional syntax for
+    callback names, method names, and attribute parameters.
+
+  commit f66cd2f700623e4f64a29e753e5e32035bd46fa6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 10 03:55:21 2010 -0400
+  
+    Break reading and writing behaviors out into their own roles. They're
+    too useful to be sequestered into a streaming role.
+
+  commit 43fffe4fa407c3dce77d3884a4911816275d9705
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 8 04:19:17 2010 -0400
+  
+    Experiment with plain sub callbacks rather than cb_coderef() syntax.
+
+  commit 9baef533375b4cf628e8c401875d857bae9e66c4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 8 04:18:08 2010 -0400
+  
+    Humor!
+
+  commit e3ba45d042d4ae6969982722a3f40dff1ef07521
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 8 04:17:46 2010 -0400
+  
+    Progress was made on the great renaming.
+
+  commit 9f05bb6eb0cb8ab91f226ab3405850e6492791f8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jul 8 04:15:37 2010 -0400
+  
+    Rough draft of the beginning of an introductory document.
+
+  commit a19c6c84846fcd2155c909920d2d570061b7a782
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jul 6 13:13:41 2010 -0400
+  
+    Replace -alias/-excludes with the method_send role parameter.
+
+  commit 7acb5f4310790f5da16b7adcf7efab057373700d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jul 5 13:21:26 2010 -0400
+  
+    I think the base classes should have simpler names than the roles
+    they reify.
+
+  commit a3cca99599ec0a70ed017bae0516ce3930ca0b00
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jul 5 13:14:50 2010 -0400
+  
+    Revise Reflex::PID to work with Reflex::SigCatcher. Remove deprecated
+    Reflex::Signal.
+
+  commit d42bbca32aac10a167b6a3ee48a90077e5964d82
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jul 5 02:29:39 2010 -0400
+  
+    Document the new SigCatcher role and class. 
+
+================================
 2010-07-04 22:40:56 -0400 v0_056
 ================================
 

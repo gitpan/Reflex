@@ -1,6 +1,6 @@
 package Reflex::Callback::Method;
 BEGIN {
-  $Reflex::Callback::Method::VERSION = '0.056';
+  $Reflex::Callback::Method::VERSION = '0.060';
 }
 
 use Moose;
@@ -28,7 +28,7 @@ Reflex::Callback::Method - Callback adapter for class and object methods
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 
@@ -41,14 +41,14 @@ Used within Reflex:
 	use ExampleHelpers qw(eg_say);
 
 	has ticker => (
-		isa     => 'Maybe[Reflex::Timer]',
+		isa     => 'Maybe[Reflex::Interval]',
 		is      => 'rw',
 	);
 
 	sub BUILD {
 		my $self = shift;
 		$self->ticker(
-			Reflex::Timer->new(
+			Reflex::Interval->new(
 				interval    => 1 + rand(),
 				auto_repeat => 1,
 				on_tick     => cb_method($self, "callback"),

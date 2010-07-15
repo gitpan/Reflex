@@ -1,6 +1,6 @@
 package Reflex::Callback::CodeRef;
 BEGIN {
-  $Reflex::Callback::CodeRef::VERSION = '0.056';
+  $Reflex::Callback::CodeRef::VERSION = '0.060';
 }
 
 use Moose;
@@ -27,7 +27,7 @@ Reflex::Callback::CodeRef - Callback adapter for plain code references
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 
@@ -35,7 +35,7 @@ Used within Reflex:
 
 	use Reflex::Callbacks qw(cb_coderef);
 
-	my $ct = Reflex::Timer->new(
+	my $ct = Reflex::Interval->new(
 		interval    => 1 + rand(),
 		auto_repeat => 1,
 		on_tick     => cb_coderef {

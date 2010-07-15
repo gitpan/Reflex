@@ -1,6 +1,6 @@
 package Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Reflex::Trait::EmitsOnChange::VERSION = '0.056';
+  $Reflex::Trait::EmitsOnChange::VERSION = '0.060';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
@@ -83,7 +83,7 @@ has event => (
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.056';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.060';
 }
 sub register_implementation { 'Reflex::Trait::EmitsOnChange' }
 
@@ -97,7 +97,7 @@ Reflex::Trait::EmitsOnChange - Emit an event when an attribute's value changes.
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 
@@ -138,10 +138,10 @@ is the name of the attribute.
 The "setup" option provides default constructor parameters for the
 attribute.  In the above example, clock() will by default contain
 
-	Reflex::Timer->new(interval => 1, auto_repeat => 1);
+	Reflex::Interval->new(interval => 1, auto_repeat => 1);
 
-In other words, it will emit the Reflex::Timer event ("tick") once per
-second until destroyed.
+In other words, it will emit the Reflex::Interval event ("tick") once
+per second until destroyed.
 
 =head1 CAVEATS
 

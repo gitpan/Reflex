@@ -1,13 +1,15 @@
 package Reflex::Role::Reactive;
 BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.056';
+  $Reflex::Role::Reactive::VERSION = '0.060';
 }
 
 use Moose::Role;
 
 use Scalar::Util qw(weaken blessed);
-use Carp qw(croak);
+use Carp qw(carp croak);
 use Reflex;
+use Reflex::Callback::Promise;
+use Reflex::Callback::CodeRef;
 
 END {
 	#warn join "; ", keys %watchers;
@@ -53,7 +55,8 @@ my $singleton_session_id = POE::Session->create(
 
 		timer_due => sub {
 			my $envelope = $_[ARG0];
-			$envelope->[0]->deliver();
+			my ($cb_object, $cb_method) = @$envelope;
+			$cb_object->$cb_method({});
 		},
 
 		### I/O manipulators and callbacks.
@@ -244,6 +247,10 @@ sub BUILD {
 
 	CALLBACK: while (my ($param, $value) = each %$args) {
 		next unless $param =~ /^on_(\S+)/;
+
+		if (ref($value) eq "CODE") {
+			$value = Reflex::Callback::CodeRef->new(code_ref => $value);
+		}
 
 		# There is an object, so we have a watcher.
 		if ($value->object()) {
@@ -581,7 +588,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 
@@ -771,11 +778,11 @@ next() returns the next event emitted by an object.  Objects cease to
 run while your code processes the event, so be quick about it.
 
 Here's most of eg/eg-32-promise-tiny.pl, which shows how to next() on
-events from a Reflex::Timer.
+events from a Reflex::Interval.
 
-	use Reflex::Timer;
+	use Reflex::Interval;
 
-	my $t = Reflex::Timer->new(
+	my $t = Reflex::Interval->new(
 		interval    => 1,
 		auto_repeat => 1,
 	);

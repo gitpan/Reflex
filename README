@@ -2,7 +2,7 @@ NAME
     Reflex - Class library for flexible, reactive programs.
 
 VERSION
-    version 0.056
+    version 0.060
 
 SYNOPSIS
             # See eg-18-synopsis-no-moose.pl if you don't like Moose.
@@ -13,10 +13,10 @@ SYNOPSIS
                     package App;
                     use Moose;
                     extends 'Reflex::Base';
-                    use Reflex::Timer;
+                    use Reflex::Interval;
 
                     has ticker => (
-                            isa     => 'Reflex::Timer',
+                            isa     => 'Reflex::Interval',
                             is      => 'rw',
                             setup   => { interval => 1, auto_repeat => 1 },
                             traits  => [ 'Reflex::Trait::Observed' ],
@@ -101,13 +101,13 @@ DESCRIPTION
 
     Here we'll start a periodic timer and handle its ticks with a simple
     callback. The program is still reactive. Every second it prints "timer
-    ticked" in response Reflex::Timer's events.
+    ticked" in response Reflex::Interval's events.
 
-            use Reflex::Timer;
+            use Reflex::Interval;
             use ExampleHelpers qw(eg_say);
             use Reflex::Callbacks qw(cb_coderef);
 
-            my $t = Reflex::Timer->new(
+            my $t = Reflex::Interval->new(
                     interval    => 1,
                     auto_repeat => 1,
                     on_tick     => cb_coderef { eg_say("timer ticked") },
@@ -127,13 +127,13 @@ DESCRIPTION
     previous coderef callback example, but it doesn't use callbacks at all.
 
     It may not be obvious, but the same emit() method drives all of Reflex's
-    forms of callback. Reflex::Timer below is identical to the Reflex::Timer
-    used differently elsewhere.
+    forms of callback. Reflex::Interval below is identical to the
+    Reflex::Interval used differently elsewhere.
 
-            use Reflex::Timer;
+            use Reflex::Interval;
             use ExampleHelpers qw(eg_say);
 
-            my $t = Reflex::Timer->new(
+            my $t = Reflex::Interval->new(
                     interval => 1,
                     auto_repeat => 1,
             );
@@ -218,7 +218,7 @@ BUNDLED MODULES AND DOCUMENTATION INDEX
     Timer management has been relatively overlooked so far. We'll get to it
     eventually, and you're welcome to help.
 
-    Reflex::Timer - An object that watches the passage of time.
+    Reflex::Interval - An object that emits periodic events.
 
   Breadboarding Traits
     Reflex also implements signal/slot style object interaction, through
@@ -227,11 +227,6 @@ BUNDLED MODULES AND DOCUMENTATION INDEX
 
     Reflex::Trait::EmitsOnChange - Emit an event when an attribute’s value
     Reflex::Trait::Observed - Automatically watch Reflex objects.
-
-  Generic Utilities
-    Miscellaneous helper functions.
-
-    Reflex::Util::Methods - helper functions to generate methods
 
 ASSISTANCE
     Thank you for volunteering to assist with this project. You can find

@@ -1,30 +1,18 @@
 package Reflex::Role::Connecting;
 BEGIN {
-  $Reflex::Role::Connecting::VERSION = '0.056';
+  $Reflex::Role::Connecting::VERSION = '0.060';
 }
-use MooseX::Role::Parameterized;
-use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
+use Reflex::Role;
 
 use Errno qw(EWOULDBLOCK EINPROGRESS);
 use Socket qw(SOL_SOCKET SO_ERROR inet_aton pack_sockaddr_in);
 
-parameter socket => (
-	isa     => 'Str',
-	default => 'socket',
-);
+attribute_parameter socket  => "socket";
+attribute_parameter address => "address";
+attribute_parameter port    => "port";
 
-parameter address => (
-	isa     => 'Str',
-	default => 'address',
-);
-
-parameter port => (
-	isa       => 'Str',
-	default   => 'port',
-);
-
-parameter cb_success  => method_name("on", "socket", "success");
-parameter cb_error    => method_name("on", "socket", "error");
+callback_parameter  cb_success  => qw( on socket success );
+callback_parameter  cb_error    => qw( on socket error );
 
 role {
 	my $p = shift;
@@ -38,10 +26,6 @@ role {
 
 	my $internal_writable = "on_" . $socket . "_writable";
 	my $internal_stop     = "stop_" . $socket . "_writable";
-
-	with 'Reflex::Role::Writable' => {
-		handle  => $socket,
-	};
 
 	# Work around a Moose edge case.
 	sub BUILD {}
@@ -122,8 +106,12 @@ role {
 		return;
 	};
 
-	method $cb_success  => emit_an_event("success");
-	method $cb_error    => emit_an_event("error");
+	method_emit $cb_success => "success";
+	method_emit $cb_error   => "error";
+
+	with 'Reflex::Role::Writable' => {
+		handle  => $socket,
+	};
 };
 
 1;
@@ -136,7 +124,7 @@ Reflex::Role::Connecting - add non-blocking client connecting to a class
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

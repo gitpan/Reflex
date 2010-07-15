@@ -1,9 +1,8 @@
 package Reflex::Role::Readable;
 BEGIN {
-  $Reflex::Role::Readable::VERSION = '0.056';
+  $Reflex::Role::Readable::VERSION = '0.060';
 }
-use MooseX::Role::Parameterized;
-use Reflex::Util::Methods qw(emit_an_event method_name);
+use Reflex::Role;
 
 # TODO - Reflex::Role::Readable and Writable are nearly identical.
 # Can they be abstracted further?  Possibly composed as parameterized
@@ -11,20 +10,17 @@ use Reflex::Util::Methods qw(emit_an_event method_name);
 
 use Scalar::Util qw(weaken);
 
-parameter handle => (
-	isa     => 'Str',
-	default => 'handle',
-);
+attribute_parameter handle => "handle";
 
 parameter active => (
 	isa     => 'Bool',
 	default => 1,
 );
 
-parameter cb_ready      => method_name("on", "handle", "readable");
-parameter method_pause  => method_name("pause", "handle", "readable");
-parameter method_resume => method_name("resume", "handle", "readable");
-parameter method_stop   => method_name("stop", "handle", "readable");
+callback_parameter  cb_ready      => qw( on handle readable );
+method_parameter    method_pause  => qw( pause handle readable );
+method_parameter    method_resume => qw( resume handle readable );
+method_parameter    method_stop   => qw( stop handle readable );
 
 role {
 	my $p = shift;
@@ -34,6 +30,8 @@ role {
 
 	my $cb_name       = $p->cb_ready();
 	my $setup_name    = "_setup_${h}_readable";
+
+	requires $cb_name;
 
 	method $setup_name => sub {
 		my ($self, $arg) = @_;
@@ -85,7 +83,7 @@ role {
 	};
 
 	# Default callbacks that re-emit their parameters.
-	method $cb_name => emit_an_event("readable");
+	#method $cb_name => emit_an_event("readable");
 };
 
 1;
@@ -98,7 +96,7 @@ Reflex::Role::Readable - add readable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

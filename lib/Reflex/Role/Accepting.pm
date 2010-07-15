@@ -1,20 +1,16 @@
 package Reflex::Role::Accepting;
 BEGIN {
-  $Reflex::Role::Accepting::VERSION = '0.056';
+  $Reflex::Role::Accepting::VERSION = '0.060';
 }
-use MooseX::Role::Parameterized;
-use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
+use Reflex::Role;
 
-parameter listener => (
-	isa     => 'Str',
-	default => 'listener',
-);
+attribute_parameter listener => "listener";
 
-parameter cb_accept     => method_name("on", "listener", "accept");
-parameter cb_error      => method_name("on", "listener", "error");
-parameter method_pause  => method_name("pause", "listener", undef);
-parameter method_resume => method_name("resume", "listener", undef);
-parameter method_stop   => method_name("stop", "listener", undef);
+callback_parameter  cb_accept     => qw( on listener accept );
+callback_parameter  cb_error      => qw( on listener error );
+method_parameter    method_pause  => qw( pause listener _ );
+method_parameter    method_resume => qw( resume listener _ );
+method_parameter    method_stop   => qw( stop listener _ );
 
 role {
 	my $p = shift;
@@ -22,14 +18,6 @@ role {
 	my $listener  = $p->listener();
 	my $cb_accept = $p->cb_accept();
 	my $cb_error  = $p->cb_error();
-
-	with 'Reflex::Role::Readable' => {
-		handle        => $listener,
-		active        => 1,
-		method_pause  => $p->method_pause(),
-		method_resume => $p->method_resume(),
-		method_stop   => $p->method_stop(),
-	};
 
 	method "on_${listener}_readable" => sub {
 		my ($self, $args) = @_;
@@ -59,8 +47,17 @@ role {
 		return;
 	};
 
-	method $cb_accept => emit_an_event("accept");
-	method $cb_error  => emit_an_event("error");  # TODO - Retryable ones.
+	method_emit $cb_accept  => "accept";
+	method_emit $cb_error   => "error";   # TODO - Retryable ones.
+
+	with 'Reflex::Role::Readable' => {
+		handle        => $listener,
+		active        => 1,
+		method_pause  => $p->method_pause(),
+		method_resume => $p->method_resume(),
+		method_stop   => $p->method_stop(),
+	};
+
 };
 
 1;
@@ -73,7 +70,7 @@ Reflex::Role::Accepting - add connection accepting to a class
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

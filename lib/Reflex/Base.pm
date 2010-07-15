@@ -1,6 +1,6 @@
 package Reflex::Base;
 BEGIN {
-  $Reflex::Base::VERSION = '0.056';
+  $Reflex::Base::VERSION = '0.060';
 }
 
 use Moose;
@@ -19,7 +19,7 @@ Reflex::Base - Base class for reactive (aka, event driven) objects.
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

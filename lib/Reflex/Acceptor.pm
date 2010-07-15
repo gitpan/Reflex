@@ -1,6 +1,6 @@
 package Reflex::Acceptor;
 BEGIN {
-  $Reflex::Acceptor::VERSION = '0.056';
+  $Reflex::Acceptor::VERSION = '0.060';
 }
 
 use Moose;
@@ -31,7 +31,7 @@ Reflex::Acceptor - non-blocking client socket acceptor
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

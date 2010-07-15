@@ -1,19 +1,16 @@
 package Reflex::Role::Recving;
 BEGIN {
-  $Reflex::Role::Recving::VERSION = '0.056';
+  $Reflex::Role::Recving::VERSION = '0.060';
 }
-use MooseX::Role::Parameterized;
-use Reflex::Util::Methods qw(emit_an_event emit_and_stopped method_name);
+use Reflex::Role;
 
-parameter handle => (
-	isa     => 'Str',
-	default => 'socket',
-);
+attribute_parameter handle => "socket";
 
-parameter cb_datagram => method_name("on", "handle", "datagram");
-parameter cb_error    => method_name("on", "handle", "error");
-parameter method_send => method_name("send", "handle", undef);
-parameter method_stop => method_name("stop", "handle", undef);
+callback_parameter  cb_datagram => qw( on handle datagram );
+callback_parameter  cb_error    => qw( on handle error );
+
+method_parameter    method_send => qw( send handle _ );
+method_parameter    method_stop => qw( stop handle _ );
 
 parameter max_datagram_size => (
 	isa     => 'Int',
@@ -28,10 +25,6 @@ role {
 	my $cb_datagram = $p->cb_datagram();
 	my $cb_error    = $p->cb_error();
 	my $max_dg_size = $p->max_datagram_size();
-
-	with 'Reflex::Role::Readable' => {
-		handle => $h,
-	};
 
 	method $p->method_stop() => sub {
 		my $self = shift;
@@ -94,9 +87,13 @@ role {
 		);
 	};
 
+	with 'Reflex::Role::Readable' => {
+		handle => $h,
+	};
+
 	# Default callbacks that re-emit their parameters.
-	method $cb_datagram => emit_an_event("datagram");
-	method $cb_error    => emit_and_stopped("error");
+	method_emit           $cb_datagram  => "datagram";
+	method_emit_and_stop  $cb_error     => "error";
 };
 
 1;
@@ -115,7 +112,7 @@ Reflex::Role::Recving - Mix standard send/recv code into a class.
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 

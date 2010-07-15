@@ -1,6 +1,6 @@
 package Reflex::Callback::Promise;
 BEGIN {
-  $Reflex::Callback::Promise::VERSION = '0.056';
+  $Reflex::Callback::Promise::VERSION = '0.060';
 }
 
 use Moose;
@@ -41,16 +41,16 @@ Reflex::Callback::Promise - Non-callback, inline Promise adapter
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 
 Used within Reflex:
 
-	use Reflex::Timer;
+	use Reflex::Interval;
 	use ExampleHelpers qw(eg_say);
 
-	my $pt = Reflex::Timer->new(
+	my $pt = Reflex::Interval->new(
 		interval    => 1 + rand(),
 		auto_repeat => 1,
 	);
@@ -88,7 +88,7 @@ sweeteners will be used instead of raw Reflex::Callback::Promise
 objects.  For example, promises are implicitly enabled if no callbacks
 are defined:
 
-	my $t = Reflex::Timer->new(
+	my $t = Reflex::Interval->new(
 		interval    => 1,
 		auto_repeat => 1,
 	);

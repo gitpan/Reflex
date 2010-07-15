@@ -1,9 +1,8 @@
 package Reflex::Role::Writable;
 BEGIN {
-  $Reflex::Role::Writable::VERSION = '0.056';
+  $Reflex::Role::Writable::VERSION = '0.060';
 }
-use MooseX::Role::Parameterized;
-use Reflex::Util::Methods qw(emit_an_event method_name);
+use Reflex::Role;
 
 # TODO - Reflex::Role::Readable and Writable are nearly identical.
 # Can they be abstracted further?  Possibly composed as parameterized
@@ -11,21 +10,18 @@ use Reflex::Util::Methods qw(emit_an_event method_name);
 
 use Scalar::Util qw(weaken);
 
-parameter handle => (
-	isa     => 'Str',
-	default => 'handle',
-);
+attribute_parameter handle => "handle";
 
 parameter active => (
 	isa     => 'Bool',
 	default => 0,
 );
 
-parameter cb_ready      => method_name("on", "handle", "writable");
-parameter method_pause  => method_name("pause", "handle", "writable");
-parameter method_resume => method_name("resume", "handle", "writable");
-parameter method_stop   => method_name("stop", "handle", "writable");
-parameter method_start  => method_name("start", "handle", "writable");
+callback_parameter  cb_ready      => qw( on handle writable );
+method_parameter    method_pause  => qw( pause handle writable );
+method_parameter    method_resume => qw( resume handle writable );
+method_parameter    method_stop   => qw( stop handle writable );
+method_parameter    method_start  => qw( start handle writable );
 
 role {
 	my $p = shift;
@@ -38,6 +34,8 @@ role {
 	my $method_stop   = $p->method_stop();
 	my $method_pause  = $p->method_pause();
 	my $method_resume = $p->method_resume();
+
+	requires $cb_name;
 
 	method $method_start => sub {
 		my ($self, $arg) = @_;
@@ -86,9 +84,6 @@ role {
 		my $self = shift;
 		$self->method_stop();
 	};
-
-	# Default callbacks that re-emit their parameters.
-	method $cb_name => emit_an_event("writable");
 };
 
 1;
@@ -101,7 +96,7 @@ Reflex::Role::Writable - add writable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.056
+version 0.060
 
 =head1 SYNOPSIS
 
@@ -124,7 +119,7 @@ version 0.056
 =head1 DESCRIPTION
 
 Reflex::Role::Writable is a Moose parameterized role that adds
-writable-watching behavior for Reflex-based classes.  In the SYNOPSIS,
+writable-watching behavior to Reflex-based classes.  In the SYNOPSIS,
 a filehandle named "socket" is watched for writability.  The method
 on_socket_writable() is called when data becomes available.
 
