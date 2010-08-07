@@ -5,7 +5,9 @@ META.yml
 Makefile.PL
 README
 README.mkdn
+TODO
 dist.ini
+docs/TODO.otl
 docs/continuation-passing.otl
 docs/intro/AfterAwhileClass.pm
 docs/intro/AfterAwhileRole.pm
@@ -20,7 +22,6 @@ docs/intro/intro.pod
 docs/manual.otl
 docs/new-names.otl
 docs/patterns.otl
-docs/requirements.otl
 docs/style.otl
 docs/syntax.pm
 eg/EchoStream.pm
@@ -101,7 +102,6 @@ lib/Reflex/Role/Accepting.pm
 lib/Reflex/Role/Collectible.pm
 lib/Reflex/Role/Connecting.pm
 lib/Reflex/Role/Interval.pm
-lib/Reflex/Role/PidReaper.pm
 lib/Reflex/Role/Reactive.pm
 lib/Reflex/Role/Readable.pm
 lib/Reflex/Role/Reading.pm

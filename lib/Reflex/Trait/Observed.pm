@@ -1,6 +1,6 @@
 package Reflex::Trait::Observed;
 BEGIN {
-  $Reflex::Trait::Observed::VERSION = '0.060';
+  $Reflex::Trait::Observed::VERSION = '0.070';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
@@ -103,7 +103,7 @@ has setup => (
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.060';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.070';
 }
 sub register_implementation { 'Reflex::Trait::Observed' }
 
@@ -117,7 +117,7 @@ Reflex::Trait::Observed - Automatically watch Reflex objects.
 
 =head1 VERSION
 
-version 0.060
+version 0.070
 
 =head1 SYNOPSIS
 

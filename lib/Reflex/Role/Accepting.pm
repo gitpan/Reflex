@@ -1,6 +1,6 @@
 package Reflex::Role::Accepting;
 BEGIN {
-  $Reflex::Role::Accepting::VERSION = '0.060';
+  $Reflex::Role::Accepting::VERSION = '0.070';
 }
 use Reflex::Role;
 
@@ -70,7 +70,7 @@ Reflex::Role::Accepting - add connection accepting to a class
 
 =head1 VERSION
 
-version 0.060
+version 0.070
 
 =head1 SYNOPSIS
 

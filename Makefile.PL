@@ -21,12 +21,12 @@ my %WriteMakefileArgs = (
                        'BUILD_REQUIRES' => {},
                        'ABSTRACT' => 'Class library for flexible, reactive programs.',
                        'EXE_FILES' => [],
-                       'VERSION' => '0.060',
+                       'VERSION' => '0.070',
                        'PREREQ_PM' => {
                                         'Scalar::Util' => '1.21',
                                         'Test::More' => '0.94',
-                                        'POE' => '1.268',
-                                        'Moose' => '0.92'
+                                        'POE' => '1.292',
+                                        'Moose' => '1.08'
                                       },
                        'LICENSE' => 'perl'
                      );

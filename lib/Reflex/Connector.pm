@@ -1,6 +1,6 @@
 package Reflex::Connector;
 BEGIN {
-  $Reflex::Connector::VERSION = '0.060';
+  $Reflex::Connector::VERSION = '0.070';
 }
 
 use Moose;
@@ -40,7 +40,7 @@ Reflex::Connector - non-blocking client socket connector
 
 =head1 VERSION
 
-version 0.060
+version 0.070
 
 =head1 SYNOPSIS
 

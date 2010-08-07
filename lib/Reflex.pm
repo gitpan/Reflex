@@ -1,6 +1,6 @@
 package Reflex;
 BEGIN {
-  $Reflex::VERSION = '0.060';
+  $Reflex::VERSION = '0.070';
 }
 
 use warnings;
@@ -47,7 +47,7 @@ Reflex - Class library for flexible, reactive programs.
 
 =head1 VERSION
 
-version 0.060
+version 0.070
 
 =head1 SYNOPSIS
 
@@ -420,8 +420,8 @@ Chris Fedde, CFEDDE on CPAN
 Please browse the source for the TODO marker.  Some are visible in the
 documentation, and others are sprinlked around in the code's comments.
 
-Also see L<docs/requirements.otl> in the distribution.  This is a Vim
-Outliner file with the current roadmap and progress.
+Also see L<docs/TODO.otl> in the distribution.
+This is a Vim Outliner file with the current roadmap and progress.
 
 Set up Dist::Zilla to reduce technical debt and make releasing code
 fun again.

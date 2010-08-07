@@ -1,6 +1,6 @@
 package Reflex::Callback::Promise;
 BEGIN {
-  $Reflex::Callback::Promise::VERSION = '0.060';
+  $Reflex::Callback::Promise::VERSION = '0.070';
 }
 
 use Moose;
@@ -41,7 +41,7 @@ Reflex::Callback::Promise - Non-callback, inline Promise adapter
 
 =head1 VERSION
 
-version 0.060
+version 0.070
 
 =head1 SYNOPSIS
 

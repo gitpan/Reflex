@@ -13,10 +13,10 @@ meta-spec:
 name: Reflex
 recommends: {}
 requires:
-  Moose: 0.92
-  POE: 1.268
+  Moose: 1.08
+  POE: 1.292
   Scalar::Util: 1.21
   Test::More: 0.94
 resources:
   repository: http://github.com/rcaputo/reflex
-version: 0.060
+version: 0.070

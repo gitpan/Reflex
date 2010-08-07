@@ -1,3 +1,28 @@
+==============================
+9999-99-99 99:99:99 +0000 HEAD
+==============================
+
+  commit 5f76cdde13f1d633db7024a93c064168f25de67b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Aug 5 01:58:41 2010 -0400
+  
+    requirements.otl becomes TODO.otl, as it ought to be.
+
+  commit d1e2210e3c08c76e69515d0d6e7fb722e63bdf1b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Aug 5 01:50:39 2010 -0400
+  
+    The Great Renaming is complete.
+
+  commit e5e89df56a11e066e7a4dcde5d8ef49d8953e9fe
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 31 23:50:04 2010 -0400
+  
+    Hoist writability callback management from Writing to Streaming.
+
+    It's up to the Writing role's consumer to decide how flushes are to
+    be triggered. The Writing role is only to be concerned with writing. 
+
 ================================
 2010-07-15 00:00:17 -0400 v0_060
 ================================

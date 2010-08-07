@@ -1,6 +1,6 @@
 package Reflex::POE::Session;
 BEGIN {
-  $Reflex::POE::Session::VERSION = '0.060';
+  $Reflex::POE::Session::VERSION = '0.070';
 }
 
 use Moose;
@@ -54,7 +54,7 @@ Reflex::POE::Session - Observe events from a POE::Session object.
 
 =head1 VERSION
 
-version 0.060
+version 0.070
 
 =head1 SYNOPSIS
 
