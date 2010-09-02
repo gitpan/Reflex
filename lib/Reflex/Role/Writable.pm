@@ -1,6 +1,6 @@
 package Reflex::Role::Writable;
 BEGIN {
-  $Reflex::Role::Writable::VERSION = '0.070';
+  $Reflex::Role::Writable::VERSION = '0.071';
 }
 use Reflex::Role;
 
@@ -96,7 +96,7 @@ Reflex::Role::Writable - add writable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.070
+version 0.071
 
 =head1 SYNOPSIS
 

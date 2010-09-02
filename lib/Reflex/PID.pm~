@@ -1,7 +1,4 @@
 package Reflex::PID;
-BEGIN {
-  $Reflex::PID::VERSION = '0.071';
-}
 
 use Moose;
 extends qw(Reflex::Signal);
@@ -23,6 +20,7 @@ __PACKAGE__->_register_signal_params(qw(pid exit));
 sub resume {
 	my $self = shift;
 	return unless $self->call_gate("resume");
+warn $self->pid();
 	$POE::Kernel::poe_kernel->sig_child($self->pid(), "signal_happened");
 }
 
@@ -39,10 +37,6 @@ __END__
 =head1 NAME
 
 Reflex::PID - Observe the exit of a subprocess by its SIGCHLD signal.
-
-=head1 VERSION
-
-version 0.071
 
 =head1 SYNOPSIS
 

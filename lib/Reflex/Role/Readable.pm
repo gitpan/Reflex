@@ -1,6 +1,6 @@
 package Reflex::Role::Readable;
 BEGIN {
-  $Reflex::Role::Readable::VERSION = '0.070';
+  $Reflex::Role::Readable::VERSION = '0.071';
 }
 use Reflex::Role;
 
@@ -96,7 +96,7 @@ Reflex::Role::Readable - add readable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.070
+version 0.071
 
 =head1 SYNOPSIS
 

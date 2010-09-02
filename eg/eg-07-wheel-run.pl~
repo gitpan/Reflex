@@ -64,8 +64,6 @@ use lib qw(../lib);
 
 # Main.
 
-# TODO - SIGCHLD isn't delivered properly.
-
 my $runner_1 = Runner->new();
 my $runner_2 = Runner->new();
 

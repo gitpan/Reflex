@@ -1,7 +1,4 @@
 package Reflex::Role::SigCatcher;
-BEGIN {
-  $Reflex::Role::SigCatcher::VERSION = '0.071';
-}
 use Reflex::Role;
 
 use Scalar::Util qw(weaken);
@@ -96,7 +93,7 @@ role {
 		my $self = shift;
 
 		my $sig_name = $self->$signal();
-
+warn "$sig_name ", $self->session_id(), " $self";
 		# Register this object with that signal.
 		$callbacks{$sig_name}->{$self->session_id()}->{$self} = [
 			$self, $cb_signal
@@ -159,10 +156,6 @@ __END__
 =head1 NAME
 
 Reflex::Role::SigCatcher - add signal catching behavior to a class
-
-=head1 VERSION
-
-version 0.071
 
 =head1 SYNOPSIS
 

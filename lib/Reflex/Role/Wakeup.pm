@@ -1,6 +1,6 @@
 package Reflex::Role::Wakeup;
 BEGIN {
-  $Reflex::Role::Wakeup::VERSION = '0.070';
+  $Reflex::Role::Wakeup::VERSION = '0.071';
 }
 use Reflex::Role;
 use Scalar::Util qw(weaken);
@@ -96,7 +96,7 @@ Reflex::Role::Wakeup - set a wakeup callback for a particular UNIX time
 
 =head1 VERSION
 
-version 0.070
+version 0.071
 
 =head1 SYNOPSIS
 

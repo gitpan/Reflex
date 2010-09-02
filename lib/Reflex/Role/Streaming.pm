@@ -1,6 +1,6 @@
 package Reflex::Role::Streaming;
 BEGIN {
-  $Reflex::Role::Streaming::VERSION = '0.070';
+  $Reflex::Role::Streaming::VERSION = '0.071';
 }
 use Reflex::Role;
 
@@ -89,7 +89,7 @@ Reflex::Role::Streaming - add streaming I/O behavior to a class
 
 =head1 VERSION
 
-version 0.070
+version 0.071
 
 =head1 SYNOPSIS
 

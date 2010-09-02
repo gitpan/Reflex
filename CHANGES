@@ -2,6 +2,33 @@
 9999-99-99 99:99:99 +0000 HEAD
 ==============================
 
+  commit db1a28d896d4bdfdb0b30427f036a671821eb4e2
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Sep 2 12:48:59 2010 -0400
+  
+    Bump version and dependencies for a new release.
+
+  commit 948a8725f927bffaca5ba328c86d5c52394d7461
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Sep 2 12:29:59 2010 -0400
+  
+    Fix the method_parameter key attribute. Was "name"; should be
+    "delay". Thanks to "batman" in irc.perl.org #reflex.
+
+  commit a5308ee78fa2e2da7db44aba3d95ca94bf721cd5
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Sep 2 12:26:13 2010 -0400
+  
+    Make a note of SIGCHLD delivery problem before I forget. Reported by
+    agorman in irc.perl.org #reflex.
+
+  commit 57d7de0172a6e026780660d0170a1fd1a851cc48
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Aug 8 23:03:05 2010 -0400
+  
+    Add MooseX::Role::Parameterized dependency. Chris Fedde pointed out
+    its absence in freenode #perl.
+
   commit 5f76cdde13f1d633db7024a93c064168f25de67b
   Author: Rocco Caputo <rcaputo@cpan.org>
   Date:   Thu Aug 5 01:58:41 2010 -0400

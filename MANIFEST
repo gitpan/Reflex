@@ -7,6 +7,7 @@ README
 README.mkdn
 TODO
 dist.ini
+dist.ini~
 docs/TODO.otl
 docs/continuation-passing.otl
 docs/intro/AfterAwhileClass.pm
@@ -35,6 +36,7 @@ eg/eg-04-inheritance.pl
 eg/eg-05-composition.pl
 eg/eg-06-moose-roles.pl
 eg/eg-07-wheel-run.pl
+eg/eg-07-wheel-run.pl~
 eg/eg-08-observer-trait.pl
 eg/eg-09-emitter-trait.pl
 eg/eg-10-setup.pl
@@ -56,6 +58,8 @@ eg/eg-37-ping-pong.pl
 eg/eg-38-promise-client.pl
 eg/eg-39-signals.pl
 eg/eg-40-proxy.pl
+eg/eg-41-signal-twice.pl
+eg/eg-41-signal-twice.pl~
 eg/eg-50-timeout.pl
 eg/eg-51-wakeup.pl
 eg/ttl/Ttl/Adder.pm
@@ -80,6 +84,7 @@ eg/ttl/Ttl/Xor.pm
 eg/ttl/fail-ttl-counter.pl
 eg/ttl/fail-ttl-simple.pl
 lib/Reflex.pm
+lib/Reflex/.PID.pm.swp
 lib/Reflex/Acceptor.pm
 lib/Reflex/Base.pm
 lib/Reflex/Callback.pm
@@ -92,11 +97,13 @@ lib/Reflex/Collection.pm
 lib/Reflex/Connector.pm
 lib/Reflex/Interval.pm
 lib/Reflex/PID.pm
+lib/Reflex/PID.pm~
 lib/Reflex/POE/Event.pm
 lib/Reflex/POE/Postback.pm
 lib/Reflex/POE/Session.pm
 lib/Reflex/POE/Wheel.pm
 lib/Reflex/POE/Wheel/Run.pm
+lib/Reflex/POE/Wheel/Run.pm~
 lib/Reflex/Role.pm
 lib/Reflex/Role/Accepting.pm
 lib/Reflex/Role/Collectible.pm
@@ -107,8 +114,10 @@ lib/Reflex/Role/Readable.pm
 lib/Reflex/Role/Reading.pm
 lib/Reflex/Role/Recving.pm
 lib/Reflex/Role/SigCatcher.pm
+lib/Reflex/Role/SigCatcher.pm~
 lib/Reflex/Role/Streaming.pm
 lib/Reflex/Role/Timeout.pm
+lib/Reflex/Role/Timeout.pm~
 lib/Reflex/Role/Wakeup.pm
 lib/Reflex/Role/Writable.pm
 lib/Reflex/Role/Writing.pm
@@ -120,7 +129,6 @@ lib/Reflex/Trait/Observed.pm
 lib/Reflex/UdpPeer.pm
 lib/Reflex/Wakeup.pm
 t/000-info.t
-t/000-report-versions.t
 t/901-discrete-observer.t
 t/902-observed-new.t
 t/920-rcb-coderef.t

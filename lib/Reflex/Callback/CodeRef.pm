@@ -1,6 +1,6 @@
 package Reflex::Callback::CodeRef;
 BEGIN {
-  $Reflex::Callback::CodeRef::VERSION = '0.070';
+  $Reflex::Callback::CodeRef::VERSION = '0.071';
 }
 
 use Moose;
@@ -27,7 +27,7 @@ Reflex::Callback::CodeRef - Callback adapter for plain code references
 
 =head1 VERSION
 
-version 0.070
+version 0.071
 
 =head1 SYNOPSIS
 
