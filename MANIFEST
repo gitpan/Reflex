@@ -3,9 +3,12 @@ LICENSE
 MANIFEST
 META.yml
 Makefile.PL
+OUTSTANDING-BUGS-TO-FIX.txt
+OUTSTANDING-BUGS-TO-FIX.txt~
 README
 README.mkdn
 TODO
+agorman.pl~
 dist.ini
 dist.ini~
 docs/TODO.otl
@@ -84,7 +87,6 @@ eg/ttl/Ttl/Xor.pm
 eg/ttl/fail-ttl-counter.pl
 eg/ttl/fail-ttl-simple.pl
 lib/Reflex.pm
-lib/Reflex/.PID.pm.swp
 lib/Reflex/Acceptor.pm
 lib/Reflex/Base.pm
 lib/Reflex/Callback.pm
@@ -109,7 +111,10 @@ lib/Reflex/Role/Accepting.pm
 lib/Reflex/Role/Collectible.pm
 lib/Reflex/Role/Connecting.pm
 lib/Reflex/Role/Interval.pm
+lib/Reflex/Role/PidCatcher.pm
+lib/Reflex/Role/PidCatcher.pm~
 lib/Reflex/Role/Reactive.pm
+lib/Reflex/Role/Reactive.pm~
 lib/Reflex/Role/Readable.pm
 lib/Reflex/Role/Reading.pm
 lib/Reflex/Role/Recving.pm
@@ -122,6 +127,7 @@ lib/Reflex/Role/Wakeup.pm
 lib/Reflex/Role/Writable.pm
 lib/Reflex/Role/Writing.pm
 lib/Reflex/Signal.pm
+lib/Reflex/Signal.pm~
 lib/Reflex/Stream.pm
 lib/Reflex/Timeout.pm
 lib/Reflex/Trait/EmitsOnChange.pm

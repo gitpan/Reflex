@@ -1,6 +1,6 @@
 package Reflex::Interval;
 BEGIN {
-  $Reflex::Interval::VERSION = '0.071';
+  $Reflex::Interval::VERSION = '0.072';
 }
 
 use Moose;
@@ -30,7 +30,7 @@ Reflex::Interval - A stand-alone multi-shot periodic callback
 
 =head1 VERSION
 
-version 0.071
+version 0.072
 
 =head1 SYNOPSIS
 

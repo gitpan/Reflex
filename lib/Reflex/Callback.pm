@@ -1,6 +1,6 @@
 package Reflex::Callback;
 BEGIN {
-  $Reflex::Callback::VERSION = '0.071';
+  $Reflex::Callback::VERSION = '0.072';
 }
 
 use Moose;
@@ -23,7 +23,7 @@ Reflex::Callback - Generic callback adapters to simplify calling back
 
 =head1 VERSION
 
-version 0.071
+version 0.072
 
 =head1 SYNOPSIS
 

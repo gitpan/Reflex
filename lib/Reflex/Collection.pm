@@ -4,7 +4,7 @@
 
 package Reflex::Collection;
 BEGIN {
-  $Reflex::Collection::VERSION = '0.071';
+  $Reflex::Collection::VERSION = '0.072';
 }
 use Moose;
 use Reflex::Callbacks qw(cb_method);
@@ -43,7 +43,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-version 0.071
+version 0.072
 
 =head1 SYNOPSIS
 

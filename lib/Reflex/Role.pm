@@ -1,6 +1,6 @@
 package Reflex::Role;
 BEGIN {
-  $Reflex::Role::VERSION = '0.071';
+  $Reflex::Role::VERSION = '0.072';
 }
 use Moose::Role;
 use MooseX::Role::Parameterized;
@@ -128,7 +128,7 @@ Reflex::Role - define a Reflex paramaterized role
 
 =head1 VERSION
 
-version 0.071
+version 0.072
 
 =head1 SYNOPSIS
 

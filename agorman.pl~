@@ -1,12 +1,3 @@
-#!/usr/bin/perl
-
-use warnings;
-use strict;
-use lib qw(../lib);
-
-# Demonstrate how wheels may be encapsulated in thin,
-# configuration-only subclasses.
-
 {
 	package Runner;
 	use Moose;
@@ -19,12 +10,17 @@ use lib qw(../lib);
 		is  => 'rw',
 	);
 
+	has end => (
+		isa => 'Int',
+		is  => 'ro',
+	);
+
 	sub BUILD {
 		my $self = shift;
 
 		$self->wheel(
 			Reflex::POE::Wheel::Run->new(
-				Program => "$^X -wle 'print qq[pid(\$\$) moo(\$_)] for 1..10; exit'",
+				Program => "$^X -wle 'print qq[pid(\$\$) moo(\$_)] for 1..".$self->end."; exit'",
 				cb_role($self, "child"),
 			)
 		);
@@ -55,7 +51,7 @@ use lib qw(../lib);
 		print "child closed all output\n";
 	}
 
-	sub on_child_pid {
+	sub on_child_signal {
 		my ($self, $args) = @_;
 		print "child $args->{pid} exited: $args->{exit}\n";
 		$self->wheel(undef);
@@ -64,10 +60,26 @@ use lib qw(../lib);
 
 # Main.
 
-# TODO - SIGCHLD isn't delivered properly.
-
-my $runner_1 = Runner->new();
-my $runner_2 = Runner->new();
-
+my $runner = Runner->new(end => 1);
+my $runner2 = Runner->new(end => 100000);
 Reflex->run_all();
 exit;
+
+---Output---
+
+...
+stdout: pid(27457) moo(14647)
+stdout: pid(27457) moo(14648)
+stdout: pid(27457) moo(14649)
+stdout: pid(27457) moo(14650)
+stdout: pid(27457) moo(14651)
+stdout: pid(27457) moo(14652)
+stdout: pid(27457) moo(14653)
+stdout: pid(27457) moo(14654)
+child 27456 exited: 0
+child 27456 exited: 0
+27447: !!! Child process PID:27457 reaped: 
+27447: !!! Your program may not be using sig_child() to reap processes.
+27447: !!! In extreme cases, your program can force a system reboot
+27447: !!! if this resource leakage is not corrected.
+

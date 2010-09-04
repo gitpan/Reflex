@@ -1,6 +1,6 @@
 package Reflex::Role::Collectible;
 BEGIN {
-  $Reflex::Role::Collectible::VERSION = '0.071';
+  $Reflex::Role::Collectible::VERSION = '0.072';
 }
 
 # A Moose role that implements the Collectible side of the
@@ -23,7 +23,7 @@ Reflex::Role::Collectible - add manageability by Reflex::Collection
 
 =head1 VERSION
 
-version 0.071
+version 0.072
 
 =head1 SYNOPSIS
 

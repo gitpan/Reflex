@@ -2,6 +2,28 @@
 9999-99-99 99:99:99 +0000 HEAD
 ==============================
 
+  commit 394ca1407078520763ca8e72a190feb5f4d2d1d1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Sep 4 15:21:32 2010 -0400
+  
+    Require cutting edge POE.
+
+  commit 344d969e7647059de8a988d18b1eb01d4bc7b885
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Sep 4 15:13:16 2010 -0400
+  
+    Deliver PID exit noficiations only to interested objects.
+
+    Agorman in irc.perl.org #reflex discovered that multiple PID watchers
+    receive notification of all exiting child processes. This commit
+    limits notification to just those PIDs that are watched.
+
+  commit fc6cbf2d1428249cd70e2be12f2e178a13da8b34
+  Author: Chris Prather <chris@prather.org>
+  Date:   Sat Sep 4 13:34:30 2010 -0400
+  
+    Fix BUILD usage in Reflex::Role::Reactive.
+
   commit db1a28d896d4bdfdb0b30427f036a671821eb4e2
   Author: Rocco Caputo <rcaputo@cpan.org>
   Date:   Thu Sep 2 12:48:59 2010 -0400

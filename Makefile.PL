@@ -22,11 +22,11 @@ my %WriteMakefileArgs = (
   'PREREQ_PM' => {
     'Moose' => '1.12',
     'MooseX::Role::Parameterized' => '0.19',
-    'POE' => '1.292',
+    'POE' => '1.293',
     'Scalar::Util' => '1.21',
     'Test::More' => '0.94'
   },
-  'VERSION' => '0.071',
+  'VERSION' => '0.072',
   'test' => {
     'TESTS' => 't/*.t'
   }

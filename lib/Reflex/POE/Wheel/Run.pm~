@@ -92,16 +92,16 @@ has sigchild_watcher => (
 
 sub BUILD {
 	my $self = shift;
-warn $self->wheel();
-warn $self->wheel()->PID();
+
 	$self->sigchild_watcher(
 		Reflex::PID->new(pid => $self->wheel()->PID())
 	);
 }
 
 # Rethrow our signal event.
-sub on_sigchld_signal {
+sub on_sigchld_pid {
 	my ($self, $args) = @_;
+	warn 111;
 	$self->emit(
 		event => 'signal',
 		args  => $args,

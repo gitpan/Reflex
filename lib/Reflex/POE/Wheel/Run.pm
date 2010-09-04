@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel::Run;
 BEGIN {
-  $Reflex::POE::Wheel::Run::VERSION = '0.071';
+  $Reflex::POE::Wheel::Run::VERSION = '0.072';
 }
 use Moose;
 extends 'Reflex::POE::Wheel';
@@ -102,7 +102,7 @@ sub BUILD {
 }
 
 # Rethrow our signal event.
-sub on_sigchld_signal {
+sub on_sigchld_pid {
 	my ($self, $args) = @_;
 	$self->emit(
 		event => 'signal',
@@ -125,7 +125,7 @@ Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
 =head1 VERSION
 
-version 0.071
+version 0.072
 
 =head1 SYNOPSIS
 

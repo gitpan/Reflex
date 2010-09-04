@@ -1,7 +1,4 @@
 package Reflex::Role::Reactive;
-BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.072';
-}
 
 use Moose::Role;
 
@@ -70,6 +67,11 @@ my $singleton_session_id = POE::Session->create(
 		### Signals.
 
 		signal_happened => sub {
+			my $signal_class = pop @_;
+			$signal_class->deliver(@_[ARG0..$#_]);
+		},
+
+		sigchld_happened => sub {
 			my $signal_class = pop @_;
 			$signal_class->deliver(@_[ARG0..$#_]);
 		},
@@ -587,10 +589,6 @@ __END__
 =head1 NAME
 
 Reflex::Role::Reactive - Make an object reactive (aka, event driven).
-
-=head1 VERSION
-
-version 0.072
 
 =head1 SYNOPSIS
 
