@@ -1,10 +1,13 @@
 package Reflex::Trait::Observed;
 BEGIN {
-  $Reflex::Trait::Observed::VERSION = '0.072';
+  $Reflex::Trait::Observed::VERSION = '0.080';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
 use Reflex::Callbacks qw(cb_role);
+
+use Moose::Exporter;
+Moose::Exporter->setup_import_methods( with_caller => [ qw( observes ) ]);
 
 has setup => (
 	isa     => 'CodeRef|HashRef',
@@ -30,16 +33,22 @@ has trigger => (
 			# part of a clearer method.  Currently we rely on the object
 			# destructing on clear, which also triggers ignore().
 
-			return unless defined $value;
+			my $name = $meta_self->name();
+
+			# Previous value?  Stop watching that.
+			$self->ignore($self->$name()) if $self->$name();
+
+			# No new value?  We're done.
+			return unless $value;
 
 			$self->watch(
 				$value,
 				cb_role(
 					$self,
-					$role ||=
-					$self->meta->find_attribute_by_name($meta_self->name())->role()
+					$role ||= $self->meta->find_attribute_by_name($name)->role()
 				)
 			);
+			return;
 		}
 	}
 );
@@ -101,9 +110,19 @@ has setup => (
 #	},
 #);
 
+### Observed declarative syntax.
+
+sub observes {
+	my ($caller, $name, %etc) = @_;
+	my $meta = Class::MOP::class_of($caller);
+	push @{$etc{traits}}, __PACKAGE__;
+	$etc{is} = 'rw' unless exists $etc{is};
+	$meta->add_attribute($name, %etc);
+}
+
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.072';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.080';
 }
 sub register_implementation { 'Reflex::Trait::Observed' }
 
@@ -117,7 +136,7 @@ Reflex::Trait::Observed - Automatically watch Reflex objects.
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 
@@ -160,6 +179,13 @@ on_clock_tick() method to handle "tick" events from an object with the
 
 The "role" option allows roles to be set or overridden.  A watcher
 attribute's name is its default role.
+
+=head1 Declarative Syntax
+
+Reflex::Trait::Observed exports a declarative observes() function,
+which acts almost identically to Moose's has() but with a couple
+convenient defaults: The Observed trait is added, and the attribute is
+given "rw" access by default.
 
 =head1 CAVEATS
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Reactive;
 BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.072';
+  $Reflex::Role::Reactive::VERSION = '0.080';
 }
 
 use Moose::Role;
@@ -251,7 +251,10 @@ after BUILD => sub {
 		next unless $param =~ /^on_(\S+)/;
 
 		if (ref($value) eq "CODE") {
-			$value = Reflex::Callback::CodeRef->new(code_ref => $value);
+			$value = Reflex::Callback::CodeRef->new(
+				object    => $self,
+				code_ref  => $value,
+			);
 		}
 
 		# There is an object, so we have a watcher.
@@ -329,6 +332,7 @@ sub _stop_watchers {
 	}
 
 	delete $self->watchers()->{$watcher} unless (
+		exists $self->watchers()->{$watcher} and
 		@{$self->watchers()->{$watcher}}
 	);
 }
@@ -373,6 +377,9 @@ sub emit {
 	# Look for self-handling of the event.
 	# TODO - can() calls are also candidates for caching.
 	# (AKA: Cache as cache can()?)
+	#
+	# TODO - Using the class name here is weak.
+	# It would be sweetest if we could find a better role name.
 
 	my $caller_role = caller();
 	$caller_role =~ s/^Reflex::(?:Role::)?//;
@@ -590,7 +597,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 

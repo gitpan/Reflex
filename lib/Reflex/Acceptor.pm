@@ -1,6 +1,6 @@
 package Reflex::Acceptor;
 BEGIN {
-  $Reflex::Acceptor::VERSION = '0.072';
+  $Reflex::Acceptor::VERSION = '0.080';
 }
 
 use Moose;
@@ -31,7 +31,7 @@ Reflex::Acceptor - non-blocking client socket acceptor
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 
@@ -42,10 +42,8 @@ version 0.072
 	use Reflex::Collection;
 	use EchoStream;  # See eg directory.
 
-	has clients => (
-		is      => 'rw',
-		isa     => 'Reflex::Collection',
-		default => sub { Reflex::Collection->new() },
+	# From Reflex::Collection.
+	has_many clients => (
 		handles => { remember_client => "remember" },
 	);
 

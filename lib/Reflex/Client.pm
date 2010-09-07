@@ -6,12 +6,14 @@
 
 package Reflex::Client;
 BEGIN {
-  $Reflex::Client::VERSION = '0.072';
+  $Reflex::Client::VERSION = '0.080';
 }
 use Moose;
 use Reflex::Stream;
 
 extends 'Reflex::Connector';
+with 'Reflex::Role::Collectible';
+use Reflex::Trait::Observed;
 
 has protocol => (
 	is      => 'rw',
@@ -19,10 +21,8 @@ has protocol => (
 	default => 'Reflex::Stream',
 );
 
-has connection => (
-	is      => 'rw',
+observes connection => (
 	isa     => 'Maybe[Reflex::Stream]',
-	traits  => ['Reflex::Trait::Observed'],
 	# Maps $self->put() to $self->connection()->put().
 	# TODO - Would be nice to have something like this for outbout
 	# events.  See on_connection_data() later in this module for more.
@@ -75,6 +75,7 @@ sub on_connection_data {
 sub stop {
 	my $self = shift;
 	$self->connection(undef);
+	$self->stopped();
 };
 
 1;
@@ -87,7 +88,7 @@ Reflex::Client - A non-blocking socket client.
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 

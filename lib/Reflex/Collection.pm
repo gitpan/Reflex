@@ -4,12 +4,16 @@
 
 package Reflex::Collection;
 BEGIN {
-  $Reflex::Collection::VERSION = '0.072';
+  $Reflex::Collection::VERSION = '0.080';
 }
 use Moose;
+use Moose::Exporter;
 use Reflex::Callbacks qw(cb_method);
+use Carp qw(cluck);
 
 extends 'Reflex::Base';
+
+Moose::Exporter->setup_import_methods( with_caller => [ qw( has_many ) ]);
 
 has objects => (
 	is      => 'rw',
@@ -33,6 +37,22 @@ sub cb_forget {
 	delete $self->objects()->{$args->{_sender}};
 }
 
+sub has_many {
+	my ($caller, $name, %etc) = @_;
+
+	my $meta = Class::MOP::class_of($caller);
+	foreach (qw(is isa default)) {
+		cluck "has_many is ignoring your '$_' parameter" if exists $etc{$_};
+	}
+
+	$etc{is}      = 'ro';
+	$etc{isa}     = 'Reflex::Collection';
+	$etc{lazy}    = 1 unless exists $etc{lazy};
+	$etc{default} = sub { Reflex::Collection->new() };
+
+	$meta->add_attribute($name, %etc);
+}
+
 1;
 
 __END__
@@ -43,7 +63,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 
@@ -54,10 +74,8 @@ version 0.072
 	use Reflex::Collection;
 	use EchoStream;
 
-	has clients => (
-		is      => 'rw',
-		isa     => 'Reflex::Collection',
-		default => sub { Reflex::Collection->new() },
+	# From Reflex::Collection.
+	has_many clients => (
 		handles => { remember_client => "remember" },
 	);
 
@@ -96,6 +114,29 @@ class is sufficient to trigger the proper cleanup.
 TODO - Reflex::Collection is an excellent place to manage pools of
 objects.  Provide a callback interface for pulling new objects as
 needed.
+
+=head2 has_many
+
+Reflex::Collection exports the has_many() function, which works like
+Moose's has() with "is", "isa", "lazy" and "default" set to common
+values.  For example:
+
+	has_many connections => (
+		handles => { remember_connection => "remember" },
+	);
+
+... is equivalent to:
+
+	has connections => (
+		# Defaults provided by has_many.
+		is      => 'ro',
+		isa     => 'Reflex::Collection',
+		lazy    => 1,
+		default => sub { Reflex::Collection->new() {,
+
+		# Customization.
+		handles => { remember_connection => "remember" },
+	);
 
 =head2 new
 

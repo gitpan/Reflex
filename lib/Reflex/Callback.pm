@@ -1,15 +1,14 @@
 package Reflex::Callback;
 BEGIN {
-  $Reflex::Callback::VERSION = '0.072';
+  $Reflex::Callback::VERSION = '0.080';
 }
 
 use Moose;
-use Reflex::Base;
 
 # It's a class if it's a Str.
 has object => (
-	is        => 'ro',
-	isa       => 'Object|Str',  # TODO - Reflex::Base|Str
+	is        => 'rw',
+	isa       => 'Object|Str',
 	weak_ref  => 1,
 );
 
@@ -23,7 +22,7 @@ Reflex::Callback - Generic callback adapters to simplify calling back
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 

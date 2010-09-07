@@ -1,6 +1,6 @@
 package Reflex::Role::Connecting;
 BEGIN {
-  $Reflex::Role::Connecting::VERSION = '0.072';
+  $Reflex::Role::Connecting::VERSION = '0.080';
 }
 use Reflex::Role;
 
@@ -124,7 +124,7 @@ Reflex::Role::Connecting - add non-blocking client connecting to a class
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 

@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use lib qw(lib);
+
+{
+	package Breadboard;
+	use Moose;
+	extends 'Reflex::Base';
+	use Ttl::And;
+	use Reflex::Trait::Observed;
+
+	observes ander => ( isa => 'Ttl::And' );
+
+	sub BUILD {
+		warn 111;
+		my $self = shift;
+		$self->ander( Ttl::And->new() );
+		$self->ander->a(1);
+		$self->ander->b(1);
+	}
+
+	sub on_ander_out {
+		my ($self, $args) = @_;
+		warn "Ander out: $args->{value}\n";
+	}
+}
+
+Breadboard->new()->run_all();
+exit;

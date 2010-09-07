@@ -1,6 +1,6 @@
 package Reflex::UdpPeer;
 BEGIN {
-  $Reflex::UdpPeer::VERSION = '0.072';
+  $Reflex::UdpPeer::VERSION = '0.080';
 }
 use Moose;
 extends 'Reflex::Base';
@@ -29,7 +29,7 @@ Reflex::UdpPeer - Base class for non-blocking UDP networking peers.
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 
@@ -71,10 +71,8 @@ Use it as a helper.
 
 	has port => ( isa => 'Int', is => 'ro' );
 
-	has peer => (
+	observes peer => (
 		isa     => 'Maybe[Reflex::UdpPeer]',
-		is      => 'rw',
-		traits  => ['Reflex::Trait::Observed'],
 		setup   => sub {
 			my $self = shift;
 			Reflex::UdpPeer->new(

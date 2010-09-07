@@ -20,4 +20,4 @@ requires:
   Test::More: 0.94
 resources:
   repository: http://github.com/rcaputo/reflex
-version: 0.072
+version: 0.080

@@ -1,0 +1,445 @@
+[_] 46% Framework Requirements
+	About
+		This document summarizes the best ideas from the patterns document.
+		It is also a master TODO list for Reflex.
+		It's in Vim Outliner Format.
+			Basically just an outline where tab indents denote levels.
+			The "[_] 0%" is ongoing progress, managed by Vim Outliner.
+			http://sites.google.com/site/vimoutlinerinfo/ ... version 0.3.4 or later required.
+		The docs/patterns.otl document tries to enumerate all available options.
+			Even ones that have been discarded.
+			Even ones we'd like to do but may never get around to.
+			Patterns contains some sexy, interesting, and hard projects.
+			Volunteers are welcome.
+		A later specification document will attempt to reconcile the requirements into a syntax and semantics.
+			This will probably become the documentation. :)
+	Desirable Qualities
+		Best practices should be encouraged.
+			Base classes should set precedents for best practices.
+			The design should encourage continued use of best practices.
+		Substandard qualities should be possible but gently discouraged.
+			People like to have options.
+			People like to exercise those options, whether or not they're good.
+			It's not the framework's duty to prevent people from doing what they want.
+	Undesirable Qualities
+		Avoid implicit constructs.
+			Implicit constructs cause action without visible indication.
+			They are disorienting.
+			They interfere with comprehension.
+		Avoid unnecessary magic.
+			Magic is scary.
+			It also implies action at a distance.
+		Avoid cleverness.
+			Cleverness leads to brittle design.
+			It also leads to unnecessary magic.
+			It also leads to implicit constructs.
+		Avoid metaphors.
+			Metaphors are harmful when writing abstract frameworks.
+			Metaphors are useful tools for creating systems that mimic real things.
+				When designed properly, metaphors provide conceptual and contextual information about a framework.
+			Metaphors are contradictory to abstract design.
+				Metaphors provide specific conceptual frameworks.
+				System designs that fit within these frameworks are elegant.
+				Systems that wish to use other concepts are generally awkward.
+				Adapters can connect between metaphors, but they should not be needed.
+	[_] 0% Documentation Requirements
+		Many "requirements" are really recommended conventions.
+		For example:
+			If we require return values to be typed, or ignored.
+			Obviously we can't force code to do that.
+			So we document it.
+		[_] 0% Style guide?
+			[_] 0% Event naming conventions.
+				Event names should read well following "on".
+					On failure.
+					On success.
+				[_] 0% "stopped" role for Reflex::Collections?
+					[_] 0% How to document these interactions?
+			[_] 0% Command naming conventions.
+				stop()
+		[_] 0% Normalize names in Reflex
+			[_] 0% Helpers
+			[_] 0% Internals
+			[_] 0% Traits
+			[_] 0% Parts and Reified Objects
+		[_] 0% Reflex::Manual
+			[_] 0% Nomenclature
+				[_] 0% Reflexive namespace is a sandbox for new modules.
+					Same purpose as the -X namespace convention.
+					A bit more whimsical.
+					Reads better.
+				[_] 0% Reflex is a curated namespace.
+					[_] 0% Define rules for inclusion.
+						Threshold for usage on CPAN?
+						Threshold for requests on mailing list?
+				Other namespaces are fine.
+					MooseX.
+					Elsewhere?  I don't care.
+	[X] 100% Namespace Requirements
+		[X] 100% Choose a short base name for the namespace.
+			Large class names are unwieldy.
+			Objects should be under a single top-level namespace.
+				What single top-level namespace should be used?
+				Bacon - Basic Asynchronous Cooperative Object Networks?
+				Reflex <- chosen one
+		[X] 100% Choose a relatively flat namespace for the framework.
+			Excessive namespace nesting is unwieldy.
+			The namespace should be organized.
+			How should the namespace be organized?
+	[_] 40% Class and Object Structural Requirements
+		[X] 100% Support full object orientation.
+			[X] 100% Support composition of smaller objects into larger ones (has-a).
+			[X] 100% Support composition through direct inheritance.
+			[X] 100% Support composition through class roles.
+			[X] 100% Support composition through runtime watcher roles.
+		[_] 0% Method parameters should follow a single standard.
+			[_] 0% Methods should receive only two parameters.
+				$self - The object being called.
+				$message - A Message object, or a subclass.
+				[_] 0% What about out-of-band information, such as other continuations?
+					Additional parameters?
+					Standard members of $message?
+					Lexical magic?
+						Not in the base.
+						Maybe as an extension.
+			[_] 0% Methods should standardize their return semantics.
+				[_] 0% What are those semantics?
+					Ignore return values?
+					emit() as return?
+						Maybe as an attribute?
+				[_] 0% Returned messages must be typed.
+		[_] 0% Function parameters should follow a single standard.
+			[_] 0% What should that standard be?
+		[X] 100% Procedural design should be supported.
+			Some people will prefer procedural design.
+			[X] Objects are their own condvars.
+				$object->wait() waits for the object to finish/destruct.
+		[_] 0% Determine whether "role" is a confusing name.
+			Alternatives:
+				part
+					Interestingly ambiguous.
+					Parts as in objects that assemble into other things.
+					Parts as in roles or duties in the whole.
+				duty
+					Uninterestingly unambiguous.
+					Dreary name.
+					No longer than role or part.
+				job
+					Shortest alternative.
+					Ambiguous, since "job" may mean a work unit.
+					Perhaps drearier than duty.
+				Not: responsibility
+					Too long.
+					Res. or resp. are ambiguous abbreviations.
+	[X] 100% Object Containership Composition Rules
+		[X] 100% Containership rules are delegated to the objects themselves.
+		[X] 100% Runtime roles may be assigned as part of the observation, not the sub-object.
+			[X] 100% Multiple watchers may have the same runtime role.
+				This is already possible.
+				Currently roles address watchers.
+				Multiple watchers for a role requires additional addressing.
+				Possibly passing the watcher object into the callback.
+				[X] 100% Implement a _sender parameter supplied by Reflex::Role::Object.
+			[X] 100% Default handler method names may be derived from roles and message types.
+				Sender is a DNS resolver.
+				Sender's role is "resolver".
+				Sender emits a "success" event.
+				Container may define an on_resolver_success() method to handle the event.
+		[X] 100% Methods
+			[X] 100% Containership methods are defined by Moose traits.
+				[X] 100% Moose Observer trait implies that the stored object will be observed by the owner.
+				[X] 100% Moose Emitter trait implies that changing the attribute emits an event to observers.
+				[X] 100% Moose introspection allows objects to find their contents.
+	[X] 100% Class Inheritance Rules
+		[X] 100% Class inheritance rules are delegated to Moose.
+	[_] 28% Messaging Requirements
+		[_] 0% Object command interfaces must be methods.
+			[_] 0% Methods on the objects themselves may pass messages into themselves.
+				Synchronous method calls are translated into asynchronous messages.
+			[_] 0% Methods on the objects may trigger activity that emits new events.
+				Synchronous actions may start or stop messages emitted by an object.
+			[_] 0% Objects may be interfaces (proxies) that pass messages to other objects.
+				Objects may act as interfaces to local or remote services.
+				Synchronous method calls are translated into asynchronous messages.
+		[_] 0% Local accessors and simple mutators must be synchronous.
+			Messages for local accessors and mutators is unnecessary overhead.
+			[_] 0% Maybe make this part of the style guide.
+		[_] 44% Objects must be permitted to emit messages into their containers.
+			[_] 0% Message emission is optional, depending on the use case.
+				[_] 0% Define a use case where message emission is required.
+				[_] 0% Define a use case where it's not.
+			[_] 83% Emitted messages are first handled by the object emitting them.
+				[X] 100% Subclasses may handle messages emitted by base classes.
+				[X] 100% Subclasses may emit new messages.
+				[_] 50% Subclasses may emit the same message without re-catching it.
+					Implies that events bubble out of the object.
+					Base class emits, and subclasses pass it outward.
+					[X] 100% Implement as small methods that re-emit events.
+						Easy to implement.
+						Tedious, because you have to implement one for every event.
+						Slow because of the extra method indirection.
+					[_] 0% Implement some kind of event mapping.
+						Hard to implement.
+						Syntactically messy because the mapping must be made explicit.
+							This could probably be cleaned up later.
+						Faster since it avoids the indirection.
+			[_] 50% Emitted messages are next handled by explicit and role-based observers.
+				[_] 0% Explicit observers.
+				[X] 100% Role-based observers.
+		[X] 100% All forms of message handler (callback) must be supported.
+			[X] 100% Anonymous Coderefs
+				Anonymous coderefs support closures.
+				Anonymous coderefs and closures may be used to implement faux continuation passing style.
+				[X] Simple.
+					my $t = Reflex::Timer->new( ..., on_event => \&coderef );
+				[X] Observer.
+					$object->watch( watched => $object, event => "name", callback => \&coderef );
+				[X] Traits.
+					has member => ( traits => ['Reflex::Trait::Observed'] );
+			[X] 100% Object Methods
+				Is this not obvious?
+				[X] Simple.
+					my $t = Reflex::Timer->new( ..., on_event => rcb_method($watcher, "method_name") );
+				[X] Observer (array).
+					my $t = Reflex::Timer->new( ..., on_event => rcb_object($watcher, \@methods) );
+				[X] Observer (hash).
+					my $t = Reflex::Timer->new( ..., on_event => rcb_object($watcher, \%methods) );
+				Traits not supported at this time.
+			[X] 100% Class Methods
+				Classes may be used as singletons.
+				[X] 100% Do we want to support this?
+			[X] 100% Promises or condvars.
+			Named Subroutine References
+				Named message handlers are exportable as reusable interfaces.
+				Not needed.  Roles perform this task.
+		[_] 0% Messages must be associated with their triggers.
+			[_] 0% One message may trigger another, inner message.
+				[_] 0% The inner message must be associated with the outer message.
+					If object represent tasks, then messages are not needed.
+					[_] 0% Do objects represent tasks?
+				[_] 0% Canceling the outer message must trigger cancelation of all associated inner messages.
+				[_] 0% Generally, all inner messages should complete before an outer message completes.
+					This emulates asynchronous call/return semantics for messages.
+					Task coordination is simplified.
+	[_] 50% Session Location Rules
+		[X] 100% Objects may be created in the same session as the creator.
+		[_] 0% Objects may be created in new sessions, separate from the creator.
+			[_] 0% New sessions may be started in the same process as the previous one.
+			[_] 0% New sessions may be started in new threads.
+				[_] 0% Investigate whether we want to support threads.
+					Threads support may be more efficient on Windows.
+					Perhaps transparently thread/fork depending on $^O.
+			[_] 0% New sessions may be started in other processes.
+				[_] 0% Processes may be forked at session creation time.
+					Caveat: The new session is executed in isolation.
+				[_] 0% Processes may be already established and attached to.
+			[_] 0% Consider POE::Component::IKC for the backbone between processes.
+			[_] 0% Consider MDNS for finding objects.
+	[_] 0% Continuation Rules
+		[_] 0% Continuations may be associated with objects.
+			$self is such a continuation.
+			[_] 0% Object-scoped resources (watchers, etc) should be stored in the object's continuation.
+				[_] 0% Object destruction triggers associated resource cleanup.
+		[_] 0% Continuations may be associated with messages.
+			[_] 0% A message's sender and receiver may have their own continuations associated with the message.
+			[_] 0% Data stored in the sender's continuation is not visible to the receiver.
+			[_] 0% Receiver data is not visible to the sender.
+			[_] 0% Message-scoped resources should be stored in the message's continuation.
+				[_] 0% Message cancelation triggers associated resource cleanup.
+	[_] 63% Common primitive classes must be provided.
+		[_] 50% Callback Abstractions
+			[X] 100% Reflex::Callback
+				[X] 100% Reflex::Callback::CodeRef
+				[X] 100% Reflex::Callback::Method
+				[X] 100% Reflex::Callback::Promise
+			[_] 0% Reflex::Callbacks
+				Syntactic sugar for callback creation.
+				[_] 0% Need to make this a declarative thing.
+		[_] 89% Low-level event watchers.
+			[X] 100% I/O Watchers
+				[X] 100% Reflex::Role::Readable
+				[X] 100% Reflex::Role::Writable
+			[_] 75% I/O Performers
+				[X] 100% Roles
+					[X] 100% Reflex::Role::Reading
+					[X] 100% Reflex::Role::Writing
+					[X] 100% Reflex::Role::Streaming
+				[_] 50% Classes
+					[X] 100% Reflex::Stream
+					[_] 0% Integrate Data::Transform
+			[X] 100% Time Watchers
+				[X] 100% Roles
+					[X] 100% Reflex::Role::Timeout
+					[X] 100% Reflex::Role::Wakeup
+					[X] 100% Reflex::Role::Interval
+				[X] 100% Classes
+					[X] 100% Reflex::Timeout
+					[X] 100% Reflex::Wakeup
+					[X] 100% Reflex::Interval
+			[X] 100% Signals
+				[X] 100% Roles
+					[X] 100% Reflex::Role::SigCatcher
+				[X] 100% Classes
+					[X] 100% Reflex::Signal
+			[X] 100% Clients and Servers
+				[X] 100% Roles
+					[X] 100% Reflex::Role::Connecting
+					[X] 100% Reflex::Role::Accepting
+					[X] 100% Reflex::Role::Recving
+				[X] 100% Classes
+					[X] 100% Reflex::Acceptor
+					[X] 100% Reflex::Connector
+					[X] 100% Reflex::Client
+					[X] 100% Reflex::UdpPeer
+			[X] 100% Pool Management
+				[X] 100% Reflex::Role::Collectible
+				[X] 100% Reflex::Collection
+					Manage a collection of Reflex objects.
+					Removes objects from itself when they shut down.
+					Reflex servers can use this to manage client objects.
+					[X] 100% has_many syntactic sugar for Reflex::Collection.
+			[_] 50% Process Watchers
+				[_] 0% Reflex::Role::ProcReaper?
+					I can't find a good reason to write this role.
+					This seems highly dynamic.
+					Contributions are welcome.
+				[X] 100% Reflex::PID
+		[_] 50% Containership Traits
+			[_] 50% Reflex::Trait::EmitsOnChange
+				[X] 100% Initial implementation, with explicit syntax.
+				[_] 0% Make declarative syntax so we can avoid the icky explicit use of traits.
+			[_] 50% Reflex::Trait::Observed
+				[X] 100% Initial implementation, with explicit syntax.
+				[_] 0% Make declarative syntax so we can avoid the icky explicit use of traits.
+		[X] 100% POE Interfaces
+			[X] 100% Wheel wrappers.
+				[X] 100% Reflex::POE::Wheel
+					Generic base class for POE::Wheel watchers.
+				[X] 100% Reflex::POE::Wheel::Run
+					Specific subclass for proving the concept.
+			[X] 100% Generic Component shims.
+				[X] 100% Create a postback analog for components that expect postbacks.
+					Reflex::POE::Postback
+					About
+						Creates a coderef that, when called, posts a message to the object's session, with routing information back to the object.
+						Postbacks use closures to pass @passthru_params to the callback.
+						Closures can also handle routing information.
+						Usage syntax must be identical to Reflex postbacks.
+						Creation syntax may differ from Reflex postbacks.
+							Identical creation syntax would be to allow others to create them for us.
+							However, most eternal postback creators use $_[SENDER]->postback().
+							$_[SENDER] is the Reflex object's session, not an individual object.
+							Therefore, components that call $_[SENDER]->postback() will not work.
+							Therefore, $_[SENDER]->postback() syntax is not needed.
+						To support identical creation syntax.
+							$_[SENDER] must be a session that maps directly to a single object.
+							It could be a dynamically created session for the purpose of interfacing.
+							Indirection would be heavy.
+							Consider it for a future revision.
+				[X] 100% Create an event analog for components that expect events.
+					About
+						Many components allow callers to specify return events.
+						We create a unique, anonymous event that calls a specific object and method upon dispatch.
+						We can pass this event to components that expect them.
+					Syntax if anonymous events may be blessed objects
+						my $event = Reflex::POE::Event->new(...);
+						$_[KERNEL]->post($event, @callback_params);
+					Syntax if events may not be blessed
+						About
+							Some explicit cleanup must be provided and adhered to.
+							Rely on object DEMOLISH to automatically clean up for us.
+							CAVEAT: Components that stringify event names will fail.
+						Sorry, but they must be blessed for now.
+							The bless and DEMOLISH tracking is very convenient.
+							I haven't found a good, reliable way to avoid it.
+					Dispatch Mechanism
+						_default
+							Events that are objects in the Reflex::POE::Event class are invoked to deliver themselves.
+				[X] 100% Session subscription.
+					About
+						A client Reflex object creates the component, to be used as a service.
+						The client Reflex object registers interest in the service's events.
+						The service's events are posted to all interested Reflex objects.
+						POE::Component::IRC will be a good example component.
+					Syntax
+						Reflex::POE::Session watcher.
+					Dispatch Mechanism
+						Sender Interest
+							The object creates the component.
+							The object registers interest in all events from the component.
+				[X] 100% Components that emit specific events require Wheel-like wrappers.
+					[X] 100% Is this worth supporting?
+						No.  The Session subscriber can detect any events emitted by the component.
+		[_] 80% Basic Modules	
+			[X] 100% Reflex::Base
+			[X] 100% Reflex::Role::Reactive
+			[_] 0% MooseX::Role::Reactive
+				[_] 0% Fork git project.
+				[_] 0% Remove all nonessentials.
+				[_] 0% Fix up dist.ini.
+				[_] 0% Rename things.
+			[X] 100% Reflex::Role
+			[X] 100% Reflex
+		[_] 13% Primitive program pieces.
+			[_] 0% Clean up this branch of the outline.
+			[_] 0% Reflex::App
+				[_] 0% Does it offer anything in particular?
+				[_] 0% Strawman implementation.
+				[_] 0% Determine API.
+			[_] 0% Reflex::Cron
+				[_] 0% Strawman implementation.
+				[_] 0% Determine API.
+					See POE::Component::Cron for clues.
+					Would Chris Fedde like to work on this?
+				[_] 0% Wait for repeating times.
+			[_] 25% Reflex::Client::HTTP
+				[X] 100% Reflex::Connector
+				[_] 0% Reflex::Connector::Keepalive
+					[_] 0% Strawman implementation.
+					[_] 0% Determine API.
+					[_] 0% Reified version of Reflex::Role::Connector::Keepalive?
+				[_] 0% Reflex::Resolver
+					[_] 0% Determine API.
+					[_] 0% Determine how to make asynchronous.
+						Forked?
+						Coro?
+						Threads?
+					[_] 0% IPV4
+					[_] 0% IPv6
+					[_] 0% Reified version of Reflex::Role::Resolver
+				[_] 0% Is this a reified version of Reflex::Role::Client::HTTP?
+					Do we really need to be that dogmatic about roles?
+					What would a role allow us to do?
+			[_] 0% Reflex::Conduit
+				[_] 0% Reified version of Reflex::Role::Proxy
+				[_] 0% Based on the example proxy.
+				[_] 0% Between-endpoint flow control?
+				[_] % Generic rate throttling?
+			[_] 0% Reflex::Process
+				[_] 0% Strawman implementation.
+				[_] 0% Determine API.
+					See POE::Wheel::Run for clues.
+			[_] 0% Reflex::Tail
+				[_] 0% Strawman implementation.
+				[_] 0% Determine API.
+					See POE::Wheel::FollowTail for clues.
+				[_] 0% Reified version of Reflex::Role::Tail
+			[X] 100% Reflex::Collection
+			[_] 0% What else?  Probably a lot!
+	[_] 33% Optimizations.
+		[X] 100% Only $kernel->call() when we need to switch sessions.
+		[_] 0% Do we need call() at all?
+			[_] 0% Explore IO::Lambda's cheat.
+		[_] 0% Consolidate POE-specific code out into a single role.
+			Allows other event loops to be supported directly rather than through POE.
+			[_] 0% POE::Session singleton
+			[_] 0% has session_id
+			[_] 0% sub run_all
+			[_] 0% sub run_within_session
+			[_] 0% sub call_gate
+			[_] 0% Abstract event loop things.
+Philosophy
+	Boolean role parameters are opportunities for new roles or role subclasses.
+		Static behaviors should be determined at role consumption time.
+		Not continually evaluated at runtime.
+		Runtime behavior toggles are only appropriate when behavior should change at runtime.

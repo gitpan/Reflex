@@ -1,6 +1,6 @@
 package Reflex::PID;
 BEGIN {
-  $Reflex::PID::VERSION = '0.072';
+  $Reflex::PID::VERSION = '0.080';
 }
 
 use Moose;
@@ -38,7 +38,7 @@ Reflex::PID - Observe the exit of a subprocess by its SIGCHLD signal.
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 
@@ -47,11 +47,9 @@ version 0.072
 
 	use Reflex::PID;
 
-	has pid_watcher => (
-		isa    => 'Reflex::PID|Undef',
-		is     => 'rw',
-		traits => ['Reflex::Trait::Observed'],
-		role   => 'process',
+	observes pid_watcher => (
+		isa   => 'Reflex::PID|Undef',
+		role  => 'process',
 	);
 
 	sub some_method {

@@ -71,11 +71,6 @@ my $singleton_session_id = POE::Session->create(
 			$signal_class->deliver(@_[ARG0..$#_]);
 		},
 
-		sigchld_happened => sub {
-			my $signal_class = pop @_;
-			$signal_class->deliver(@_[ARG0..$#_]);
-		},
-
 		### Cross-session emit() is converted into these events.
 
 		deliver_callback => sub {
@@ -253,7 +248,10 @@ after BUILD => sub {
 		next unless $param =~ /^on_(\S+)/;
 
 		if (ref($value) eq "CODE") {
-			$value = Reflex::Callback::CodeRef->new(code_ref => $value);
+			$value = Reflex::Callback::CodeRef->new(
+				object    => $self,
+				code_ref  => $value,
+			);
 		}
 
 		# There is an object, so we have a watcher.
@@ -331,6 +329,7 @@ sub _stop_watchers {
 	}
 
 	delete $self->watchers()->{$watcher} unless (
+		exists $self->watchers()->{$watcher} and
 		@{$self->watchers()->{$watcher}}
 	);
 }

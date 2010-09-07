@@ -1,9 +1,12 @@
 package Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Reflex::Trait::EmitsOnChange::VERSION = '0.072';
+  $Reflex::Trait::EmitsOnChange::VERSION = '0.080';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
+
+use Moose::Exporter;
+Moose::Exporter->setup_import_methods( with_caller => [ qw( emits ) ]);
 
 has setup => (
 	isa     => 'CodeRef|HashRef',
@@ -81,9 +84,19 @@ has event => (
 	},
 );
 
+### EmitsOnChanged declarative syntax.
+
+sub emits {
+	my ($caller, $name, %etc) = @_;
+	my $meta = Class::MOP::class_of($caller);
+	push @{$etc{traits}}, __PACKAGE__;
+	$etc{is} = 'rw' unless exists $etc{is};
+	$meta->add_attribute($name, %etc);
+}
+
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.072';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.080';
 }
 sub register_implementation { 'Reflex::Trait::EmitsOnChange' }
 
@@ -97,7 +110,7 @@ Reflex::Trait::EmitsOnChange - Emit an event when an attribute's value changes.
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 
@@ -108,6 +121,13 @@ version 0.072
 	use Moose;
 	extends 'Reflex::Base';
 	use Reflex::Trait::EmitsOnChange;
+
+	emits count => (
+		isa       => 'Int',
+		default   => 0,
+	);
+
+An equivalent alternative:
 
 	has count   => (
 		traits    => ['Reflex::Trait::EmitsOnChange'],
@@ -142,6 +162,13 @@ attribute.  In the above example, clock() will by default contain
 
 In other words, it will emit the Reflex::Interval event ("tick") once
 per second until destroyed.
+
+=head1 Declarative Syntax
+
+Reflex::Trait::EmitsOnChange exports a declarative emits() function,
+which acts almost identically to Moose's has() but with a couple
+convenient defaults: The EmitsOnChange trait is added, and the
+attribute is "rw" to allow changes.
 
 =head1 CAVEATS
 

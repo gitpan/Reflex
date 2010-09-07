@@ -16,7 +16,7 @@ has active => (
 );
 
 with 'Reflex::Role::PidCatcher' => {
-	pid						=> 'pid',
+	pid           => 'pid',
 	active        => 'active',
 	cb_exit       => 'on_exit',
 	method_start  => 'start',

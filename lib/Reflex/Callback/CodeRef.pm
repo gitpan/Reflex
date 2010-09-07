@@ -1,6 +1,6 @@
 package Reflex::Callback::CodeRef;
 BEGIN {
-  $Reflex::Callback::CodeRef::VERSION = '0.072';
+  $Reflex::Callback::CodeRef::VERSION = '0.080';
 }
 
 use Moose;
@@ -14,7 +14,7 @@ has code_ref => (
 
 sub deliver {
 	my ($self, $event, $arg) = @_;
-	$self->code_ref()->($arg);
+	$self->code_ref()->($self->object(), $arg);
 }
 
 1;
@@ -27,7 +27,7 @@ Reflex::Callback::CodeRef - Callback adapter for plain code references
 
 =head1 VERSION
 
-version 0.072
+version 0.080
 
 =head1 SYNOPSIS
 

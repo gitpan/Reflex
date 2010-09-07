@@ -1,6 +1,52 @@
-==============================
-9999-99-99 99:99:99 +0000 HEAD
-==============================
+================================
+2010-09-06 22:10:35 -0400 v0_080
+================================
+
+  commit 02cbace86c93007760218a9ad6dbfe3a07f6eacc
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 6 22:10:35 2010 -0400
+  
+    Fix emitting/observing attributes in the weak TTL examples. They
+    still don't work, however.
+
+  commit 6eae87cc7b55520bb6803d6ce52176927611b8b4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 6 21:50:10 2010 -0400
+  
+    Add "emits" and "observes" attribute declarations.
+
+    "emits" is a shortcut for Reflex::Trait::EmitsOnChange. "observes" is
+    a shortcut for Reflex::Trait::Observed. Names and locations may
+    change.
+
+  commit 134c7e07d5a25f8006f822137c319d8773df7424
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 6 15:47:39 2010 -0400
+  
+    Add simpler has_many syntax for Reflex::Collection.
+
+  commit aeb38523e9c6c6dc1a19ae0af0eee4753c1ad86b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 6 12:18:07 2010 -0400
+  
+    Document another urgent TODO and expand upon the less urgent one.
+
+  commit 253508c3e1acf0308a648ad4cd885439bf6d4d17
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 6 04:31:27 2010 -0400
+  
+    New example using Reflex within Bot::BasicBot. Incomplete, per TODO
+    notes within this commit.
+
+  commit c3ae474440a5a6eefaf05561e5411402d0675761
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Sep 5 17:31:02 2010 -0400
+  
+    Document a new example idea: Using Reflex from POE programs.
+
+    If this can be made to work, it represents an incremental migration
+    path from POE to Reflex. Begin with a POE program, and gradually
+    incorporate Reflex code. Eventually (har) port everything over.
 
   commit 394ca1407078520763ca8e72a190feb5f4d2d1d1
   Author: Rocco Caputo <rcaputo@cpan.org>
