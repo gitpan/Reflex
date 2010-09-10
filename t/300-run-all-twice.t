@@ -5,7 +5,7 @@
 	use Reflex::POE::Wheel::Run;
 	use Reflex::Callbacks qw(cb_role);
 
-	use Test::More;
+	use constant VERBOSE => 0;
 
 	has count => (
 		is => 'rw',
@@ -34,34 +34,36 @@
 	}
 
 	sub on_child_stdin {
-		diag("stdin flushed");
+		VERBOSE and Test::More::diag("stdin flushed");
 	}
 
 	sub on_child_stdout {
 		my ($self, $args) = @_;
-		diag("stdout: $args->{output}");
+		VERBOSE and Test::More::diag("stdout: $args->{output}");
 		${$self->count()}++;
 	}
 
 	sub on_child_stderr {
 		my ($self, $args) = @_;
-		diag("stderr: $args->{output}");
+		VERBOSE and Test::More::diag("stderr: $args->{output}");
 	}
 
 	sub on_child_error {
 		my ($self, $args) = @_;
 		return if $args->{operation} eq "read";
-		diag("$args->{operation} error $args->{errnum}: $args->{errstr}");
+		VERBOSE and Test::More::diag(
+			"$args->{operation} error $args->{errnum}: $args->{errstr}"
+		);
 	}
 
 	sub on_child_close {
 		my ($self, $args) = @_;
-		diag("child closed all output");
+		VERBOSE and Test::More::diag("child closed all output");
 	}
 
 	sub on_child_signal {
 		my ($self, $args) = @_;
-		diag("child $args->{pid} exited: $args->{exit}");
+		VERBOSE and Test::More::diag("child $args->{pid} exited: $args->{exit}");
 		$self->wheel(undef);
 	}
 }

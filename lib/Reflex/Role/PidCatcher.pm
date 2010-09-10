@@ -1,6 +1,6 @@
 package Reflex::Role::PidCatcher;
 BEGIN {
-  $Reflex::Role::PidCatcher::VERSION = '0.080';
+  $Reflex::Role::PidCatcher::VERSION = '0.081';
 }
 use Reflex::Role;
 
@@ -157,7 +157,7 @@ Reflex::Role::PidCatcher - add async process reaping behavior to a class
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

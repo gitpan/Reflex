@@ -1,6 +1,6 @@
 package Reflex::Role::Interval;
 BEGIN {
-  $Reflex::Role::Interval::VERSION = '0.080';
+  $Reflex::Role::Interval::VERSION = '0.081';
 }
 use Reflex::Role;
 use Scalar::Util qw(weaken);
@@ -96,7 +96,7 @@ Reflex::Role::Interval - set a periodic, recurring timer
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

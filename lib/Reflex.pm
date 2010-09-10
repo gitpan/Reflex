@@ -1,6 +1,6 @@
 package Reflex;
 BEGIN {
-  $Reflex::VERSION = '0.080';
+  $Reflex::VERSION = '0.081';
 }
 
 use warnings;
@@ -47,7 +47,7 @@ Reflex - Class library for flexible, reactive programs.
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Timeout;
 BEGIN {
-  $Reflex::Role::Timeout::VERSION = '0.080';
+  $Reflex::Role::Timeout::VERSION = '0.081';
 }
 use Reflex::Role;
 use Scalar::Util qw(weaken);
@@ -98,7 +98,7 @@ Reflex::Role::Timeout - set a wakeup callback for a relative delay
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Signal;
 BEGIN {
-  $Reflex::Signal::VERSION = '0.080';
+  $Reflex::Signal::VERSION = '0.081';
 }
 
 use Moose;
@@ -38,7 +38,7 @@ Reflex::Signal - receive callbacks when signals arrive
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

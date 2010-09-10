@@ -5,8 +5,6 @@
 	use Reflex::POE::Wheel::Run;
 	use Reflex::Callbacks qw(cb_role);
 
-	use Test::More;
-
 	has count => (
 		is => 'rw',
 		isa => 'ScalarRef',
@@ -34,34 +32,34 @@
 	}
 
 	sub on_child_stdin {
-		diag("stdin flushed");
+		Test::More::diag("stdin flushed");
 	}
 
 	sub on_child_stdout {
 		my ($self, $args) = @_;
-		diag("stdout: $args->{output}");
+		Test::More::diag("stdout: $args->{output}");
 		${$self->count()}++;
 	}
 
 	sub on_child_stderr {
 		my ($self, $args) = @_;
-		diag("stderr: $args->{output}");
+		Test::More::diag("stderr: $args->{output}");
 	}
 
 	sub on_child_error {
 		my ($self, $args) = @_;
 		return if $args->{operation} eq "read";
-		diag("$args->{operation} error $args->{errnum}: $args->{errstr}");
+		Test::More::diag("$args->{operation} error $args->{errnum}: $args->{errstr}");
 	}
 
 	sub on_child_close {
 		my ($self, $args) = @_;
-		diag("child closed all output");
+		Test::More::diag("child closed all output");
 	}
 
 	sub on_child_signal {
 		my ($self, $args) = @_;
-		diag("child $args->{pid} exited: $args->{exit}");
+		Test::More::diag("child $args->{pid} exited: $args->{exit}");
 		$self->wheel(undef);
 	}
 }

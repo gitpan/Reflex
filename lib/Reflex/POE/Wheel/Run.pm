@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel::Run;
 BEGIN {
-  $Reflex::POE::Wheel::Run::VERSION = '0.080';
+  $Reflex::POE::Wheel::Run::VERSION = '0.081';
 }
 use Moose;
 extends 'Reflex::POE::Wheel';
@@ -88,7 +88,7 @@ sub valid_params {
 # Also handle signals.
 
 observes sigchild_watcher => (
-	isa   => 'Reflex::PID|Undef',
+	isa   => 'Maybe[Reflex::PID]',
 	role  => 'sigchld',
 );
 
@@ -124,7 +124,7 @@ Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

@@ -1,4 +1,19 @@
 ================================
+2010-09-08 22:33:44 -0400 v0_081
+================================
+
+  commit 1b7423a2c48f6137ed8c01c3fe94f293a967f164
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 8 22:33:44 2010 -0400
+  
+    Add agorman's test for run_all() called twice, and fix the problem.
+
+    Agorman (irc.perl.org #reflex) discovered that run_all() called more
+    than once asplodes ugly-like. He provided a nice test case, which
+    I've added to Reflex's tests. It uses Reflex::POE::Wheel::Run, and
+    that might need to be removed to make the test more portable. 
+
+================================
 2010-09-06 22:10:35 -0400 v0_080
 ================================
 

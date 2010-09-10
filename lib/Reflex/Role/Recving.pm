@@ -1,6 +1,6 @@
 package Reflex::Role::Recving;
 BEGIN {
-  $Reflex::Role::Recving::VERSION = '0.080';
+  $Reflex::Role::Recving::VERSION = '0.081';
 }
 use Reflex::Role;
 
@@ -112,7 +112,7 @@ Reflex::Role::Recving - Mix standard send/recv code into a class.
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

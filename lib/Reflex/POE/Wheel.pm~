@@ -1,7 +1,4 @@
 package Reflex::POE::Wheel;
-BEGIN {
-  $Reflex::POE::Wheel::VERSION = '0.081';
-}
 use Moose;
 extends 'Reflex::Base';
 use Scalar::Util qw(weaken);
@@ -29,20 +26,23 @@ sub BUILD {
 	while (my ($wheel_param, $event_idx) = each %$event_to_index) {
 		$args->{$wheel_param} = "wheel_event_$event_idx";
 	}
-
+warn 10000;
 	$self->create_wheel($wheel_class, $args);
+warn 10010;
 }
 
 sub create_wheel {
 	my ($self, $wheel_class, $args) = @_;
-
+warn 30000;
 	return unless $self->call_gate("create_wheel", $wheel_class, $args);
-
+warn 30010;
 	my $wheel = $wheel_class->new( %$args );
+warn "30015 ($wheel)";
 	$self->wheel($wheel);
-
+warn 30020;
 	$wheel_id_to_object{$wheel->ID()} = $self;
 	weaken $wheel_id_to_object{$wheel->ID()};
+warn 30030;
 }
 
 sub wheel_id {
@@ -102,10 +102,6 @@ __END__
 =head1 NAME
 
 Reflex::POE::Wheel - Base class for POE::Wheel wrappers.
-
-=head1 VERSION
-
-version 0.081
 
 =head1 SYNOPSIS
 

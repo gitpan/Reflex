@@ -1,6 +1,6 @@
 package Reflex::Callback::Method;
 BEGIN {
-  $Reflex::Callback::Method::VERSION = '0.080';
+  $Reflex::Callback::Method::VERSION = '0.081';
 }
 
 use Moose;
@@ -28,7 +28,7 @@ Reflex::Callback::Method - Callback adapter for class and object methods
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 

@@ -2,6 +2,8 @@ package Reflex::POE::Wheel::Run;
 use Moose;
 extends 'Reflex::POE::Wheel';
 use POE::Wheel::Run;
+use Reflex::PID;
+use Reflex::Trait::Observed;
 
 # These are class methods, returning static class data.
 # TODO - What's the proper way to do this with Moose?
@@ -82,18 +84,18 @@ sub valid_params {
 
 # Also handle signals.
 
-use Reflex::PID;
 observes sigchild_watcher => (
-	isa   => 'Reflex::PID|Undef',
+	isa   => 'Maybe[Reflex::PID]',
 	role  => 'sigchld',
 );
 
 sub BUILD {
 	my $self = shift;
-
+warn "20000 (", $self->wheel(), ")";
 	$self->sigchild_watcher(
 		Reflex::PID->new(pid => $self->wheel()->PID())
 	);
+warn 20010;
 }
 
 # Rethrow our signal event.

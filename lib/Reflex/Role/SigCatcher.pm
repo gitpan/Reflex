@@ -1,6 +1,6 @@
 package Reflex::Role::SigCatcher;
 BEGIN {
-  $Reflex::Role::SigCatcher::VERSION = '0.080';
+  $Reflex::Role::SigCatcher::VERSION = '0.081';
 }
 use Reflex::Role;
 
@@ -166,7 +166,7 @@ Reflex::Role::SigCatcher - add signal catching behavior to a class
 
 =head1 VERSION
 
-version 0.080
+version 0.081
 
 =head1 SYNOPSIS
 
