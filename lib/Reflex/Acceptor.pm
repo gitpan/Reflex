@@ -1,6 +1,6 @@
 package Reflex::Acceptor;
 BEGIN {
-  $Reflex::Acceptor::VERSION = '0.081';
+  $Reflex::Acceptor::VERSION = '0.085';
 }
 
 use Moose;
@@ -15,7 +15,9 @@ has listener => (
 with 'Reflex::Role::Accepting' => {
 	listener      => 'listener',
 	cb_accept     => 'on_accept',
+	ev_accept     => 'accept',
 	cb_error      => 'on_error',
+	ev_error      => 'error',
 	method_pause  => 'pause',
 	method_resume => 'resume',
 	method_stop   => 'stop',
@@ -31,7 +33,7 @@ Reflex::Acceptor - non-blocking client socket acceptor
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

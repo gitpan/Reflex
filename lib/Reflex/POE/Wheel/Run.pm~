@@ -91,11 +91,10 @@ observes sigchild_watcher => (
 
 sub BUILD {
 	my $self = shift;
-warn "20000 (", $self->wheel(), ")";
+
 	$self->sigchild_watcher(
 		Reflex::PID->new(pid => $self->wheel()->PID())
 	);
-warn 20010;
 }
 
 # Rethrow our signal event.

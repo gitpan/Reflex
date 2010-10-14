@@ -1,88 +1,153 @@
-{
-	package Runner;
-	use Moose;
-	extends 'Reflex::Base';
-	use Reflex::POE::Wheel::Run;
-	use Reflex::Callbacks qw(cb_role);
+#!/usr/bin/env perl
 
-	use Test::More;
+# Agorman's concerns:
+#
+# 1. This way of doing things seems like I couldn't do $tc->next to get
+# the result event.
+#
+#   a. We can add a new pass_on() that re-emits events without
+#   clobbering _sender.  However, this inverts the problem---in some
+#   cases we may want _sender to refer to the collection!  The caller
+#   should be able to decide.
+#
+#   b. Add the member to $args when re-emitting an event.  A test
+#   implementation is in on_result_2() below.  This seems the best
+#   design of all the solutions, but it's also the most tedious and
+#   least efficient.  Every layer of the stack must re-emit events
+#   that are part of its interface... which is good encapsulation.
+#
+#   Perhaps some syntactic convention can configure or short-circuit
+#   re-emitted events at class construction time?
+#
+#   c. We can hack Reflex::Role::Reactive to propagate unhandled
+#   emitted events to parents/grandparent/etc. promises.  Too
+#   implicit.  "Spooky action at a distance."  I don't like invisible
+#   things like this.
+#
+# 2. Not sure I love $self->result( $args ); inside my TestCollectible
+# method. Be nice if it could just get the current state of the
+# object.  Using sender doesn't work because the state has (possible)
+# changed by the time of the callback.
+#
+#   I don't know if that would be possible without cloning the object
+#   at the time of result().  And then any calls on the clone wouldn't
+#   affect the original object that might still be in the collection.
+#
+#   It might help to think of results as being different types than
+#   the objects that create them.  DNS resolvers return IP addresses,
+#   not more DNS resolvers.  HTTP user agents return HTTP responses.
+#
+#   Maybe result() could be renamed response() or output()?
+#
+# 3. It would be nice if my callback inside the owner class was
+# on_foo_event rather than on_event but I don't know of a good way to
+# deal with the plural singular thing.
+
+{
+	package TestCollectible;
+	use Moose;
+	with 'Reflex::Role::Collectible';
+	extends 'Reflex::Base';
+	use Reflex::Trait::Observed;
+	use Reflex::Interval;
+
+	has id => (
+		is  => 'rw',
+		isa => 'Int',
+	);
 
 	has count => (
 		is => 'rw',
-		isa => 'ScalarRef',
-	);
-	
-	has wheel => (
-		isa => 'Reflex::POE::Wheel::Run|Undef',
-		is  => 'rw',
+		isa => 'Int',
+		default => 0,
 	);
 
-	has end => (
-		isa => 'Int',
-		is  => 'ro',
+	observes timer => (
+		is => 'rw',
+		isa => 'Maybe[Reflex::Interval]',
+		setup => sub {
+			Reflex::Interval->new(
+				interval => 0.1,
+				auto_repeat => 1,
+			);
+		}
+	);
+
+	sub on_timer_tick {
+		my $self = shift;
+
+		my $count = $self->count() + 1;
+		$self->result({ value => $count });
+		if ($count < 9) {
+			$self->count($count);
+			return;
+		}
+
+		$self->timer(undef);
+		$self->stopped();
+		return;
+	}
+}
+
+{
+	package TestCollection;
+	use Moose;
+	extends 'Reflex::Collection';
+	BEGIN { $::INC{TestCollection} = 1 }
+}
+
+{
+	package TestCollector;
+	use Moose;
+	extends 'Reflex::Base';
+	BEGIN { TestCollection->import() };
+
+	has_many foos => (
+		handles   => { remember_foo => "remember" },
 	);
 
 	sub BUILD {
-		my $self = shift;
+		my ($self, $args) = @_;
 
-		$self->wheel(
-			Reflex::POE::Wheel::Run->new(
-				Program => "$^X -wle 'print qq[pid(\$\$) moo(\$_)] for 1..".$self->end."; exit'",
-				cb_role($self, "child"),
-			)
+		for (1..9) {
+			$self->remember_foo(TestCollectible->new(id => $_));
+		}
+	}
+
+	sub on_result_1 {
+		my ($self, $args) = @_;
+
+		my $foo      = $args->{_sender};
+		my $value    = $args->{value};
+		my $foo_type = ref $foo;
+		printf(
+			"got a result_1 of %s! id => %s, value => %s\n",
+			$foo_type, $foo->id, $value
 		);
 	}
 
-	sub on_child_stdin {
-		diag("stdin flushed");
-	}
+	# 2. TestCollection can include a new "member" parameter when it
+	# re-emits events.  "member" points to the collectible object that
+	# really sent the event.  Reflex::Role::Reactive is free to clobber
+	# _sender.
 
-	sub on_child_stdout {
+	sub on_result_2 {
 		my ($self, $args) = @_;
-		diag("stdout: $args->{output}");
-		${$self->count()}++;
-	}
-
-	sub on_child_stderr {
-		my ($self, $args) = @_;
-		diag("stderr: $args->{output}");
-	}
-
-	sub on_child_error {
-		my ($self, $args) = @_;
-		return if $args->{operation} eq "read";
-		diag("$args->{operation} error $args->{errnum}: $args->{errstr}");
-	}
-
-	sub on_child_close {
-		my ($self, $args) = @_;
-		diag("child closed all output");
-	}
-
-	sub on_child_signal {
-		my ($self, $args) = @_;
-		diag("child $args->{pid} exited: $args->{exit}");
-		$self->wheel(undef);
+		$args->{member} = $args->{_sender};
+		$self->emit( event => "result_n", args => $args );
 	}
 }
 
-# Main.
+# By waiting on a promise for TestCollection, we really want to
+# receive events from any TestCollectible in the collection.
 
-use Test::More tests => 2;
-
-{
-	my ($end, $count) = (1, 0);
-	my $runner = Runner->new(end => 1, count => \$count);
-	Reflex->run_all();
-	is($end, $count, "first run ran to completion");
-}
-
-{
-	my ($end, $count) = (10, 0);
-	my $runner2 = Runner->new(end => 10, count => \$count);
-	Reflex->run_all();
-	Reflex->run_all();
-	is($end, $count, "second run ran to completion");
+my $tc = TestCollector->new();
+while (my $e = $tc->next) {
+	my $sender = $e->{arg}{member};
+	printf(
+		"got a promise of %s! id => %s, value => %s\n",
+		ref($sender), $sender->id, $e->{arg}{value}
+	);
 }
 
 exit;

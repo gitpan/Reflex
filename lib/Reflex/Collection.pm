@@ -4,11 +4,12 @@
 
 package Reflex::Collection;
 BEGIN {
-  $Reflex::Collection::VERSION = '0.081';
+  $Reflex::Collection::VERSION = '0.085';
 }
 use Moose;
 use Moose::Exporter;
 use Reflex::Callbacks qw(cb_method);
+use Reflex::Role::Collectible;
 use Carp qw(cluck);
 
 extends 'Reflex::Base';
@@ -17,24 +18,29 @@ Moose::Exporter->setup_import_methods( with_caller => [ qw( has_many ) ]);
 
 has objects => (
 	is      => 'rw',
-	isa     => 'HashRef[Reflex::Collectible]',
+	isa     => 'HashRef[Reflex::Role::Collectible]',
+	traits  => ['Hash'],
 	default => sub { {} },
+	handles => {
+		_set_object => 'set',
+		_delete_object => 'delete',
+	},
 );
 
 sub remember {
 	my ($self, $object) = @_;
 	$self->watch($object, stopped => cb_method($self, "cb_forget"));
-	$self->objects()->{$object} = $object;
+	$self->_set_object($object, $object);
 }
 
 sub forget {
 	my ($self, $object) = @_;
-	delete $self->objects()->{$object};
+	$self->_delete_object($object);
 }
 
 sub cb_forget {
 	my ($self, $args) = @_;
-	delete $self->objects()->{$args->{_sender}};
+	$self->_delete_object($args->{_sender});
 }
 
 sub has_many {
@@ -63,7 +69,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

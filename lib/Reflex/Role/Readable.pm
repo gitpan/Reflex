@@ -1,6 +1,6 @@
 package Reflex::Role::Readable;
 BEGIN {
-  $Reflex::Role::Readable::VERSION = '0.081';
+  $Reflex::Role::Readable::VERSION = '0.085';
 }
 use Reflex::Role;
 
@@ -50,18 +50,24 @@ role {
 		$POE::Kernel::poe_kernel->select_pause_read($self->$h());
 	};
 
-	method $p->method_pause() => sub {
+	my $method_pause = $p->method_pause();
+	method $method_pause => sub {
 		my $self = shift;
+		return unless $self->call_gate($method_pause);
 		$POE::Kernel::poe_kernel->select_pause_read($self->$h());
 	};
 
-	method $p->method_resume() => sub {
+	my $method_resume = $p->method_resume();
+	method $p->method_resume => sub {
 		my $self = shift;
+		return unless $self->call_gate($method_resume);
 		$POE::Kernel::poe_kernel->select_resume_read($self->$h());
 	};
 
-	method $p->method_stop() => sub {
+	my $method_stop = $p->method_stop();
+	method $method_stop => sub {
 		my $self = shift;
+		return unless $self->call_gate($method_stop);
 		$POE::Kernel::poe_kernel->select_read($self->$h(), undef);
 	};
 
@@ -96,7 +102,7 @@ Reflex::Role::Readable - add readable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

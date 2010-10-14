@@ -11,6 +11,8 @@ parameter active => (
 );
 
 callback_parameter  cb_exit       => qw( on pid exit );
+event_parameter     ev_exit       => qw( _ pid exit );
+
 method_parameter    method_start  => qw( start pid _ );
 method_parameter    method_stop   => qw( stop pid _ );
 method_parameter    method_pause  => qw( pause pid _ );
@@ -143,14 +145,14 @@ role {
 		}
 	};
 
-	method_emit $cb_exit => "pid";
+	method_emit $cb_exit => $p->ev_exit();
 };
 
 __END__
 
 =head1 NAME
 
-Reflex::Role::PidCatcher - add signal catching behavior to a class
+Reflex::Role::PidCatcher - add async process reaping behavior to a class
 
 =head1 SYNOPSIS
 
@@ -205,7 +207,7 @@ to wait for.  Process IDs must be integers.
 
 =head3 active
 
-C<active> specifies whether Reflex::Role::SigCatcher should be created
+C<active> specifies whether Reflex::Role::PidCatcher should be created
 in the active, process-watching state.  All Reflex watchers are
 enabled by default.  Set it to a false value, preferably 0, to
 initialize the catcher in an inactive or paused mode.
@@ -227,47 +229,49 @@ it will be "on_transcoder_exit" if the process ID is stored in a
 
 C<method_start> sets the name of the method that may be used to start
 watching for a process exit.  It's "start_%s" by default, where %s is
-the attribute  name being caught.
+the name of the process ID's attribute.
 
-Reflex::Role::SigCatcher will automatically start watching for signals
-if the value of C<active>'s attribute is true.
+Reflex::Role::PidCatcher will automatically start watching for its
+process ID if the value of C<active>'s attribute is true.
 
 =head3 method_stop
 
-C<method_stop> may be used to permanently stop signal catchers.
-Stopped catchers cannot be restarted, so use C<method_pause> if you
-need to temporarily disable signal watchers.  C<method_resume> may be
+C<method_stop> may be used to permanently stop a process ID watcher.
+Stopped watchers cannot be restarted, so use C<method_pause> if you
+need to temporarily disable them instead.  C<method_resume> may be
 used to resume them again.
 
-Signal catchers will automatically stop watching for signals upon
-DEMOLISH.
+Process ID catchers will automatically stop watching for process exit
+upon DEMOLISH.
 
 =head3 method_pause
 
 C<method_pause> sets the name of the method that may be used to pause
-signal catching.  It is "pause_%s" by default, where %s is the signal
-name being caught.
+process catching.  It is "pause_%s" by default, where %s is the name
+of the PID attribute.
 
 =head3 method_resume
 
 C<method_resume> sets the name of the method that may be used to
-resume signal catching.  It is "resume_%s" by default, where %s is the
-signal name being caught.
+resume process reaping.  It is "resume_%s" by default, where %s is the
+name of the attribute holding the process ID.
 
 =head1 EXAMPLES
 
-eg/eg-39-signals.pl shows how Reflex::Signal may be used with
-callbacks or promises.
+Reflex::Role::PidCatcher was initially written to support Reflex::PID,
+so there aren't many examples of the role's use by itself.
 
-L<Reflex::Signal> is a simple class that watches for signals with
-Reflex::Role::SigCatcher.
+L<Reflex::POE::Wheel::Run> actualy uses Reflex::PID.
+
+eg/eg-07-wheel-run.pl uses Reflex::POE::Wheel::Run.
 
 =head1 SEE ALSO
 
 L<Reflex>
+L<Reflex::Role::SigCatcher>
 L<Reflex::Signal>
-L<Reflex::Role::PidReaper>
-L<Reflex::PidReaper>
+L<Reflex::Role::PidCatcher>
+L<Reflex::PID>
 
 L<Reflex/ACKNOWLEDGEMENTS>
 L<Reflex/ASSISTANCE>

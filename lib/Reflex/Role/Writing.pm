@@ -1,6 +1,6 @@
 package Reflex::Role::Writing;
 BEGIN {
-  $Reflex::Role::Writing::VERSION = '0.081';
+  $Reflex::Role::Writing::VERSION = '0.085';
 }
 use Reflex::Role;
 
@@ -105,7 +105,7 @@ Reflex::Role::Writing - add buffered non-blocking syswrite() to a class
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

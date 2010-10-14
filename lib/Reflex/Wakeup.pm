@@ -1,6 +1,6 @@
 package Reflex::Wakeup;
 BEGIN {
-  $Reflex::Wakeup::VERSION = '0.081';
+  $Reflex::Wakeup::VERSION = '0.085';
 }
 
 use Moose;
@@ -25,7 +25,7 @@ Reflex::Wakeup - A stand-alone single-shot callback at an absolute time
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

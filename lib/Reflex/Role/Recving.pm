@@ -1,6 +1,6 @@
 package Reflex::Role::Recving;
 BEGIN {
-  $Reflex::Role::Recving::VERSION = '0.081';
+  $Reflex::Role::Recving::VERSION = '0.085';
 }
 use Reflex::Role;
 
@@ -8,6 +8,9 @@ attribute_parameter handle => "socket";
 
 callback_parameter  cb_datagram => qw( on handle datagram );
 callback_parameter  cb_error    => qw( on handle error );
+
+callback_parameter  ev_datagram => qw( _ handle datagram );
+callback_parameter  ev_error    => qw( _ handle error );
 
 method_parameter    method_send => qw( send handle _ );
 method_parameter    method_stop => qw( stop handle _ );
@@ -92,8 +95,8 @@ role {
 	};
 
 	# Default callbacks that re-emit their parameters.
-	method_emit           $cb_datagram  => "datagram";
-	method_emit_and_stop  $cb_error     => "error";
+	method_emit           $cb_datagram  => $p->ev_datagram();
+	method_emit_and_stop  $cb_error     => $p->ev_error();
 };
 
 1;
@@ -112,7 +115,7 @@ Reflex::Role::Recving - Mix standard send/recv code into a class.
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

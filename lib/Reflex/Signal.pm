@@ -1,6 +1,6 @@
 package Reflex::Signal;
 BEGIN {
-  $Reflex::Signal::VERSION = '0.081';
+  $Reflex::Signal::VERSION = '0.085';
 }
 
 use Moose;
@@ -22,6 +22,7 @@ with 'Reflex::Role::SigCatcher' => {
 	signal        => 'signal',
 	active        => 'active',
 	cb_signal     => 'on_signal',
+	ev_signal     => 'signal',
 	method_start  => 'start',
 	method_stop   => 'stop',
 	method_pause  => 'pause',
@@ -38,7 +39,7 @@ Reflex::Signal - receive callbacks when signals arrive
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

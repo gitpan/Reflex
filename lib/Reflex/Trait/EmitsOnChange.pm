@@ -1,6 +1,6 @@
 package Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Reflex::Trait::EmitsOnChange::VERSION = '0.081';
+  $Reflex::Trait::EmitsOnChange::VERSION = '0.085';
 }
 use Moose::Role;
 use Scalar::Util qw(weaken);
@@ -96,7 +96,7 @@ sub emits {
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.081';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.085';
 }
 sub register_implementation { 'Reflex::Trait::EmitsOnChange' }
 
@@ -110,7 +110,7 @@ Reflex::Trait::EmitsOnChange - Emit an event when an attribute's value changes.
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

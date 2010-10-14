@@ -13,37 +13,35 @@ use lib qw(../lib);
 	use Moose;
 	extends 'Reflex::Base';
 	use Reflex::POE::Session;
-	use Reflex::Trait::Observes;
+	use Reflex::Trait::Observed;
 
 	use POE qw(Component::IRC);
 
 	has component => (
-		isa => 'Object|Undef',
-		is  => 'rw',
-	);
-
-	observes poco_watcher => (
-		isa   => 'Reflex::POE::Session',
-		role  => 'poco',
-	);
-
-	sub BUILD {
-		my $self = shift;
-
-		$self->component(
+		isa     => 'Object|Undef',
+		is      => 'rw',
+		default => sub {
 			POE::Component::IRC->spawn(
 				nick    => "reflex_$$",
 				ircname => "Reflex Test Bot",
 				server  => "irc.perl.org",
 			) || die "Drat: $!"
-		);
+		},
+	);
 
-		$self->poco_watcher(
+	observes poco_watcher => (
+		isa   => 'Reflex::POE::Session',
+		role  => 'poco',
+		setup => sub {
+			my $self = shift;
 			Reflex::POE::Session->new(
 				sid => $self->component()->session_id(),
 			)
-		);
+		},
+	);
 
+	sub BUILD {
+		my $self = shift;
 		$self->run_within_session(
 			sub {
 				$self->component()->yield(register => "all");

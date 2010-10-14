@@ -1,4 +1,51 @@
 ================================
+2010-10-14 11:14:38 -0400 v0_085
+================================
+
+  commit 98811eeeb1bf80793be3d0c807c0fbc898a1f3b8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Oct 14 11:14:38 2010 -0400
+  
+    Fix Reflex handling of terminal POE signals. The presence of a Reflex
+    signal handler should imply POE::Kernel->sig_handled(). Fixes a bug
+    found by confound in irc.perl.org #poe.
+
+  commit 971a7acf28cd095b8947d1ab54cbd13a3c9e2ed7
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Oct 14 11:13:17 2010 -0400
+  
+    Fix Reflex::Role::Collectible's use of type constraints. HDP pointed
+    out that it was bypassing type constraints by using its objects hash
+    directly and explained how to do it correctly.
+
+  commit b4f2d1952b5b404ae951b63cb844568555cad42d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Oct 13 23:09:18 2010 -0400
+  
+    Add Acceptor and Connector role events.
+
+  commit 2ea8fb890f7eec4bdfe31124e059bab4aebd1dcf
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Oct 3 05:08:33 2010 -0400
+  
+    Parameterize events the roles can emit. Create eg-15-ipc-run.pl and a
+    supporting role and class.
+
+  commit 5b2d561d9f51493d4d4189918a70679a2a67c352
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Sep 27 01:50:19 2010 -0400
+  
+    Send parameters to cross-session callbacks. Agorman (irc.perl.org
+    #reflex) discovered that they weren't being received.
+
+  commit ade0cdc6b6ebf1a7ab31c217d8c86d37fef55bf0
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Sep 23 13:30:10 2010 -0400
+  
+    Close a hole where the singleton session goes away and isn't rebuilt
+    as needed. Fixes agorman's test case from irc.perl.org #reflex. 
+
+================================
 2010-09-08 22:33:44 -0400 v0_081
 ================================
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Writable;
 BEGIN {
-  $Reflex::Role::Writable::VERSION = '0.081';
+  $Reflex::Role::Writable::VERSION = '0.085';
 }
 use Reflex::Role;
 
@@ -82,7 +82,7 @@ role {
 	# Turn off watcher during destruction.
 	after DEMOLISH => sub {
 		my $self = shift;
-		$self->method_stop();
+		$self->$method_stop();
 	};
 };
 
@@ -96,7 +96,7 @@ Reflex::Role::Writable - add writable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

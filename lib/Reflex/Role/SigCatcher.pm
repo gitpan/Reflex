@@ -1,6 +1,6 @@
 package Reflex::Role::SigCatcher;
 BEGIN {
-  $Reflex::Role::SigCatcher::VERSION = '0.081';
+  $Reflex::Role::SigCatcher::VERSION = '0.085';
 }
 use Reflex::Role;
 
@@ -14,6 +14,7 @@ parameter active => (
 );
 
 callback_parameter  cb_signal     => qw( on signal caught );
+event_parameter     ev_signal     => qw( _ signal caught );
 method_parameter    method_start  => qw( start signal _ );
 method_parameter    method_stop   => qw( stop signal _ );
 method_parameter    method_pause  => qw( pause signal _ );
@@ -155,7 +156,7 @@ role {
 		}
 	};
 
-	method_emit $cb_signal => "signal";
+	method_emit $cb_signal => $p->ev_signal();
 };
 
 __END__
@@ -166,7 +167,7 @@ Reflex::Role::SigCatcher - add signal catching behavior to a class
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

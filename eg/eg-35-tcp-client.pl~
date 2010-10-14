@@ -13,7 +13,7 @@ use lib qw(../lib);
 		$self->connection()->put("Hello, world!\n");
 	};
 
-	sub on_connection_data {
+	sub on_client_data {
 		my ($self, $args) = @_;
 
 		# Not chomped.
@@ -21,7 +21,6 @@ use lib qw(../lib);
 
 		# Disconnect after we receive the echo.
 		$self->stop();
-		undef;
 	}
 }
 

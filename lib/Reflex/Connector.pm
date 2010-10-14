@@ -1,6 +1,6 @@
 package Reflex::Connector;
 BEGIN {
-  $Reflex::Connector::VERSION = '0.081';
+  $Reflex::Connector::VERSION = '0.085';
 }
 
 use Moose;
@@ -28,6 +28,8 @@ with 'Reflex::Role::Connecting' => {
 	port          => 'port',        # Default!
 	cb_success    => 'on_connection',
 	cb_error      => 'on_error',
+	ev_success    => 'connection',
+	ev_error      => 'error',
 };
 
 1;
@@ -40,7 +42,7 @@ Reflex::Connector - non-blocking client socket connector
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

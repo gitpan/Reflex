@@ -26,23 +26,20 @@ sub BUILD {
 	while (my ($wheel_param, $event_idx) = each %$event_to_index) {
 		$args->{$wheel_param} = "wheel_event_$event_idx";
 	}
-warn 10000;
+
 	$self->create_wheel($wheel_class, $args);
-warn 10010;
 }
 
 sub create_wheel {
 	my ($self, $wheel_class, $args) = @_;
-warn 30000;
+
 	return unless $self->call_gate("create_wheel", $wheel_class, $args);
-warn 30010;
+
 	my $wheel = $wheel_class->new( %$args );
-warn "30015 ($wheel)";
 	$self->wheel($wheel);
-warn 30020;
+
 	$wheel_id_to_object{$wheel->ID()} = $self;
 	weaken $wheel_id_to_object{$wheel->ID()};
-warn 30030;
 }
 
 sub wheel_id {

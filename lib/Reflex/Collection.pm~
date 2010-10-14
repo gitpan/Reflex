@@ -14,24 +14,29 @@ Moose::Exporter->setup_import_methods( with_caller => [ qw( has_many ) ]);
 
 has objects => (
 	is      => 'rw',
-	isa     => 'HashRef[Reflex::Collectible]',
+	isa     => 'HashRef[Reflex::Role::Collectible]',
+	traits  => ['Hash'],
 	default => sub { {} },
+	handles => {
+		_set_object => 'set',
+		_delete_object => 'delete',
+	},
 );
 
 sub remember {
 	my ($self, $object) = @_;
 	$self->watch($object, stopped => cb_method($self, "cb_forget"));
-	$self->objects()->{$object} = $object;
+	$self->_set_object($object, $object);
 }
 
 sub forget {
 	my ($self, $object) = @_;
-	delete $self->objects()->{$object};
+	$self->_delete_object($object);
 }
 
 sub cb_forget {
 	my ($self, $args) = @_;
-	delete $self->objects()->{$args->{_sender}};
+	$self->_delete_object($args->{_sender});
 }
 
 sub has_many {
@@ -67,10 +72,8 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 	use Reflex::Collection;
 	use EchoStream;
 
-	has clients => (
-		is      => 'rw',
-		isa     => 'Reflex::Collection',
-		default => sub { Reflex::Collection->new() },
+	# From Reflex::Collection.
+	has_many clients => (
 		handles => { remember_client => "remember" },
 	);
 
@@ -109,6 +112,29 @@ class is sufficient to trigger the proper cleanup.
 TODO - Reflex::Collection is an excellent place to manage pools of
 objects.  Provide a callback interface for pulling new objects as
 needed.
+
+=head2 has_many
+
+Reflex::Collection exports the has_many() function, which works like
+Moose's has() with "is", "isa", "lazy" and "default" set to common
+values.  For example:
+
+	has_many connections => (
+		handles => { remember_connection => "remember" },
+	);
+
+... is equivalent to:
+
+	has connections => (
+		# Defaults provided by has_many.
+		is      => 'ro',
+		isa     => 'Reflex::Collection',
+		lazy    => 1,
+		default => sub { Reflex::Collection->new() {,
+
+		# Customization.
+		handles => { remember_connection => "remember" },
+	);
 
 =head2 new
 

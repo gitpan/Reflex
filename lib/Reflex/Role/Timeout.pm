@@ -1,6 +1,6 @@
 package Reflex::Role::Timeout;
 BEGIN {
-  $Reflex::Role::Timeout::VERSION = '0.081';
+  $Reflex::Role::Timeout::VERSION = '0.085';
 }
 use Reflex::Role;
 use Scalar::Util qw(weaken);
@@ -13,6 +13,7 @@ method_parameter    method_start  => qw( start delay _ );
 method_parameter    method_reset  => qw( reset delay _ );
 
 callback_parameter  cb_timeout    => qw( on delay done );
+event_parameter     ev_timeout    => qw( _ delay done );
 
 role {
 	my $p = shift;
@@ -85,7 +86,7 @@ role {
 		$self->$timer_id_name(undef);
 	};
 
-	method_emit $cb_timeout => "done";
+	method_emit $cb_timeout => $p->ev_timeout();
 };
 
 1;
@@ -98,7 +99,7 @@ Reflex::Role::Timeout - set a wakeup callback for a relative delay
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

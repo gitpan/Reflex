@@ -10,6 +10,7 @@ use Reflex::Stream;
 
 extends 'Reflex::Connector';
 with 'Reflex::Role::Collectible';
+use Reflex::Trait::Observed;
 
 has protocol => (
 	is      => 'rw',
@@ -23,6 +24,7 @@ observes connection => (
 	# TODO - Would be nice to have something like this for outbout
 	# events.  See on_connection_data() later in this module for more.
 	handles => ['put'],
+	role => 'connection',
 );
 
 sub on_connection {

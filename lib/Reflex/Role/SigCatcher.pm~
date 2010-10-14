@@ -152,7 +152,7 @@ role {
 		}
 	};
 
-	method_emit $cb_signal => "signal";
+	method_emit $cb_signal => $p->ev_signal();
 };
 
 __END__
@@ -284,8 +284,8 @@ Reflex::Role::SigCatcher.
 
 L<Reflex>
 L<Reflex::Signal>
-L<Reflex::Role::PidReaper>
-L<Reflex::PidReaper>
+L<Reflex::Role::PidCatcher>
+L<Reflex::PID>
 
 L<Reflex/ACKNOWLEDGEMENTS>
 L<Reflex/ASSISTANCE>

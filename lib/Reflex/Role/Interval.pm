@@ -1,6 +1,6 @@
 package Reflex::Role::Interval;
 BEGIN {
-  $Reflex::Role::Interval::VERSION = '0.081';
+  $Reflex::Role::Interval::VERSION = '0.085';
 }
 use Reflex::Role;
 use Scalar::Util qw(weaken);
@@ -12,7 +12,9 @@ attribute_parameter auto_start  => "auto_start";
 method_parameter    method_start  => qw( start name _ );
 method_parameter    method_stop   => qw( stop interval _ );
 method_parameter    method_repeat => qw( repeat interval _ );
+
 callback_parameter  cb_tick       => qw( on interval tick );
+event_parameter     ev_tick       => qw( _ interval tick );
 
 role {
 	my $p = shift;
@@ -79,9 +81,10 @@ role {
 		$self->$timer_id_name(undef);
 	};
 
+	my $ev_tick = $p->ev_tick();
 	method $cb_tick => sub {
 		my ($self, $args) = @_;
-		$self->emit(event => "tick", args => $args);
+		$self->emit(event => $ev_tick, args => $args);
 		$self->$method_repeat() if $self->$auto_repeat();
 	};
 };
@@ -96,7 +99,7 @@ Reflex::Role::Interval - set a periodic, recurring timer
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Role::PidCatcher;
 BEGIN {
-  $Reflex::Role::PidCatcher::VERSION = '0.081';
+  $Reflex::Role::PidCatcher::VERSION = '0.085';
 }
 use Reflex::Role;
 
@@ -14,6 +14,8 @@ parameter active => (
 );
 
 callback_parameter  cb_exit       => qw( on pid exit );
+event_parameter     ev_exit       => qw( _ pid exit );
+
 method_parameter    method_start  => qw( start pid _ );
 method_parameter    method_stop   => qw( stop pid _ );
 method_parameter    method_pause  => qw( pause pid _ );
@@ -146,7 +148,7 @@ role {
 		}
 	};
 
-	method_emit $cb_exit => "pid";
+	method_emit $cb_exit => $p->ev_exit();
 };
 
 __END__
@@ -157,7 +159,7 @@ Reflex::Role::PidCatcher - add async process reaping behavior to a class
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

@@ -2,7 +2,7 @@ NAME
     Reflex - Class library for flexible, reactive programs.
 
 VERSION
-    version 0.081
+    version 0.085
 
 SYNOPSIS
             # See eg-18-synopsis-no-moose.pl if you don't like Moose.

@@ -1,6 +1,6 @@
 package Reflex::Role::Reactive;
 BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.081';
+  $Reflex::Role::Reactive::VERSION = '0.085';
 }
 
 use Moose::Role;
@@ -50,7 +50,8 @@ sub _create_singleton_session {
 				undef;
 			},
 			_stop => sub {
-				# No-op to satisfy assertions.
+				# Session has become defunct.
+				$singleton_session_id = undef;
 				undef;
 			},
 
@@ -75,13 +76,14 @@ sub _create_singleton_session {
 			signal_happened => sub {
 				my $signal_class = pop @_;
 				$signal_class->deliver(@_[ARG0..$#_]);
+				$_[KERNEL]->sig_handled();
 			},
 
 			### Cross-session emit() is converted into these events.
 
 			deliver_callback => sub {
-				my ($callback, $args) = @_[ARG0, ARG1];
-				$callback->deliver($args);
+				my ($callback, $event, $args) = @_[ARG0, ARG1, ARG2];
+				$callback->deliver($event, $args);
 			},
 
 			# call_gate() uses this to call methods in the right session.
@@ -139,14 +141,10 @@ sub _create_singleton_session {
 	)->ID();
 }
 
-has session_id => (
-	isa     => 'Str',
-	is      => 'ro',
-	default => sub {
-		_create_singleton_session() unless defined $singleton_session_id;
-		$singleton_session_id;
-	},
-);
+sub session_id {
+	_create_singleton_session() unless defined $singleton_session_id;
+	$singleton_session_id;
+}
 
 # What's watching me.
 # watchers()->{$watcher} = \@callbacks
@@ -421,6 +419,7 @@ sub emit {
 		}
 
 		$deliver_event = "promise";
+		#warn $event unless exists $self->watchers_by_event()->{$deliver_event};
 		return unless exists $self->watchers_by_event()->{$deliver_event};
 		# Fall through.
 	}
@@ -449,7 +448,7 @@ sub emit {
 			# Different session.  Post it through.
 			$poe_kernel->post(
 				$callback_rec->{watcher}->session_id(), 'deliver_callback',
-				$callback, $callback_args,
+				$callback, $event, $callback_args,
 				$callback_rec->{watcher}, $self, # keep objects alive a bit
 			);
 		}
@@ -606,7 +605,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 

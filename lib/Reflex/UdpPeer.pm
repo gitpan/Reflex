@@ -1,6 +1,6 @@
 package Reflex::UdpPeer;
 BEGIN {
-  $Reflex::UdpPeer::VERSION = '0.081';
+  $Reflex::UdpPeer::VERSION = '0.085';
 }
 use Moose;
 extends 'Reflex::Base';
@@ -17,6 +17,8 @@ with 'Reflex::Role::Recving' => {
 	method_stop => 'stop',
 	cb_datagram => 'on_datagram',
 	cb_error    => 'on_error',
+	ev_datagram => 'datagram',
+	ev_error    => 'error',
 };
 
 1;
@@ -29,7 +31,7 @@ Reflex::UdpPeer - Base class for non-blocking UDP networking peers.
 
 =head1 VERSION
 
-version 0.081
+version 0.085
 
 =head1 SYNOPSIS
 
