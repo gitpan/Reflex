@@ -6,18 +6,18 @@ build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: 6.31
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.102340, CPAN::Meta::Converter version 2.102400'
+generated_by: 'Dist::Zilla version 4.200000, CPAN::Meta::Converter version 2.102400'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Reflex
 requires:
-  Moose: 1.12
-  MooseX::Role::Parameterized: 0.19
-  POE: 1.293
-  Scalar::Util: 1.21
-  Test::More: 0.94
+  Moose: 1.21
+  MooseX::Role::Parameterized: 0.23
+  POE: 1.294
+  Scalar::Util: 1.23
+  Test::More: 0.96
 resources:
-  repository: http://github.com/rcaputo/reflex
-version: 0.085
+  repository: git://github.com/rcaputo/reflex.git
+version: 0.088

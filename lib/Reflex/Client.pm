@@ -6,7 +6,7 @@
 
 package Reflex::Client;
 BEGIN {
-  $Reflex::Client::VERSION = '0.085';
+  $Reflex::Client::VERSION = '0.088';
 }
 use Moose;
 use Reflex::Stream;
@@ -88,7 +88,7 @@ Reflex::Client - A non-blocking socket client.
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

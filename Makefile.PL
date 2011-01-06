@@ -20,13 +20,13 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'perl',
   'NAME' => 'Reflex',
   'PREREQ_PM' => {
-    'Moose' => '1.12',
-    'MooseX::Role::Parameterized' => '0.19',
-    'POE' => '1.293',
-    'Scalar::Util' => '1.21',
-    'Test::More' => '0.94'
+    'Moose' => '1.21',
+    'MooseX::Role::Parameterized' => '0.23',
+    'POE' => '1.294',
+    'Scalar::Util' => '1.23',
+    'Test::More' => '0.96'
   },
-  'VERSION' => '0.085',
+  'VERSION' => '0.088',
   'test' => {
     'TESTS' => 't/*.t'
   }

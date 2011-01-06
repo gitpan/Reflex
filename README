@@ -2,7 +2,7 @@ NAME
     Reflex - Class library for flexible, reactive programs.
 
 VERSION
-    version 0.085
+    version 0.088
 
 SYNOPSIS
             # See eg-18-synopsis-no-moose.pl if you don't like Moose.
@@ -68,6 +68,7 @@ DESCRIPTION
             package Pinger;
             use Moose;
             extends 'Reflex::Base';
+            use Reflex::Trait::Observed;
 
             observes echoer => (
                     isa     => 'Echoer',
@@ -243,18 +244,16 @@ ASSISTANCE
     See irc.perl.org #moose for help with Moose.
 
     Support is officially available from POE's mailing list as well. Send a
-    blank message to poe-subscribe@perl.org <mailto:poe-subscribe@perl.org>
-    to join.
+    blank message to poe-subscribe@perl.org to join.
 
     The Reflex package also has helpful examples which may serve as a
     tutorial until Reflex is documented more.
 
 ACKNOWLEDGEMENTS
-    irc.perl.org channel #moose <irc://irc.perl.org/moose> and #poe
-    <irc://irc.perl.org/poe>. The former for assisting in learning their
-    fine libraries, sometimes against everyone's better judgement. The
-    latter for putting up with lengthy and sometimes irrelevant design
-    discussion for oh so long.
+    irc.perl.org channel #moose and #poe. The former for assisting in
+    learning their fine libraries, sometimes against everyone's better
+    judgement. The latter for putting up with lengthy and sometimes
+    irrelevant design discussion for oh so long.
 
 SEE ALSO
     Moose, POE, the Reflex namespace on CPAN.
@@ -270,8 +269,7 @@ BUGS
     kudos. You may enter them into our request tracker by following the
     instructions at <https://rt.cpan.org/Dist/Display.html?&Queue=Reflex>.
 
-    We also accept e-mail at bug-Reflex@rt.cpan.org
-    <mailto:bug-Reflex@rt.cpan.org>.
+    We also accept e-mail at bug-Reflex@rt.cpan.org.
 
 AUTHORS
     Rocco Caputo, RCAPUTO on CPAN.

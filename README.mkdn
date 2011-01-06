@@ -2,6 +2,10 @@
 
 Reflex - Class library for flexible, reactive programs.
 
+# VERSION
+
+version 0.088
+
 # SYNOPSIS
 
 	# See eg-18-synopsis-no-moose.pl if you don't like Moose.
@@ -70,6 +74,7 @@ event to the on_echoer_pong() method.
 	package Pinger;
 	use Moose;
 	extends 'Reflex::Base';
+	use Reflex::Trait::Observed;
 
 	observes echoer => (
 		isa     => 'Echoer',
@@ -284,7 +289,7 @@ See irc.perl.org #moose for help with Moose.
 
 Support is officially available from POE's mailing list as well.  Send
 a blank message to
-L<poe-subscribe@perl.org|mailto:poe-subscribe@perl.org>
+L<mailto:poe-subscribe@perl.org>
 to join.
 
 The Reflex package also has helpful examples which may serve as a
@@ -293,16 +298,16 @@ tutorial until Reflex is documented more.
 # ACKNOWLEDGEMENTS
 
 irc.perl.org channel
-L<#moose|irc://irc.perl.org/moose>
+L<irc://irc.perl.org/moose>
 and
-L<#poe|irc://irc.perl.org/poe>.
+L<irc://irc.perl.org/poe>.
 The former for assisting in learning their fine libraries, sometimes
 against everyone's better judgement.  The latter for putting up with
 lengthy and sometimes irrelevant design discussion for oh so long.
 
 # SEE ALSO
 
-[Moose](http://search.cpan.org/search?mode=module&query=Moose), [POE](http://search.cpan.org/search?mode=module&query=POE), the Reflex namespace on CPAN.
+[Moose](http://search.cpan.org/perldoc?Moose), [POE](http://search.cpan.org/perldoc?POE), the Reflex namespace on CPAN.
 
 Ohlo - https://www.ohloh.net/p/reflex-perl
 
@@ -315,10 +320,10 @@ TODO - Set up home page.
 We appreciate your feedback, bug reports, feature requests, patches
 and kudos.  You may enter them into our request tracker by following
 the instructions at
-<https://rt.cpan.org/Dist/Display.html?&Queue=Reflex>.
+[https://rt.cpan.org/Dist/Display.html?&Queue=Reflex](https://rt.cpan.org/Dist/Display.html?&Queue=Reflex).
 
 We also accept e-mail at
-L<bug-Reflex@rt.cpan.org|mailto:bug-Reflex@rt.cpan.org>.
+L<mailto:bug-Reflex@rt.cpan.org>.
 
 # AUTHORS
 
@@ -330,9 +335,9 @@ Reflex is open source, and we welcome involvement.
 
 Chris Fedde, CFEDDE on CPAN
 
-- * <https://github.com/rcaputo/reflex>
+- * [https://github.com/rcaputo/reflex](https://github.com/rcaputo/reflex)
 
-- * <http://gitorious.org/reflex>
+- * [http://gitorious.org/reflex](http://gitorious.org/reflex)
 
 # TODO
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Writing;
 BEGIN {
-  $Reflex::Role::Writing::VERSION = '0.085';
+  $Reflex::Role::Writing::VERSION = '0.088';
 }
 use Reflex::Role;
 
@@ -52,7 +52,11 @@ role {
 	method $p->method_put() => sub {
 		my ($self, @chunks) = @_;
 
-		# TODO - Benchmark string vs. array buffering.
+		# TODO - Benchmark string vs. array buffering?
+		# Stack Overflow suggests that string buffering is more efficient,
+		# but it doesn't discuss the relative efficiencies of substr() vs.
+		# shift to remove the buffer's head.
+		# http://stackoverflow.com/questions/813752/how-can-i-pre-allocate-a-string-in-perl
 
 		use bytes;
 
@@ -105,7 +109,7 @@ Reflex::Role::Writing - add buffered non-blocking syswrite() to a class
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Timeout;
 BEGIN {
-  $Reflex::Timeout::VERSION = '0.085';
+  $Reflex::Timeout::VERSION = '0.088';
 }
 
 use Moose;
@@ -42,7 +42,7 @@ Reflex::Timeout - A stand-alone single-shot delayed callback
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

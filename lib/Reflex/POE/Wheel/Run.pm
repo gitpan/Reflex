@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel::Run;
 BEGIN {
-  $Reflex::POE::Wheel::Run::VERSION = '0.085';
+  $Reflex::POE::Wheel::Run::VERSION = '0.088';
 }
 use Moose;
 extends 'Reflex::POE::Wheel';
@@ -124,7 +124,7 @@ Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

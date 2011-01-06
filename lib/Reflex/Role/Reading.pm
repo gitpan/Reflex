@@ -1,6 +1,6 @@
 package Reflex::Role::Reading;
 BEGIN {
-  $Reflex::Role::Reading::VERSION = '0.085';
+  $Reflex::Role::Reading::VERSION = '0.088';
 }
 use Reflex::Role;
 
@@ -80,7 +80,7 @@ Reflex::Role::Reading - add standard sysread() behavior to a class
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

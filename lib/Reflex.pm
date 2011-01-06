@@ -1,6 +1,6 @@
 package Reflex;
 BEGIN {
-  $Reflex::VERSION = '0.085';
+  $Reflex::VERSION = '0.088';
 }
 
 use warnings;
@@ -47,7 +47,7 @@ Reflex - Class library for flexible, reactive programs.
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 
@@ -117,6 +117,7 @@ event to the on_echoer_pong() method.
 	package Pinger;
 	use Moose;
 	extends 'Reflex::Base';
+	use Reflex::Trait::Observed;
 
 	observes echoer => (
 		isa     => 'Echoer',

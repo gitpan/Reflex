@@ -4,13 +4,27 @@
 
 package Reflex::Collection;
 BEGIN {
-  $Reflex::Collection::VERSION = '0.085';
+  $Reflex::Collection::VERSION = '0.088';
 }
 use Moose;
 use Moose::Exporter;
 use Reflex::Callbacks qw(cb_method);
-use Reflex::Role::Collectible;
 use Carp qw(cluck);
+
+# Reflex::Role::Collectible isn't directly used in this module, but
+# the role needs to be loaded for the objects() type constraint to
+# work below.  Hans Dieter Pearcey recommends the canonical Moose
+# practice of declaring types in a separate header-like class:
+#
+#   package Reflex::Types;
+#   use Moose::Util::TypeConstraints;
+#   role_type('Reflex::Role::Collectible');
+#
+# Using Reflex::Types sets up role and type constraints once across
+# the entire program.  Problems can occur when the order modules are
+# loaded becomes significant.  A Reflex::Types module can avoid them.
+
+use Reflex::Role::Collectible;
 
 extends 'Reflex::Base';
 
@@ -27,10 +41,23 @@ has objects => (
 	},
 );
 
+has _owner => (
+	is       => 'ro',
+	isa      => 'Object',
+	writer   => '_set_owner',
+	weak_ref => 1,
+);
+
 sub remember {
 	my ($self, $object) = @_;
+
 	$self->watch($object, stopped => cb_method($self, "cb_forget"));
-	$self->_set_object($object, $object);
+	$self->_owner->watch(
+		$object,
+		result => cb_method($self->_owner, "on_result")
+	);
+
+	$self->objects()->{$object} = $object;
 }
 
 sub forget {
@@ -40,7 +67,7 @@ sub forget {
 
 sub cb_forget {
 	my ($self, $args) = @_;
-	$self->_delete_object($args->{_sender});
+	$self->_delete_object($args->{_sender}->get_last_emitter());
 }
 
 sub has_many {
@@ -54,7 +81,10 @@ sub has_many {
 	$etc{is}      = 'ro';
 	$etc{isa}     = 'Reflex::Collection';
 	$etc{lazy}    = 1 unless exists $etc{lazy};
-	$etc{default} = sub { Reflex::Collection->new() };
+	$etc{default} = sub {
+		my $self = shift;
+		return Reflex::Collection->new( _owner => $self );
+	};
 
 	$meta->add_attribute($name, %etc);
 }
@@ -69,7 +99,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

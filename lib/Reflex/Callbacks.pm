@@ -1,6 +1,6 @@
 package Reflex::Callbacks;
 BEGIN {
-  $Reflex::Callbacks::VERSION = '0.085';
+  $Reflex::Callbacks::VERSION = '0.088';
 }
 
 # Reflex::Callbacks is a callback manager.  It encapsulates the
@@ -197,7 +197,7 @@ Reflex::Callbacks - Convenience functions for creating and using callbacks
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 

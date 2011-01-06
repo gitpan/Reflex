@@ -1,4 +1,113 @@
 ================================
+2011-01-06 18:32:53 -0500 v0_088
+================================
+
+  commit 67a5a537be32ac2475e8a6bc245faa1167c9ee51
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jan 6 18:32:53 2011 -0500
+  
+    Forgot to document a couple newish classes.
+
+  commit 96596b2d80d6e143a16407cc8aa6e8b1db341cb9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jan 6 17:43:37 2011 -0500
+  
+    Update experimental promise collection to use Sender.
+
+    Make promise collections (Reflex::Collections that propagate events
+    from their contents) work with Nick Perez's Reflex::Sender.
+
+  commit 4a78509d41f54a9777377898738256653803aa08
+  Author: nperez <nperez@cpan.org>
+  Date:   Tue Jan 4 10:27:23 2011 -0600
+  
+    Implement Reflex::Sender and basic test for it.
+
+  commit eeef1bcd5874252083f6829c6ed8a86351786dad
+  Author: nperez <nperez@cpan.org>
+  Date:   Thu Dec 16 12:48:05 2010 -0600
+  
+    Implement _sender as a stack
+
+  commit 3af0b450fdb7cc79a6fdaaaa65103c8ed41a8ef8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jan 2 20:38:20 2011 -0500
+  
+    Promote some of the eg files to tests.
+
+  commit 80a2572fbd0b46bfbdc94f3680144fc73a487310
+  Merge: b454d6c 3d79c43
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jan 2 19:26:03 2011 -0500
+  
+    Merge branch 'agorman'
+
+  commit 3d79c43cd73061ff7ee18fc1ecb81f320e21386e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Jan 2 19:06:54 2011 -0500
+  
+    Update dist.ini and add MANIFEST.SKIP.
+
+  commit b454d6c2c1786a2f8e83bacc15f7d91f4f9d2c94
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Dec 7 01:55:14 2010 -0500
+  
+    Fix Reflex::Role::Streaming's implementation and docs, a bug found by
+    Nick Perez.
+
+  commit 3b760a4e15053ab5c4a894243f0984bde5f0ccf3
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Fri Nov 26 02:08:14 2010 -0500
+  
+    Document why emit() is bad inside Reflex roles and the plan to
+    replace them.
+
+  commit 2c8c01acbfd922a69ebb0fdbce8ec309e4a0dcc3
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Nov 22 12:58:52 2010 -0500
+  
+    Document "Reflexive" namespace as the preferred sandbox. Document the
+    alternatives that were considered, pros and cons.
+
+  commit f68bbe4830fc41ae468a6b796c16b44dc9584596
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Nov 8 13:15:55 2010 -0500
+  
+    Fix an example error discovered out by Matt S. Trout.
+
+  commit 12580b3daaf62955af4c81ee556c70936f315074
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Oct 18 11:42:31 2010 -0400
+  
+    Add the one-way streaming roles needed for IPC::Run integration.
+
+  commit 0ccc7a7966119cc83266c6dee8fc8ef2d755e133
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Oct 18 11:42:05 2010 -0400
+  
+    Skip installing some really crufty files.
+
+  commit 6bd0de8fade38ee84c4f2cf5d8df370406c86477
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Oct 14 12:49:35 2010 -0400
+  
+    Note why Reflex::Types might be needed in the future.
+
+  commit 5585824f2e2022ba646b9fec665322fe137dbb2c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed Sep 29 12:00:34 2010 -0400
+  
+    Explore a couple of agorman's questions about collections emitting
+    events.
+
+  commit 541a1f6120bf13dae2294a47e99a05224fd8b575
+  Author: Andy Gorman <himura@sonic.net>
+  Date:   Tue Sep 28 20:30:28 2010 -0700
+  
+    Added functionality that provides a callback interface for elements
+    in the Collection 
+
+================================
 2010-10-14 11:14:38 -0400 v0_085
 ================================
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Reactive;
 BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.085';
+  $Reflex::Role::Reactive::VERSION = '0.088';
 }
 
 use Moose::Role;
@@ -10,6 +10,7 @@ use Carp qw(carp croak);
 use Reflex;
 use Reflex::Callback::Promise;
 use Reflex::Callback::CodeRef;
+use Reflex::Sender;
 
 END {
 	#warn join "; ", keys %watchers;
@@ -373,11 +374,12 @@ sub emit {
 	my $callback_args = $args->{args} || {};
 
 	# TODO - Needs consideration:
-	# TODO - Weaken?
 	# TODO - Underscores for Reflex parameters?
 	# TODO - Must be a hash reference.  Would be nice if non-hashref
 	# errors were pushed to the caller.
-	$callback_args->{_sender} = $self;
+
+	$callback_args->{_sender} ||= Reflex::Sender->new();
+	$callback_args->{_sender}->push_emitter($self);
 
 	# Look for self-handling of the event.
 	# TODO - can() calls are also candidates for caching.
@@ -418,10 +420,14 @@ sub emit {
 			return;
 		}
 
+		# TODO - At this point, do we walk up the ownership tree looking
+		# for a promise?  That would allow events to bubble out of objects.
+
 		$deliver_event = "promise";
 		#warn $event unless exists $self->watchers_by_event()->{$deliver_event};
 		return unless exists $self->watchers_by_event()->{$deliver_event};
-		# Fall through.
+
+		# Fall through if the promise exists.
 	}
 
 	# This event is watched.  Broadcast it to watchers.
@@ -605,7 +611,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.085
+version 0.088
 
 =head1 SYNOPSIS
 
