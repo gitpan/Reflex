@@ -1,30 +1,35 @@
 package Reflex::Role::Timeout;
 BEGIN {
-  $Reflex::Role::Timeout::VERSION = '0.088';
+  $Reflex::Role::Timeout::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
+
 use Reflex::Role;
 use Scalar::Util qw(weaken);
 
-attribute_parameter delay       => "delay";
-attribute_parameter auto_start  => "auto_start";
-
-method_parameter    method_stop   => qw( stop delay _ );
-method_parameter    method_start  => qw( start delay _ );
-method_parameter    method_reset  => qw( reset delay _ );
-
-callback_parameter  cb_timeout    => qw( on delay done );
-event_parameter     ev_timeout    => qw( _ delay done );
+attribute_parameter att_auto_start => "auto_start";
+attribute_parameter att_delay      => "delay";
+callback_parameter  cb_timeout     => qw( on att_delay done );
+method_parameter    method_reset   => qw( reset att_delay _ );
+method_parameter    method_start   => qw( start att_delay _ );
+method_parameter    method_stop    => qw( stop att_delay _ );
 
 role {
 	my $p = shift;
 
-	my $delay         = $p->delay();
-	my $timer_id_name = "${delay}_timer_id";
+	my $att_delay      = $p->att_delay();
+	my $att_auto_start = $p->att_auto_start();
+	my $cb_timeout     = $p->cb_timeout();
+
+	requires $att_delay, $cb_timeout;
+
+	has $att_auto_start  => ( is => 'ro', isa => 'Bool', default => 1 );
+
+	my $method_reset  = $p->method_reset();
 	my $method_start  = $p->method_start();
 	my $method_stop   = $p->method_stop();
-	my $method_reset  = $p->method_reset();
-	my $cb_timeout    = $p->cb_timeout();
-	my $auto_start    = $p->auto_start();
+
+	my $timer_id_name = "${att_delay}_timer_id";
 
 	has $timer_id_name => (
 		isa => 'Maybe[Str]',
@@ -36,7 +41,7 @@ role {
 
 	after BUILD => sub {
 		my ($self, $args) = @_;
-		$self->$method_start() if $self->$auto_start();
+		$self->$method_start() if $self->$att_auto_start();
 	};
 
 	my $code_start = sub {
@@ -45,8 +50,8 @@ role {
 		# Switch to the proper session.
 		return unless $self->call_gate($method_start);
 
-		# If the args include "delay", then let's reset delay().
-		$self->$delay( $args->{delay} ) if exists $args->{delay};
+		# If the args include "delay", then let's reset att_delay().
+		$self->$att_delay( $args->{delay} ) if exists $args->{delay};
 
 		# Stop a previous alarm.
 		$self->$method_stop() if defined $self->$timer_id_name();
@@ -60,7 +65,7 @@ role {
 		$self->$timer_id_name(
 			$POE::Kernel::poe_kernel->delay_set(
 				'timer_due',
-				$self->$delay(),
+				$self->$att_delay(),
 				$envelope,
 			)
 		);
@@ -85,13 +90,17 @@ role {
 		$POE::Kernel::poe_kernel->alarm_remove($self->$timer_id_name());
 		$self->$timer_id_name(undef);
 	};
-
-	method_emit $cb_timeout => $p->ev_timeout();
 };
 
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -99,7 +108,7 @@ Reflex::Role::Timeout - set a wakeup callback for a relative delay
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -112,12 +121,12 @@ version 0.088
 	has auto_start  => ( isa => 'Bool', is => 'ro', default => 1 );
 
 	with 'Reflex::Role::Timeout' => {
-		delay         => "delay",
-		cb_timeout    => "on_done",
-		auto_start    => "auto_start",
-		method_start  => "start",
-		method_stop   => "stop",
-		method_reset  => "reset",
+		delay          => "delay",
+		cb_timeout     => "on_done",
+		att_auto_start => "auto_start",
+		method_start   => "start",
+		method_stop    => "stop",
+		method_reset   => "reset",
 	};
 
 	1;
@@ -220,18 +229,118 @@ L<Reflex::Timeout> is one example of using Reflex::Role::Timeout.
 
 =head1 SEE ALSO
 
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
+
 L<Reflex>
+
+=item *
+
 L<Reflex::Timeout>
+
+=item *
+
 L<Reflex::Role>
 
+=item *
+
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

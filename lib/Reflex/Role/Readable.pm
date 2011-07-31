@@ -1,7 +1,9 @@
 package Reflex::Role::Readable;
 BEGIN {
-  $Reflex::Role::Readable::VERSION = '0.088';
+  $Reflex::Role::Readable::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
+
 use Reflex::Role;
 
 # TODO - Reflex::Role::Readable and Writable are nearly identical.
@@ -10,28 +12,23 @@ use Reflex::Role;
 
 use Scalar::Util qw(weaken);
 
-attribute_parameter handle => "handle";
-
-parameter active => (
-	isa     => 'Bool',
-	default => 1,
-);
-
-callback_parameter  cb_ready      => qw( on handle readable );
-method_parameter    method_pause  => qw( pause handle readable );
-method_parameter    method_resume => qw( resume handle readable );
-method_parameter    method_stop   => qw( stop handle readable );
+attribute_parameter att_handle    => "handle";
+attribute_parameter att_active    => "active";
+callback_parameter  cb_ready      => qw( on att_handle readable );
+method_parameter    method_pause  => qw( pause att_handle readable );
+method_parameter    method_resume => qw( resume att_handle readable );
+method_parameter    method_stop   => qw( stop att_handle readable );
 
 role {
 	my $p = shift;
 
-	my $h = $p->handle();
-	my $active = $p->active();
+	my $att_active = $p->att_active();
+	my $att_handle = $p->att_handle();
+	my $cb_name    = $p->cb_ready();
 
-	my $cb_name       = $p->cb_ready();
-	my $setup_name    = "_setup_${h}_readable";
+	requires $att_active, $att_handle, $cb_name;
 
-	requires $cb_name;
+	my $setup_name = "_setup_${att_handle}_readable";
 
 	method $setup_name => sub {
 		my ($self, $arg) = @_;
@@ -42,33 +39,33 @@ role {
 		my $envelope = [ $self, $cb_name ];
 		weaken $envelope->[0];
 		$POE::Kernel::poe_kernel->select_read(
-			$self->$h(), 'select_ready', $envelope,
+			$self->$att_handle(), 'select_ready', $envelope,
 		);
 
-		return if $active;
+		return if $self->$att_active();
 
-		$POE::Kernel::poe_kernel->select_pause_read($self->$h());
+		$POE::Kernel::poe_kernel->select_pause_read($self->$att_handle());
 	};
 
 	my $method_pause = $p->method_pause();
 	method $method_pause => sub {
 		my $self = shift;
 		return unless $self->call_gate($method_pause);
-		$POE::Kernel::poe_kernel->select_pause_read($self->$h());
+		$POE::Kernel::poe_kernel->select_pause_read($self->$att_handle());
 	};
 
 	my $method_resume = $p->method_resume();
 	method $p->method_resume => sub {
 		my $self = shift;
 		return unless $self->call_gate($method_resume);
-		$POE::Kernel::poe_kernel->select_resume_read($self->$h());
+		$POE::Kernel::poe_kernel->select_resume_read($self->$att_handle());
 	};
 
 	my $method_stop = $p->method_stop();
 	method $method_stop => sub {
 		my $self = shift;
 		return unless $self->call_gate($method_stop);
-		$POE::Kernel::poe_kernel->select_read($self->$h(), undef);
+		$POE::Kernel::poe_kernel->select_read($self->$att_handle(), undef);
 	};
 
 	# Work around a Moose edge case.
@@ -85,16 +82,19 @@ role {
 	# Turn off watcher during destruction.
 	after DEMOLISH => sub {
 		my $self = shift;
-		$POE::Kernel::poe_kernel->select_read($self->$h(), undef);
+		$self->$method_stop();
 	};
-
-	# Default callbacks that re-emit their parameters.
-	#method $cb_name => emit_an_event("readable");
 };
 
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -102,7 +102,7 @@ Reflex::Role::Readable - add readable-watching behavior to a class
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -203,18 +203,118 @@ TODO - I'm sure there are some.
 
 =head1 SEE ALSO
 
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
+
 L<Reflex>
+
+=item *
+
 L<Reflex::Role::Writable>
+
+=item *
+
 L<Reflex::Role::Streaming>
 
+=item *
+
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

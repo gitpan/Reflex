@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# vim: ts=2 sw=2 noexpandtab
 
 use warnings;
 use strict;
@@ -9,9 +10,9 @@ use lib qw(lib);
 	use Moose;
 	extends 'Reflex::Base';
 	use Ttl::And;
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 
-	observes ander => ( isa => 'Ttl::And' );
+	watches ander => ( isa => 'Ttl::And' );
 
 	sub BUILD {
 		my $self = shift;

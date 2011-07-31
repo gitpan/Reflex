@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 use warnings;
 use strict;
@@ -8,8 +9,8 @@ use lib qw(lib);
 	package Counter;
 	use Moose;
 	extends 'Reflex::Base';
-	use Reflex::Trait::EmitsOnChange;
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::EmitsOnChange qw(emits);
+	use Reflex::Trait::Watched qw(watches);
 
 	use Ttl::FlipFlop::T;
 	use Ttl::HexDecoder;
@@ -18,12 +19,12 @@ use lib qw(lib);
 	# The counter schematic comes from Don Lancaster's _TTL Cookbook_.
 	# Other sources (like www.play-hookey.com) seem to be flaky.
 
-	observes t1      => ( isa => 'Ttl::FlipFlop::T', handles => ['clock'] );
-	observes t2      => ( isa => 'Ttl::FlipFlop::T'                       );
-	observes t4      => ( isa => 'Ttl::FlipFlop::T'                       );
-	observes t8      => ( isa => 'Ttl::FlipFlop::T'                       );
-	observes decoder => ( isa => 'Ttl::HexDecoder'                        );
-	emits    out     => ( isa => 'Str'                                    );
+	watches t1      => ( isa => 'Ttl::FlipFlop::T', handles => ['clock'] );
+	watches t2      => ( isa => 'Ttl::FlipFlop::T'                       );
+	watches t4      => ( isa => 'Ttl::FlipFlop::T'                       );
+	watches t8      => ( isa => 'Ttl::FlipFlop::T'                       );
+	watches decoder => ( isa => 'Ttl::HexDecoder'                        );
+	emits   out     => ( isa => 'Str'                                    );
 
 	sub on_t1_q {
 		my ($self, $args) = @_;
@@ -82,10 +83,10 @@ use lib qw(lib);
 	use Moose;
 	extends 'Reflex::Base';
 	use Reflex::Interval;
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 
-	observes counter  => ( isa => 'Counter' );
-	observes clock    => ( isa => 'Reflex::Interval' );
+	watches counter  => ( isa => 'Counter' );
+	watches clock    => ( isa => 'Reflex::Interval' );
 
 	sub BUILD {
 		my $self = shift;

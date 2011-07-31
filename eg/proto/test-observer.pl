@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# vim: ts=2 sw=2 noexpandtab
 
 use warnings;
 use strict;
@@ -12,10 +13,10 @@ use lib qw(../lib);
 	use Moose;
 	extends 'Reflex::Base';
 	use Reflex::POE::Wheel::Run;
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 
-	observes child => (
-		isa     => 'Maybe[Reflex::POE::Wheel::Run]',
+	watches child => (
+		isa => 'Maybe[Reflex::POE::Wheel::Run]',
 	);
 
 	sub BUILD {

@@ -1,4 +1,4 @@
-# $Id$
+# vim: ts=2 sw=2 noexpandtab
 
 # RS Nand latch.
 #
@@ -19,13 +19,13 @@ use Moose;
 extends 'Reflex::Base';
 use Ttl::Nand;
 
-use Reflex::Trait::Observed;
-use Reflex::Trait::EmitsOnChange;
+use Reflex::Trait::Watched qw(watches);
+use Reflex::Trait::EmitsOnChange qw(emits);
 
-observes nand_r => ( isa => 'Ttl::Nand', handles => { r => 'b' } );
-observes nand_s => ( isa => 'Ttl::Nand', handles => { s => 'a' } );
-emits    q      => ( isa => 'Bool'                               );
-emits    not_q  => ( isa => 'Bool'                               );
+watches nand_r => ( isa => 'Ttl::Nand', handles => { r => 'b' } );
+watches nand_s => ( isa => 'Ttl::Nand', handles => { s => 'a' } );
+emits   q      => ( isa => 'Bool'                               );
+emits   not_q  => ( isa => 'Bool'                               );
 
 sub on_nand_s_out {
 	my ($self, $args) = @_;

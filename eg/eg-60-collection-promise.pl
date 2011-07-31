@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 # Agorman's concerns:
 #
@@ -56,7 +57,7 @@ my $collectible_id = 1;
 	use Moose;
 	with 'Reflex::Role::Collectible';
 	extends 'Reflex::Base';  # TODO - Implicit in Reflex::Role::Collectible?
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 	use Reflex::Interval;
 
 	has id => (
@@ -70,7 +71,7 @@ my $collectible_id = 1;
 		default => 0,
 	);
 
-	observes timer => (
+	watches timer => (
 		is => 'rw',
 		isa => 'Maybe[Reflex::Interval]',
 		setup => sub {
@@ -167,6 +168,12 @@ my $tcp = PromiseCollection->new();
 
 while (my $e = $tcp->next) {
 	my $sender = $e->{arg}{_sender}->get_first_emitter();
+
+	unless ($sender) {
+		warn "--- Why is the sender undefined";
+		next;
+	}
+
 	printf(
 		"promise collection got a result of %s! id => %s, value => %s\n",
 		ref($sender), $sender->id, $e->{arg}{value}

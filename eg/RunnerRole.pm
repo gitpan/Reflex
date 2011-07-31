@@ -1,39 +1,40 @@
 package RunnerRole;
+# vim: ts=2 sw=2 noexpandtab
+
 use Reflex::Role;
 
-attribute_parameter stdin   => "stdin";
-attribute_parameter stdout  => "stdin";
-attribute_parameter stderr  => "stdin";
-attribute_parameter pid     => "pid";
-
-callback_parameter  cb_stdout_data    => qw( on stdout data );
-callback_parameter  cb_stdout_error   => qw( on stdout error );
-
-callback_parameter  cb_stdout_closed  => qw( on stdout closed );
-event_parameter     ev_stdout_closed  => qw( _ stdout closed );
-
-callback_parameter  cb_stderr_data    => qw( on stderr data );
-callback_parameter  cb_stderr_error   => qw( on stderr error );
-
-callback_parameter  cb_stderr_closed  => qw( on stderr closed );
-event_parameter     ev_stderr_closed  => qw( _ stderr closed );
-
-callback_parameter  cb_exit => qw( on pid exit );
-event_parameter     ev_exit => qw( _ pid exit );
-
-method_parameter    method_put => qw( put stdin _ );
+attribute_parameter att_pid          => "pid";
+attribute_parameter att_stderr       => "stderr";
+attribute_parameter att_stdin        => "stdin";
+attribute_parameter att_stdout       => "stdout";
+callback_parameter  cb_exit          => qw( on att_pid exit );
+callback_parameter  cb_stderr_closed => qw( on att_stderr closed );
+callback_parameter  cb_stderr_data   => qw( on att_stderr data );
+callback_parameter  cb_stderr_error  => qw( on att_stderr error );
+callback_parameter  cb_stdout_closed => qw( on att_stdout closed );
+callback_parameter  cb_stdout_data   => qw( on att_stdout data );
+callback_parameter  cb_stdout_error  => qw( on att_stdout error );
+method_parameter    method_put       => qw( put att_stdin _ );
 
 role {
 	my $p = shift;
 
 	with 'Reflex::Role::OutStreaming' => {
-		handle      => $p->stdin(),
+		att_handle  => $p->att_stdin(),
 		method_put  => $p->method_put(),
 	};
 
-	my $m_stdout_stop = "stop_" . $p->stdout();
+	my $m_stdout_stop = "stop_" . $p->att_stdout();
 	my $cb_stdout_closed = $p->cb_stdout_closed();
-	my $ev_stdout_closed = $p->ev_stdout_closed();
+
+	requires(
+		map { $p->$_() } qw(
+			att_pid att_stderr att_stdin att_stdout
+			cb_exit
+			cb_stderr_closed cb_stderr_data cb_stderr_data
+			cb_stdout_closed cb_stdout_data cb_stdout_data
+		)
+	);
 
 	after $cb_stdout_closed => sub {
 		my ($self, $args) = @_;
@@ -41,33 +42,30 @@ role {
 	};
 
 	with 'Reflex::Role::InStreaming' => {
-		handle    => $p->stdout(),
-		cb_data   => $p->cb_stdout_data(),
-		cb_error  => $p->cb_stdout_error(),
-		cb_closed => $cb_stdout_closed,
+		att_handle => $p->att_stdout(),
+		cb_data    => $p->cb_stdout_data(),
+		cb_error   => $p->cb_stdout_error(),
+		cb_closed  => $cb_stdout_closed,
 	};
 
-	my $m_stderr_stop = "stop_" . $p->stderr();
+	my $m_stderr_stop = "stop_" . $p->att_stderr();
 	my $cb_stderr_closed = $p->cb_stderr_closed();
-	my $ev_stderr_closed = $p->ev_stderr_closed();
 
 	after $cb_stderr_closed => sub {
 		my ($self, $args) = @_;
 		$self->$m_stderr_stop();
-		$self->emit(event => $ev_stderr_closed, args => $args);
 	};
 
 	with 'Reflex::Role::InStreaming' => {
-		handle    => $p->stderr(),
-		cb_data   => $p->cb_stderr_data(),
-		cb_error  => $p->cb_stderr_error(),
-		cb_closed => $cb_stderr_closed,
+		att_handle => $p->att_stderr(),
+		cb_data    => $p->cb_stderr_data(),
+		cb_error   => $p->cb_stderr_error(),
+		cb_closed  => $cb_stderr_closed,
 	};
 
 	with 'Reflex::Role::PidCatcher' => {
-		pid     => 'pid',
+		att_pid => $p->att_pid(),
 		cb_exit => $p->cb_exit(),
-		ev_exit => $p->ev_exit(),
 	};
 };
 
@@ -77,7 +75,7 @@ __END__
 
 extends 'Reflex::Base';
 
-use Reflex::Trait::Observed;
+use Reflex::Trait::Watched qw(watches);
 use Reflex::PID;
 
 use Carp qw(croak);
@@ -87,7 +85,7 @@ use Symbol qw(gensym);
 
 __END__
 
-observes process => ( isa => 'Maybe[Reflex::PID]', is => 'rw' );
+watches process => ( isa => 'Maybe[Reflex::PID]', is => 'rw' );
 
 has [qw(stdin stdout stderr)] => (
 	isa => 'Maybe[FileHandle]',
@@ -123,7 +121,7 @@ sub on_stdin_error {
 	$self->emit(event => 'stdin_error', args => $args);
 }
 
-with 'Reflex::Role::Writing' => { handle  => 'stdin' };
+with 'Reflex::Role::Writing' => { att_handle  => 'stdin' };
 
 sub on_stdin_writable {
 	my ($self, $arg) = @_;
@@ -132,7 +130,7 @@ sub on_stdin_writable {
 	$self->flush_stdin();
 }
 
-with 'Reflex::Role::Writable' => { handle => 'stdin' };
+with 'Reflex::Role::Writable' => { att_handle => 'stdin' };
 
 ### Read from standard output.
 
@@ -156,13 +154,12 @@ sub on_stdout_error {
 }
 
 with 'Reflex::Role::Reading' => {
-	handle      => 'stdout',
-	cb_data     => 'on_stdout',
-	ev_data     => 'stdout',
+	att_handle  => 'stdout',
+	cb_data     => make_emitter(on_stdout => "stdout"),
 };
 
 with 'Reflex::Role::Readable' => {
-	handle      => 'stdout',
+	att_handle  => 'stdout',
 	cb_ready    => 'on_stdout_readable',
 };
 
@@ -188,13 +185,12 @@ sub on_stderr_readable {
 }
 
 with 'Reflex::Role::Reading' => {
-	handle      => 'stderr',
-	cb_data     => 'on_stderr',
-	ev_data     => 'stderr',
+	att_handle  => 'stderr',
+	cb_data     => make_emitter(on_stderr => "stderr"),
 };
 
 with 'Reflex::Role::Readable' => {
-	handle      => 'stderr',
+	att_handle  => 'stderr',
 	cb_ready    => 'on_stderr_readable',
 };
 
@@ -218,9 +214,9 @@ sub BUILD {
 		)
 	);
 
-	$self->stdin($fh_in);
-	$self->stdout($fh_out);
-	$self->stderr($fh_err);
+	$self->att_stdin($fh_in);
+	$self->att_stdout($fh_out);
+	$self->att_stderr($fh_err);
 }
 
 1;

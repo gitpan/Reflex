@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 use warnings;
 use strict;
@@ -23,10 +24,22 @@ use lib qw(../lib);
 		my $self = shift;
 		$self->component( PoCoEvent->new() );
 
-		# TODO - Make this more convenient.
+		# TODO - Make the following more convenient.
+
+		# BUILD may be called synchronously from any old POE session.
+		# Switch to the session associated with the object being built.
+		# This allows the component to receive the proper $_[SENDER],
+		# which it will then use to respond back to this Reflex object.
 		$self->run_within_session(
 			sub {
+				# The request() call here could be replaced with
+				# $poe_kernel->post(...) assuming you import $poe_kernel and
+				# understand how to address the component.  PoCoEvent provides
+				# the request() method to gloss over these details.
 				$self->component->request(
+					# Reflex::POE::Event looks and feels like a POE event, but
+					# it includes magic to route responses back to the correct
+					# Reflex object.
 					Reflex::POE::Event->new(
 						object  => $self,
 						method  => "on_component_result",

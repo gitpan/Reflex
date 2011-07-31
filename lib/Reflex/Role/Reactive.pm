@@ -1,7 +1,8 @@
 package Reflex::Role::Reactive;
 BEGIN {
-  $Reflex::Role::Reactive::VERSION = '0.088';
+  $Reflex::Role::Reactive::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
 
 use Moose::Role;
 
@@ -48,6 +49,7 @@ sub _create_singleton_session {
 
 			_start => sub {
 				# No-op to satisfy assertions.
+				$_[KERNEL]->alias_set("alias_" . $_[SESSION]->ID);
 				undef;
 			},
 			_stop => sub {
@@ -148,32 +150,36 @@ sub session_id {
 }
 
 # What's watching me.
-# watchers()->{$watcher} = \@callbacks
+# watchers()->{$watcher->get_id} = \@callbacks
 has watchers => (
 	isa     => 'HashRef',
 	is      => 'rw',
+	lazy    => 1,
 	default => sub { {} },
 );
 
 # What's watching me.
-# watchers_by_event()->{$event}->{$watcher} = \@callbacks
+# watchers_by_event()->{$event}->{$watcher->get_id} = \@callbacks
 has watchers_by_event => (
 	isa     => 'HashRef',
 	is      => 'rw',
+	lazy    => 1,
 	default => sub { {} },
 );
 
 # What I'm watching.
-# watched_objects()->{$watched}->{$event} = \@interests
+# watched_objects()->{$watched->get_id}->{$event} = \@interests
 has watched_object_events => (
 	isa     => 'HashRef',
 	is      => 'rw',
+	lazy    => 1,
 	default => sub { {} },
 );
 
 has watched_objects => (
 	isa     => 'HashRef',
 	is      => 'rw',
+	lazy    => 1,
 	default => sub { {} },
 );
 
@@ -191,8 +197,9 @@ has watched_objects => (
 #);
 
 has promise => (
-	is => 'rw',
-	isa => 'Reflex::Callback::Promise',
+	is      => 'rw',
+	isa     => 'Maybe[Reflex::Callback::Promise]',
+	default => undef,
 );
 
 has emits_seen => (
@@ -200,6 +207,16 @@ has emits_seen => (
 	isa     => 'HashRef[Str]',
 	default => sub { {} },
 );
+
+my $next_id = 1;
+
+has _id => (
+	isa     => 'Int',
+	is      => 'ro',
+	default => sub { $next_id++ },
+);
+
+sub get_id { return shift()->_id() }
 
 # Base class.
 
@@ -211,7 +228,7 @@ after BUILD => sub {
 
 	foreach my $setup (
 		grep {
-			$_->does('Reflex::Trait::EmitsOnChange') || $_->does('Reflex::Trait::Observed')
+			$_->does('Reflex::Trait::EmitsOnChange') || $_->does('Reflex::Trait::Watched')
 		}
 		$self->meta()->get_all_attributes()
 	) {
@@ -256,23 +273,31 @@ after BUILD => sub {
 	CALLBACK: while (my ($param, $value) = each %$args) {
 		next unless $param =~ /^on_(\S+)/;
 
+		my $event = $1;
+
 		if (ref($value) eq "CODE") {
 			$value = Reflex::Callback::CodeRef->new(
 				object    => $self,
 				code_ref  => $value,
 			);
 		}
+		elsif (ref($value) eq "ARRAY") {
+			$value = Reflex::Callback::Method->new(
+				object => $value->[0],
+				method_name => $value->[1],
+			);
+		}
 
 		# There is an object, so we have a watcher.
 		if ($value->object()) {
-			$value->object()->watch($self, $1 => $value);
+			$value->object()->watch($self, $event => $value);
 			next CALLBACK;
 		}
 
 		# TODO - Who is the watcher?
 		# TODO - Optimization!  watch() takes multiple event/callback
 		# pairs.  We can combine them into a hash and call watch() once.
-		$self->watch($self, $1 => $value);
+		$self->watch($self, $event => $value);
 		next CALLBACK;
 	}
 
@@ -286,8 +311,35 @@ after BUILD => sub {
 sub watch {
 	my ($self, $watched, %callbacks) = @_;
 
+	my $watched_id = $watched->get_id();
+
 	while (my ($event, $callback) = each %callbacks) {
 		$event =~ s/^on_//;
+
+		if (ref $callback) {
+			if (blessed($callback)) {
+				unless ($callback->isa('Reflex::Callback')) {
+					croak "Can't use $callback as a callback";
+				}
+			}
+			elsif (ref($callback) eq "CODE") {
+				# Coerce sub{} into Reflex::Callback.
+				$callback = Reflex::Callback::CodeRef->new(
+					object    => $self,
+					code_ref  => $callback,
+				);
+			}
+			else {
+				croak "Can't use $callback as a callback."
+			}
+		}
+		else {
+			# Coerce method name into a callback.
+			$callback = Reflex::Callback::Method->new(
+				object      => $self,
+				method_name => $callback,
+			);
+		}
 
 		my $interest = {
 			callback  => $callback,
@@ -296,15 +348,15 @@ sub watch {
 		};
 
 		weaken $interest->{watched};
-		unless (exists $self->watched_objects()->{$watched}) {
-			$self->watched_objects()->{$watched} = $watched;
-			weaken $self->watched_objects()->{$watched};
+		unless (exists $self->watched_objects()->{$watched_id}) {
+			$self->watched_objects()->{$watched_id} = $watched;
+			weaken $self->watched_objects()->{$watched_id};
 
 			# Keep this object's session alive.
-			$POE::Kernel::poe_kernel->refcount_increment($self->session_id, "in_use");
+			#$POE::Kernel::poe_kernel->refcount_increment($self->session_id, "in_use");
 		}
 
-		push @{$self->watched_object_events()->{$watched}->{$event}}, $interest;
+		push @{$self->watched_object_events()->{$watched_id}->{$event}}, $interest;
 
 		# Tell what I'm watching that it's being watched.
 
@@ -318,6 +370,7 @@ sub watch {
 sub _stop_watchers {
 	my ($self, $watcher, $events) = @_;
 
+	my $watcher_id = $watcher->get_id();
 	my @events = @{$events || []};
 
 	unless (@events) {
@@ -330,16 +383,16 @@ sub _stop_watchers {
 	}
 
 	foreach my $event (@events) {
-		delete $self->watchers_by_event()->{$event}->{$watcher};
+		delete $self->watchers_by_event()->{$event}->{$watcher_id};
 		delete $self->watchers_by_event()->{$event} unless (
 			scalar keys %{$self->watchers_by_event()->{$event}}
 		);
-		pop @{$self->watchers()->{$watcher}};
+		pop @{$self->watchers()->{$watcher_id}};
 	}
 
-	delete $self->watchers()->{$watcher} unless (
-		exists $self->watchers()->{$watcher} and
-		@{$self->watchers()->{$watcher}}
+	delete $self->watchers()->{$watcher_id} unless (
+		exists $self->watchers()->{$watcher_id} and
+		@{$self->watchers()->{$watcher_id}}
 	);
 }
 
@@ -353,8 +406,10 @@ sub _is_watched {
 	};
 	weaken $interest->{watcher};
 
-	push @{$self->watchers_by_event()->{$event}->{$watcher}}, $interest;
-	push @{$self->watchers()->{$watcher}}, $interest;
+	my $watcher_id = $watcher->get_id();
+
+	push @{$self->watchers_by_event()->{$event}->{$watcher_id}}, $interest;
+	push @{$self->watchers()->{$watcher_id}}, $interest;
 }
 
 sub emit {
@@ -414,6 +469,7 @@ sub emit {
 	# This event isn't watched.
 
 	my $deliver_event = $event;
+	#warn $deliver_event;
 	unless (exists $self->watchers_by_event()->{$deliver_event}) {
 		if ($self->promise()) {
 			$self->promise()->deliver($event, $callback_args);
@@ -528,25 +584,27 @@ sub ignore {
 
 	croak "ignore requires at least an object" unless defined $watched;
 
+	my $watched_id = $watched->get_id();
+
 	if (@events) {
-		delete @{$self->watched_object_events()->{$watched}}{@events};
-		unless (scalar keys %{$self->watched_object_events()->{$watched}}) {
-			delete $self->watched_object_events()->{$watched};
-			delete $self->watched_objects()->{$watched};
+		delete @{$self->watched_object_events()->{$watched_id}}{@events};
+		unless (scalar keys %{$self->watched_object_events()->{$watched_id}}) {
+			delete $self->watched_object_events()->{$watched_id};
+			delete $self->watched_objects()->{$watched_id};
 
 			# Decrement the session's use count.
-			$POE::Kernel::poe_kernel->refcount_decrement($self->session_id, "in_use");
+			#$POE::Kernel::poe_kernel->refcount_decrement($self->session_id, "in_use");
 		}
 		$watched->_stop_watchers($self, \@events);
 	}
 	else {
 		use Carp qw(cluck); cluck "whaaaa" unless defined $watched;
-		delete $self->watched_object_events()->{$watched};
-		delete $self->watched_objects()->{$watched};
+		delete $self->watched_object_events()->{$watched_id};
+		delete $self->watched_objects()->{$watched_id};
 		$watched->_stop_watchers($self);
 
 		# Decrement the session's use count.
-		$POE::Kernel::poe_kernel->refcount_decrement($self->session_id, "in_use");
+		#$POE::Kernel::poe_kernel->refcount_decrement($self->session_id, "in_use");
 	}
 }
 
@@ -594,16 +652,36 @@ sub run_all {
 	$singleton_session_id = undef;
 }
 
+# TODO - Added semantics to wait for a specific event.
+# Need to document that.
+
 sub next {
 	my $self = shift;
-
 	$self->promise() || $self->promise(Reflex::Callback::Promise->new());
-	return $self->promise()->next();
+
+	return $self->promise()->next() unless @_;
+
+	# TODO - It's user friendly to accept a list and build a hash
+	# internally, but that adds runtime CPU overhead.  On the other
+	# hand, passing in a hashref with dummy values kind of sucks for the
+	# user.  I'd like to discuss the relative merits and costs of each
+	# option with someone.
+
+	my %which = map { $_ => 1 } @_;
+	while (my $next = $self->promise()->next()) {
+		return $next if exists $which{$next->{name}};
+	}
 }
 
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -611,7 +689,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -832,19 +910,118 @@ objects.  Explore and enjoy!
 
 =head1 SEE ALSO
 
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
+
 L<Moose::Manual::Concepts>
 
+=item *
+
 L<Reflex>
+
+=item *
+
 L<Reflex::Base>
 
+=item *
+
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

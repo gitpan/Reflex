@@ -1,4 +1,4 @@
-# $Id$
+# vim: ts=2 sw=2 noexpandtab
 
 # Clocked RS Nand latch.
 #
@@ -18,11 +18,11 @@ extends 'Reflex::Base';
 use Ttl::Nand;
 use Ttl::Latch::NandRS;
 
-use Reflex::Trait::EmitsOnChange;
-use Reflex::Trait::Observed;
+use Reflex::Trait::EmitsOnChange qw(emits);
+use Reflex::Trait::Watched qw(watches);
 
-observes nand_not_r => ( isa => 'Ttl::Nand', handles => { not_r => 'b' } );
-observes nand_s     => ( isa => 'Ttl::Nand', handles => { s     => 'a' } );
+watches nand_not_r => ( isa => 'Ttl::Nand', handles => { not_r => 'b' } );
+watches nand_s     => ( isa => 'Ttl::Nand', handles => { s     => 'a' } );
 emits    clk        => ( isa => 'Bool' );
 
 sub on_my_clk {
@@ -31,7 +31,7 @@ sub on_my_clk {
 	$self->nand_not_r()->a($args->{value});
 }
 
-observes latch => ( isa => 'Ttl::Latch::NandRS' );
+watches latch => ( isa => 'Ttl::Latch::NandRS' );
 
 sub BUILD {
 	my $self = shift;

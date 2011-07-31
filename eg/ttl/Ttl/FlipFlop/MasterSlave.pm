@@ -1,4 +1,4 @@
-# $Id$
+# vim: ts=2 sw=2 noexpandtab
 
 # Edge-triggered RS (master/slave) filp-flop.
 #
@@ -18,16 +18,16 @@ extends 'Reflex::Base';
 use Ttl::Latch::ClockedNandRS;
 use Ttl::Not;
 
-use Reflex::Trait::EmitsOnChange;
-use Reflex::Trait::Observed;
+use Reflex::Trait::EmitsOnChange qw(emits);
+use Reflex::Trait::Watched qw(watches);
 
-observes cnrs1 => (
+watches cnrs1 => (
 	isa => 'Ttl::Latch::ClockedNandRS',
 	handles => ['r', 's'],
 );
 
-observes cnrs2 => ( isa => 'Ttl::Latch::ClockedNandRS' );
-observes not   => ( isa => 'Ttl::Not'                  );
+watches cnrs2 => ( isa => 'Ttl::Latch::ClockedNandRS' );
+watches not   => ( isa => 'Ttl::Not'                  );
 
 sub BUILD {
 	my $self = shift;

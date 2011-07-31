@@ -1,4 +1,4 @@
-# $Id$
+# vim: ts=2 sw=2 noexpandtab
 
 # T flip-flop.  Basically a D flip-flop with _q fed into d.
 
@@ -7,10 +7,10 @@ use Moose;
 extends 'Reflex::Base';
 use Ttl::FlipFlop::D;
 
-use Reflex::Trait::Observed;
-use Reflex::Trait::EmitsOnChange;
+use Reflex::Trait::Watched qw(watches);
+use Reflex::Trait::EmitsOnChange qw(emits);
 
-observes dff => (
+watches dff => (
 	isa => 'Ttl::FlipFlop::D',
 	handles => ['preset','clear','clock'],
 );

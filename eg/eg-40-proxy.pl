@@ -1,3 +1,4 @@
+# vim: ts=2 sw=2 noexpandtab
 use lib qw(../lib);
 
 use Moose;
@@ -15,8 +16,8 @@ socketpair($socket_2a, $socket_2b, AF_UNIX, SOCK_STREAM, PF_UNSPEC) or die $!;
 
 # Proxy.  Data appearing at either end is written to the other.
 my $p = Proxy->new(
-	handle_a => $socket_1b,
-	handle_b => $socket_2b,
+	client => $socket_1b,
+	server => $socket_2b,
 );
 
 my $s1 = Reflex::Stream->new( handle => $socket_1a );

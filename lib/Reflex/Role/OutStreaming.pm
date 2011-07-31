@@ -1,39 +1,39 @@
 package Reflex::Role::OutStreaming;
 BEGIN {
-  $Reflex::Role::OutStreaming::VERSION = '0.088';
+  $Reflex::Role::OutStreaming::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
+
 use Reflex::Role;
 
-attribute_parameter handle      => "handle";
-
-callback_parameter  cb_error    => qw( on handle error );
-
-callback_parameter  ev_error    => qw( ev handle error );
-
-method_parameter    method_put  => qw( put handle _ );
-method_parameter    method_stop => qw( stop handle _ );
+attribute_parameter att_handle  => "handle";
+callback_parameter  cb_error    => qw( on att_handle error );
+method_parameter    method_put  => qw( put att_handle _ );
+method_parameter    method_stop => qw( stop att_handle _ );
 
 role {
 	my $p = shift;
 
-	my $h           = $p->handle();
-	my $cb_error    = $p->cb_error();
-	my $method_put  = $p->method_put();
+	my $att_handle = $p->att_handle();
+	my $cb_error   = $p->cb_error();
 
-	my $method_writable = "_on_${h}_writable";
-	my $internal_flush  = "_do_${h}_flush";
-	my $internal_put    = "_do_${h}_put";
-	my $pause_writable  = "_pause_${h}_writable";
-	my $resume_writable = "_resume_${h}_writable";
+	requires $att_handle, $cb_error;
+
+	my $method_put = $p->method_put();
+
+	my $internal_flush  = "_do_${att_handle}_flush";
+	my $internal_put    = "_do_${att_handle}_put";
+	my $method_writable = "_on_${att_handle}_writable";
+	my $pause_writable  = "_pause_${att_handle}_writable";
+	my $resume_writable = "_resume_${att_handle}_writable";
 
 	with 'Reflex::Role::Collectible';
 
-	method_emit_and_stop $cb_error => $p->ev_error();
-
 	with 'Reflex::Role::Writing' => {
-		handle      => $h,
-		cb_error    => $cb_error,
-		method_put  => $internal_put,
+		att_handle   => $att_handle,
+		cb_error     => $cb_error,
+		method_put   => $internal_put,
+		method_flush => $internal_flush,
 	};
 
 	method $method_writable => sub {
@@ -46,8 +46,8 @@ role {
 	};
 
 	with 'Reflex::Role::Writable' => {
-		handle      => $h,
-		cb_ready    => $method_writable,
+		att_handle   => $att_handle,
+		cb_ready     => $method_writable,
 		method_pause => $pause_writable,
 	};
 
@@ -61,7 +61,13 @@ role {
 
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -69,7 +75,7 @@ Reflex::Role::OutStreaming - add streaming input behavior to a class
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -129,19 +135,122 @@ See eg/RunnerRole.pm in the distribution.
 
 =head1 SEE ALSO
 
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
+
 L<Reflex>
+
+=item *
+
 L<Reflex::Role::Writable>
+
+=item *
+
 L<Reflex::Role::Writing>
+
+=item *
+
 L<Reflex::Stream>
 
+=item *
+
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

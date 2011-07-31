@@ -1,4 +1,266 @@
 ================================
+2011-07-30 22:41:53 -0400 v0_090
+================================
+
+  commit 98db344273bd63e97283aef4690f1147ebd26e05
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 30 22:41:53 2011 -0400
+  
+    Bump the version for release.
+
+  commit e9fb8dd2b684c2332cfa914f737f20a263b03c41
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 30 22:36:46 2011 -0400
+  
+    Apply Sébastien Aperghis-Tramoni's patch to allow Reflex to compile
+    on Perl 5.8.8. Resolves rt.cpan.org ticket 66275.
+
+  commit fc48064961e2bc9a85b83eb41d80a20a33fc3ae9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 30 22:33:53 2011 -0400
+  
+    Remove PodPlexus plugin for now. That's a bigger yak than will fit in
+    any recent release.
+
+  commit a94504ff16cdb05c11469e20c4dcd38b5eab9832
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 30 22:33:17 2011 -0400
+  
+    Commit experimental things for others to consider.
+
+  commit 4dba6022a1d977f170c21a4d4efb01a3d38a47bf
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 30 22:29:03 2011 -0400
+  
+    Reorganize to make a little more accessible, based on feedback from
+    YAPC::NA.
+
+  commit 000a5036fd9342f67b51c77e3dd59f5d6853f471
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 16 20:18:06 2011 -0400
+  
+    Implement a non-Moose inheritance example. Test the new Pod::Plexus
+    "=include" directive.
+
+  commit b72e530173db48f39ca2bee0a410ddb34411cb84
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Jul 16 15:07:27 2011 -0400
+  
+    Begin using Pod::Plexus and Pod::Weaver.
+
+  commit 30bfa45994926534e5c94bc0dd83edf980edd8d6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jul 5 23:13:55 2011 -0400
+  
+    Implement a couple prototypes for injecting event loops into
+    Reflex::Base. Heavily leaning on confound's advice from irc.perl.org
+    #moose.
+
+  commit 8b5146ac2e8090a0190ded77039f61b00a2950e8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jul 5 22:22:37 2011 -0400
+  
+    Prototype a Reflexive ZeroMQ socket, with basic publish and subscribe
+    examples.
+
+  commit 9479f27167e894e18f36a4a7fbbb72155549156a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Jun 28 02:16:14 2011 -0400
+  
+    Experimentally coerce callbacks from contextual parameters.
+
+  commit 4dcae463a99d85c05d2cb03356bb721e3c84fc3a
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue May 31 01:10:20 2011 -0400
+  
+    Whitespace fixes.
+
+  commit e0d6b992e52a4f93e58bd96f985f82896d563ce4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue May 31 01:04:43 2011 -0400
+  
+    Explicitly export watches() and emits() from their corresponding
+    Reflex traits.
+
+  commit 71a77f8dbcbc35125b1e7ee3238a740746da57e6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue May 31 01:03:56 2011 -0400
+  
+    Revise documentation.
+
+  commit 5b0127b4bad48d1b5a48f39309859e693a8738d8
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun May 29 22:17:46 2011 -0400
+  
+    Remove emit() from roles.
+
+    Roles are all about static composition, and events are for dynamic
+    composition. Roles that emit() events blur this distinction, so I'm
+    deeming them to be "bad".
+
+    Additionally, one of Reflex's prime directives is for consumers to
+    decide how they'll handle things. Implementing "interface" callbacks
+    in roles (even default ones) takes this away from the consumer. The
+    current solution is to provide declarative helpers to define the
+    defaults. They also make more explicit that it's the consumer's role
+    (har) to define callbacks in all cases. This is slightly less
+    convenient, but it's a lot cleaner.
+
+    Also add vim format lines so I stop dealing with whitespace
+    inconsistencies.
+
+  commit 18c07d9577fb4e77d0bef4ecb680c31277a6beea
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu May 26 09:46:28 2011 -0400
+  
+    Avoid breaking code that uses Reflex::Trait::Observed.
+
+    Add a Reflex::Trait::Observed that's implemented by
+    Reflex::Trait::Watched. This is a temporary plceholder to avoid
+    upgrade awkwardness. It'll go away in a few releases of Reflex.
+
+  commit 354b571ef2509485a2cc4f3a660738dcec20bcc9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu May 26 00:55:38 2011 -0400
+  
+    Remove the "Empty" message. undef is just fine for this purpose.
+
+  commit 9513af3bd7026db10548a3071870be7a2e21749f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed May 25 23:05:52 2011 -0400
+  
+    Rename "observe" to "watch".
+
+    It's shorter, and it aligns the names of things with what node.js
+    people understand.
+
+  commit 20c1bb9c51c40c519dd311f1932b47be926972c5
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Wed May 18 01:09:03 2011 -0400
+  
+    Experimental queued I/O model, like a pared down STREAMS system.
+    Meant to address ordering issues when I/O races with notifications
+    like EOF and SIGCHLD, which can happen in pipe/fork/exec situations.
+
+  commit 8cbeb92e5b2a9833a40cf7496b9c082a32838666
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat May 7 19:12:58 2011 -0400
+  
+    Outline more multiprocess and ransparent RPC considerations.
+
+  commit 3d7a5058b539fa631a3f894e6aa95122ee81c7a2
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Apr 16 03:24:43 2011 -0400
+  
+    "Lifeguard" was confusing, so call it "Pool Manager" for now.
+
+  commit b0db25334d1592fdefe2ebd8bd7e04824d7afb2d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Mar 26 04:19:02 2011 -0400
+  
+    Add Andy Gorman's requirements for worker management. Begin generic
+    worker management requirements.
+
+  commit 9ee64987571c3734d03c6de6215dd52ccdc49af2
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Mar 20 00:20:15 2011 -0400
+  
+    Add experimental support to merge promise queues, but I think this
+    isn't flexible enough to be generic. Expect it to be replaced by...
+    better.
+
+  commit 97fe645e9ad687b414a9983774d9abd25da1c42b
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Mar 20 00:18:42 2011 -0400
+  
+    Reflex objects seem to interact in ways similar to the Enterprise
+    Integration Patterns. Summarize some of those patterns in the TODO
+    outline, and add tasks to investigate more.
+
+  commit c5a86a1985c373e3ef0f96d71692a83acaa5d1e9
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sat Mar 19 14:02:34 2011 -0400
+  
+    Add ability to wait for the next() occurrence of a particular event.
+    Using it in my rx-firmata work: $uno->put_handle("\xF0\x6B\xF7");
+    $uno->next('initialized');
+
+  commit f279d0812b7e19acd87a0b24befb23b443e25b66
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Tue Mar 15 23:05:37 2011 -0400
+  
+    Braindump Erlang inspiration for distributed Reflex. New tasks set
+    the project back 3%. :(
+
+  commit 49fbf78c1626e65d6ce158b5a643732888b43396
+  Author: Dylan William Hardison <dylan@hardison.net>
+  Date:   Fri Mar 4 22:09:06 2011 -0500
+  
+    Don't assume handle is named handle.
+
+  commit fb03bf2b03759d781c92b3d3f5d8ca9ff3da6642
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 13 13:02:31 2011 -0500
+  
+    Add get_id() to Reflex::Role::Reactive. Rekey all object-keyed data
+    on object ID instead, improving iThread-safety and fork()-safety on
+    Windows.
+
+  commit f56955440e184f5377840040974ae871505a288c
+  Author: Jason May <jason.a.may@gmail.com>
+  Date:   Sat Feb 12 15:22:08 2011 -0500
+  
+    Add objects() trait delegate.
+
+  commit 1d07a7687db51ceefffc94d2fa7688d8382b58e6
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 13 11:43:38 2011 -0500
+  
+    Reweaken the sender. While it would be nice to keep the sender
+    around, it was causing resource deadlocks in example programs.
+
+  commit 8e6117cfc8beaab82bd73d0c4c13ea6965a8d0db
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 13 11:42:27 2011 -0500
+  
+    Start each Reflex object with a Promise. Previously the call to
+    next() would trigger creation of a Promise. Messages delivered before
+    next() could be called would be discarded.
+
+  commit da49313800ae599d5e4d290c83bc0f80f782419c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 13 11:41:41 2011 -0500
+  
+    Doc fix. Make it explicit that input that input streams are
+    asynchronous.
+
+  commit 048f18992504b5e149bab77e75ee5f6ee94cd1b1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Sun Feb 13 11:40:18 2011 -0500
+  
+    Don't allow events to enqueue forever in a Promise callback.
+
+  commit 3bd9acb1e815ed4966afaa56baf932331e6b09ba
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jan 24 19:27:14 2011 -0500
+  
+    Explain that request() is a convenience method to gloss over the
+    details of $poe_kernel->post().
+
+  commit f32ece5c9228d31ab73f6c4182b5fae2bcbcaf0c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Mon Jan 24 18:45:21 2011 -0500
+  
+    Improve the comments in the POE component examples. Rob Bloodgood
+    pointed out that the code's not self-explanatory.
+
+  commit 94eb8a53c1c60525aa4d782c5ef6b68e62f3d754
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date:   Thu Jan 6 18:32:53 2011 -0500
+  
+    Forgot to document a couple newish classes. 
+
+================================
 2011-01-06 18:32:53 -0500 v0_088
 ================================
 
@@ -288,936 +550,6 @@
 
     It's up to the Writing role's consumer to decide how flushes are to
     be triggered. The Writing role is only to be concerned with writing. 
-
-================================
-2010-07-15 00:00:17 -0400 v0_060
-================================
-
-  commit 122cbcc1b1c67738ad7ab3775982051210fd7d73
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 15 00:00:17 2010 -0400
-  
-    Document! Oh, gods, it burns!
-
-  commit 376ab5faeee2721c23a02cbca1b1c1e5d8473da0
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Jul 14 15:46:47 2010 -0400
-  
-    Expose a reset() method from Reflex::Role::Interval.
-
-  commit 7c9265927e465bd06a184d2234d9e9158186b2bf
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Jul 14 00:38:46 2010 -0400
-  
-    Document Reflex::Role::Reading and Reflex::Role::Writing.
-
-  commit 3e2469f61c060128d9b9dbf65580c0e12df8ffcf
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jul 13 02:52:44 2010 -0400
-  
-    Document the basic Reflex::Role.
-
-  commit 18993bfac16f7725dc7f297789509257c83f8b87
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jul 12 02:19:04 2010 -0400
-  
-    The extra "name" parameters weren't needed. Begin documenting the new
-    timers. About 97% done with the renaming.
-
-  commit ce7ee1a35d28d8e30ae5c5113b7e6ce9a6a7445f
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 11 15:12:39 2010 -0400
-  
-    Add wakeup timers (alarms) and fix some bugs in the other timers.
-
-  commit 849cac2d1ee4a50a73e1afe56b21b7a8a59a1d0e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 11 14:38:06 2010 -0400
-  
-    Add Reflex::Role::Timeout and Reflex::Timeout.
-
-  commit bbf149dcc5831191165d5ae06bb0e2c2047e2e31
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 11 03:05:10 2010 -0400
-  
-    Create Reflex::Role::Interval, and reify it as Reflex::Interval.
-    Needed to change a lot of code and docs that used Reflex::Timer,
-    which has bee deleted.
-
-  commit 5cf73d961a7239647f65407d2867d1616696c855
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 10 20:10:15 2010 -0400
-  
-    Propagate the new Reflex::Role usage to old users of
-    Reflex::Util::Methods. I still don't like the function names, but
-    they're good placeholders for now.
-
-  commit 116be402c755d77aae88927fab6c607dfcd04539
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 10 20:00:08 2010 -0400
-  
-    Reflex::Handle is gone, so remove the example for it. Also removed
-    Reflex::Util::Methods because Reflex::Role will take that over.
-
-  commit e6e2bf6ad099a61bc64d7eb8d7298d898a9d3ddd
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 10 16:40:23 2010 -0400
-  
-    Reflex::Role takes over for Reflex::Util::Methods.
-
-    It expands Reflex::Role::Parameterized with additional syntax for
-    callback names, method names, and attribute parameters.
-
-  commit f66cd2f700623e4f64a29e753e5e32035bd46fa6
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 10 03:55:21 2010 -0400
-  
-    Break reading and writing behaviors out into their own roles. They're
-    too useful to be sequestered into a streaming role.
-
-  commit 43fffe4fa407c3dce77d3884a4911816275d9705
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 8 04:19:17 2010 -0400
-  
-    Experiment with plain sub callbacks rather than cb_coderef() syntax.
-
-  commit 9baef533375b4cf628e8c401875d857bae9e66c4
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 8 04:18:08 2010 -0400
-  
-    Humor!
-
-  commit e3ba45d042d4ae6969982722a3f40dff1ef07521
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 8 04:17:46 2010 -0400
-  
-    Progress was made on the great renaming.
-
-  commit 9f05bb6eb0cb8ab91f226ab3405850e6492791f8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 8 04:15:37 2010 -0400
-  
-    Rough draft of the beginning of an introductory document.
-
-  commit a19c6c84846fcd2155c909920d2d570061b7a782
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jul 6 13:13:41 2010 -0400
-  
-    Replace -alias/-excludes with the method_send role parameter.
-
-  commit 7acb5f4310790f5da16b7adcf7efab057373700d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jul 5 13:21:26 2010 -0400
-  
-    I think the base classes should have simpler names than the roles
-    they reify.
-
-  commit a3cca99599ec0a70ed017bae0516ce3930ca0b00
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jul 5 13:14:50 2010 -0400
-  
-    Revise Reflex::PID to work with Reflex::SigCatcher. Remove deprecated
-    Reflex::Signal.
-
-  commit d42bbca32aac10a167b6a3ee48a90077e5964d82
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jul 5 02:29:39 2010 -0400
-  
-    Document the new SigCatcher role and class. 
-
-================================
-2010-07-04 22:40:56 -0400 v0_056
-================================
-
-  commit a12f9734ee6df7833131e1c5a91d5fdff0c470b3
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 22:34:12 2010 -0400
-  
-    Add Reflex::Role::SigCatcher and Reflex::SigCatcher to reify it.
-
-  commit 51d8dc11fc83733843d9c5d99c0e5766cdf52ffa
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 22:34:12 2010 -0400
-  
-    Add Reflex::Role::SigCatcher and Reflex::SigCatcher to reify it.
-
-  commit 53ab166f41bd61d7e4fd2d3d8ffa47104ce976fb
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 20:06:55 2010 -0400
-  
-    Lighten up the assistance section of the docs.
-
-  commit b2668e4148976e781afb91fd54a23a4f6faf79d9
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 19:24:45 2010 -0400
-  
-    Set up CIA and Ohlo projects.
-
-  commit a39695bb1934ac456632a6c1785774d50960ce71
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 18:50:10 2010 -0400
-  
-    Remove a level of indirection on I/O dispatch.
-
-    Kind of needed since all the roles can't use the same deliver()
-    callback anymore. It makes a bit of sense for Reflex::Role::Reactive
-    to deliver callbacks itself, rather than go through a redirect method
-    in each role. 
-
-================================
-2010-07-04 05:24:55 -0400 v0_055
-================================
-
-  commit 67a0f33f3e5c11b5c54088ac6bc7c49bc50ace93
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 05:24:55 2010 -0400
-  
-    Document the ongoing naming/rolling refactor.
-
-  commit 1d107adef8a5231989723523e59351e085dd7f57
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 05:22:44 2010 -0400
-  
-    Document new roles and role-based classes.
-
-  commit 9f894605ce5da18b22ad77ca3b3f6e7f635f05c7
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 04:00:18 2010 -0400
-  
-    Get Reflex::Client working with new role-based Connector and Stream.
-
-  commit 25571ea05acad249a469f2af23f16bb794eec0bc
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 03:09:36 2010 -0400
-  
-    Write a rudimentary socket connecting role, and get one of the
-    examples to work.
-
-  commit eaa6eaf2f61ff6b21520a3018ffb8628f96f7a8f
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 02:17:55 2010 -0400
-  
-    Remove Reflex::Handle so things that need it will die, helping
-    deprecations stand out.
-
-  commit 39bad1955e2fb847f1020d9b86ee12cfafeebda6
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 02:15:27 2010 -0400
-  
-    Fix some fundamental thinkos to make things actually work.
-
-  commit f1eefec09dd8c03bdcbd300062a5f786f43a6c95
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 02:13:36 2010 -0400
-  
-    Document a philosophy about roles.
-
-  commit ccc3a37439b0b2e7229cf0e580ed079175b5c0a2
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jul 4 02:12:49 2010 -0400
-  
-    Replace Reflex::Listener with Reflex::Role::Accepting and
-    Reflex::Acceptor.
-
-  commit 786494bcec111fef45ee85f5909b8dfa0d441ab7
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 1 12:01:22 2010 -0400
-  
-    Replace perldoc's utf8 hyphens with plain old hyphens. 
-
-================================
-2010-07-01 00:55:25 -0400 v0_050
-================================
-
-  commit 156542b1d8bf595663a5e26ba7ee774098d80000
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 1 00:55:25 2010 -0400
-  
-    Add deprecation warnings to Reflex::Handle and its subclasses.
-
-  commit a6d52ce9bc046eb356aff5f28a36b52c38763d78
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 1 00:50:15 2010 -0400
-  
-    Replace the hierarchical class tree with categorized lists.
-
-    Nadim Khemir provided great ASCII tree diagrams for the old class
-    hierarchy. Through no fault of his however, they can't be used.
-    Reflex is moving away from hierarchical design and more towards
-    roles. Classes are increasingly becoming composed of multiple roles,
-    which can't adequately be represented by simple trees.
-
-  commit 1eda21a4c66d18e3d53eca83e565c15dd237109a
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jul 1 00:07:51 2010 -0400
-  
-    Add Reflex::Role::Collectible to work with Reflex::Collection.
-
-  commit affe378bd386d347f435cc8cd6ffe0d31c251b47
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jun 28 13:26:37 2010 -0400
-  
-    Replace method name declarations with a helper function.
-
-  commit 7f5d4db10cc950e22658392aeee4f9ff891bab1c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jun 28 13:04:51 2010 -0400
-  
-    Focus on promises rather than condvars.
-
-  commit 2fe7ce2387134a52173f4dfd57f4ce80a241d82f
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 27 14:07:37 2010 -0400
-  
-    Make a note to enable SIGCHLD for great justice (and speed).
-
-  commit ca75de20907d99303a70a9c6c416898ae8bb4c25
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 27 13:56:27 2010 -0400
-  
-    Sanitize (as in make SANE) Reflex::Stream callback names.
-
-  commit 1f5ed2736c54e3718dc55f754f984a7bf2f7a12d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 27 13:40:50 2010 -0400
-  
-    Rename Reflex::Role::Object to Reflex::Role::Reactive; Reflex::Object
-    to Reflex::Base.
-
-  commit e5c57fb3e0a891ecd948b6cb68342e05b13f6679
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jun 26 22:49:46 2010 -0400
-  
-    Deprecate the roles directory since the roles are first class now.
-
-  commit e45ebba890259fb4449b75f256fb03071f8e8a13
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jun 26 22:48:09 2010 -0400
-  
-    These example roles are defunct since we'll be writing real ones.
-
-  commit 9fa1ac16482cbe13f66eda1b4791240bb3c87e13
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jun 26 22:47:19 2010 -0400
-  
-    Several examples are nonexistent now, so the placeholder is silly.
-
-  commit 08bafbd2b824ae0ceed83ea9e70757929899527d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jun 26 20:19:41 2010 -0400
-  
-    Massive redoing of Reflex roles and some of the objects that use
-    them.
-
-    For example, Reflex::Handle is deprecated in favor of Reflex::Stream,
-    which is implemented now in terms of Reflex::Role::Streaming.
-
-  commit c1c573eeaa75008ff35e9d8d272bfc8807b1ccd6
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Jun 23 20:34:51 2010 -0400
-  
-    Rename the role.
-
-  commit 1d3eded20ba41b7046ae2e2d9cf5d902c3685b57
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Jun 23 20:32:52 2010 -0400
-  
-    Parameterize Reflex::Role::UdpPeer. Can EmitHelper in favor of
-    Reflex::Util::Methods.
-
-  commit 803943773d48c994b6d91c816daf728073d95533
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 22 02:53:02 2010 -0400
-  
-    Document the new roles.
-
-  commit ea712d886c630b8b16d50b505f059bc25135a301
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 20 21:25:42 2010 -0400
-  
-    Begin bringing parameterized roles into the main distro.
-
-  commit 3aadb31da4ccd888ece2451621ab83b71942ae35
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jun 19 16:38:31 2010 -0400
-  
-    Rename EmitHelper's helper to emit_by_default().
-
-  commit 4c4a60b7b4f6fd84a4696206b2b9dfce59eaadca
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Jun 16 03:44:10 2010 -0400
-  
-    Normalize on deliver() for event delivery.
-
-  commit ab4ea4a216d1abe909f366c6893fa51f2cb56b28
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 23:18:25 2010 -0400
-  
-    Rename trait class file to match its new package name.
-
-  commit bf5f35fef2bfaf387a970d270b4df67d33941590
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 23:17:54 2010 -0400
-  
-    Rename uses of Reflex::Trait::Emitter to ::EmitsOnChange.
-
-  commit fba8fa8d7b54293163fabfb4b41a4fcc5128ef61
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 23:08:25 2010 -0400
-  
-    Rename the file to match its new class.
-
-  commit 28ec466574dd3250307b54ebac433bab38f555cd
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 23:07:37 2010 -0400
-  
-    Rename uses of Reflex::Trait::Observer to Reflex::Trait::Observed.
-
-  commit 18e46a94278f2776e380c8b248f06a27e74e229e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 22:59:23 2010 -0400
-  
-    Rename callback send() to deliver() to match deliver() used
-    everywhere else.
-
-  commit 5f9458c064965a1e86d4ac43f93ef3bc50b95056
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 22:37:50 2010 -0400
-  
-    Rename observe() to watch(). Rename wait() to next().
-
-  commit 15add2525852df61c2b3c8c6c62d392f36a14689
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 20:30:55 2010 -0400
-  
-    Fix library paths to find common test helper libraries.
-
-  commit 54bef2d8e22d94d72c9a76f2dc9980f92c25ab5b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 20:25:28 2010 -0400
-  
-    Move the new tests into place.
-
-  commit 0b515ca08383f66e6539d2227aaa8487e57037b9
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 20:23:51 2010 -0400
-  
-    Convert the callback examples into tests.
-
-  commit c00d09678aaa8f51950feaeca94f19618a316e4e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 15 18:52:00 2010 -0400
-  
-    Revise discussion of tests 901 and 902.
-
-  commit 6f77f44a5983e51d130ae0fd25e08e204ee8e1b4
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 23:58:53 2010 -0400
-  
-    Move tests into test directory.
-
-  commit 4b63c090daec1deb4cf733c518c52d159563aac0
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 23:57:16 2010 -0400
-  
-    Convert another example into a test.
-
-  commit 8364e2eb7dea3aca73400ef46c1fc1b8e43b7b44
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 14:58:25 2010 -0400
-  
-    Clean up the tests a little more.
-
-  commit d8bf8e339e973dbde6c0687342382f16ac280bff
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 14:47:33 2010 -0400
-  
-    Promote check_args() to public method. ignore() syntax matches
-    observe() now.
-
-  commit d84161fc49b6bce7e1f058f492cb0868fd98f2d8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 14:15:14 2010 -0400
-  
-    Discard the observed constructor parameter now that we have
-    Reflex::Callbacks.
-
-  commit 48546334f04175c8d4abd312ff7572d3fd719955
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 14:10:42 2010 -0400
-  
-    Convert this example into a test.
-
-  commit 880e1f67d71ef9cf698ee3960fdb2d2720a46122
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jun 13 14:09:10 2010 -0400
-  
-    Add goals for making the names of things more coherent.
-
-  commit b19db8851b34b4b96ef40ed73cfece51140ddc86
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat May 15 02:44:40 2010 -0400
-  
-    Simplified default callbacks that emit events. Added stubs for other
-    necessary roles.
-
-  commit 7a303d3ee6db295f396e35ec4988e944a19ea77c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon May 10 23:54:06 2010 -0400
-  
-    Fix Streamable's error reporting, and make Stream fire events by
-    default.
-
-  commit c5e0e08f949a3c187eb9978e086b921537a2758c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon May 10 12:18:42 2010 -0400
-  
-    Get the Stream/Proxy example working.
-
-    Removed knobs entirely. They're a lovely interface with inherent
-    state, but the side effects appear to make them too clever for Moose
-    right now. They also violate one of my peeves about Perl, and that's
-    to implement polymorphism as runtime checks... when the caller knows
-    damned well what they intend to do! But I digress. The important
-    part? It woooorrrrrks!
-
-  commit e64e2b57e35bb0e1993698174f14c852860876dd
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon May 10 03:34:57 2010 -0400
-  
-    Reify the Streamable role as a Stream object.
-
-    However, it seems there's a problem with initialization timing. The
-    handle's not set by the time the knob is altered.
-
-  commit 7390907148ef4e295b85ed52aa479d6d90f0400b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun May 9 15:39:11 2010 -0400
-  
-    Port put() from Reflex::Stream to the test role Streamable.
-
-  commit fc29ff1402bcb37d052133e7edf089c22b8207af
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat May 8 22:24:37 2010 -0400
-  
-    Get Writable working, and add a Streamble role that composes Readable
-    and Writable.
-
-  commit 7681a67c7572511ef52528094bbd085b90e27bef
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat May 8 04:07:30 2010 -0400
-  
-    Extend core support for parameterized callbacks.
-
-  commit 5a31aba6ab0a544b4135e725c9b2bd399fd6d04e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat May 8 04:07:14 2010 -0400
-  
-    RJBS found a typo; fix it.
-
-  commit b1d42910c519ec68b24adaa82cec829eb024b34e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat May 8 04:05:26 2010 -0400
-  
-    Begin exploring parameterized Moose roles for static composition.
-
-    Should be faster and more Moose-friendly than Reflex dynamic roles,
-    although dynamic roles may still be useful for managing collections.
-    Pure Moose roles should also be cleaner for people who like that sort
-    of thing. 
-
-================================
-2010-05-04 21:45:45 -0400 v0_011
-================================
-
-  commit ec29ac5c83bc75be0e0b3e1b4ebea5e3586d6ee2
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue May 4 21:45:45 2010 -0400
-  
-    Add put() and kill() for Reflex::POE::Wheel and its Run subclass,
-    respectively.
-
-    Rick Strong reported their absence on irc.perl.org #reflex.
-
-  commit e21a8277122f907a9f0bedbd50f5d6a290b99d16
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Apr 23 03:14:55 2010 -0400
-  
-    I made progress on the requirements! 
-
-================================
-2010-04-23 02:38:10 -0400 v0_010
-================================
-
-  commit 72d32d4e34db606117d115634b307790427b11b6
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Apr 23 02:38:10 2010 -0400
-  
-    Bump the revision for release. Make little fixes here and there so
-    all the examples work.
-
-  commit 297a698cb5fe16f7b1747feb10c247bdbcba0cb8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Apr 23 01:32:50 2010 -0400
-  
-    Add preliminary documentation to the last three modules.
-
-  commit e932bd744ec55b67217780130df3d7747ad01e53
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Apr 22 23:56:41 2010 -0400
-  
-    Document UDP peers and a coupe of the POE adapter classes.
-
-  commit d204ea6e35362a62c2d81ca0a6b91ab8e44a9182
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Apr 22 00:12:48 2010 -0400
-  
-    Document signal handler classes, and create an example from which to
-    excerpt.
-
-  commit fae7c01a895ebaf327aea0be46620d95893da539
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 21 22:44:51 2010 -0400
-  
-    Document Reflex::Role::Object and its composer (consumer?)
-    Reflex::Object. 
-
-================================
-2010-04-21 01:29:43 -0400 v0_005
-================================
-
-  commit cd734cf1a96797a0ee1811629f6cf038bb41a06f
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 21 01:29:43 2010 -0400
-  
-    Document Reflex::Stream.
-
-  commit 0a9a05be7ac6059ad4bd19e5f55c8155b1f6cf9d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 21 01:00:06 2010 -0400
-  
-    Document Reflex::Client.
-
-  commit 4fb52d978ceb378b2e59f474b6fc337811005aab
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 21 00:28:58 2010 -0400
-  
-    Try some automated dzil/git interaction, but it was too yak-shavey
-    for now.
-
-  commit 64695f714b2a5968186a5713b227ea7520501ad1
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 21 00:28:39 2010 -0400
-  
-    Document Reflex::Connector and Reflex::Listener. 
-
-================================
-2010-04-20 03:03:09 -0400 v0_004
-================================
-
-  commit 9a7526b99908a71cddabe25a06559bd19d11bb0d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Apr 20 03:03:09 2010 -0400
-  
-    Bump revision for release.
-
-  commit 3f1c48a08aaf3505d618fe3317844f9cb0d8a4de
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Apr 20 02:56:34 2010 -0400
-  
-    Write more documentation.
-
-  commit 6912ea19a2edda449c28f695494841ccd4d7b206
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 19 01:37:29 2010 -0400
-  
-    Move to Dist::Zilla!
-
-  commit 31f022b795575467749f3c8dcfa0809be13b11a7
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Apr 18 14:03:37 2010 -0400
-  
-    Document Reflex::Handle's stop().
-
-  commit 3e4b28d9e1122e352ded6a630f6e37c1dddd48cf
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Apr 18 13:55:42 2010 -0400
-  
-    Add documentation.
-
-  commit 75cf6c4de997c982a67e437cc80309283851a213
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Apr 18 02:38:23 2010 -0400
-  
-    Begin documenting in earnest.
-
-  commit 8e1d57d5ac29b5ef141894dfe41987c6bdc5a56b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Apr 17 04:52:59 2010 -0400
-  
-    Added Reflex.pm documentation.
-
-  commit 51d81727027d90461a0efe24a7249a66bf55cbaf
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Apr 17 03:56:52 2010 -0400
-  
-    Detect and break emit() recursion. These cycles tend to eat all
-    memory.
-
-  commit eb5cc0f960ed5eeebf1d27cc00b226ac08ac20fd
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Apr 16 00:36:15 2010 -0400
-  
-    Reflex::Collection manages a collection of objects so you don't have
-    to.
-
-  commit d80166b247d3d932675b3f869b1fa4210b0d2907
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Apr 15 20:23:26 2010 -0400
-  
-    Use "handles" and rethrow subs to flatten Reflex::Client's API.
-
-    See the diff of eg/eg-35-tcp-client.pl for what this means from
-    developers' points of view.
-
-  commit 5c01112efcfeec3e5adead1fa3bb21bb9465e04c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 14 10:02:21 2010 -0400
-  
-    Try to resolve on_my_foo not looking right. See eg 35 for newness.
-
-  commit 6c37951da874bbed8c4ea8ba006ccec651c25d21
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 12 03:31:39 2010 -0400
-  
-    Clean up the client cleanup a little.
-
-  commit f1b098dc64dae0bb9548b8752b9b84debb1b37e2
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 12 03:31:26 2010 -0400
-  
-    Progress was made this weekend. Document it.
-
-  commit e2587a7b19c579645e5740f26d7d9fd37311ebdc
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 12 03:14:09 2010 -0400
-  
-    Make stop() release the filehandle, too.
-
-  commit f4b981791519cb5e523d8bfa4586813a4a1b0b5c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 12 03:04:26 2010 -0400
-  
-    Abstract the client code into Reflex::Client. Update eg 35 to use it.
-
-  commit 36c08bd768544bca83fbc7556742b60e4bf1a3ba
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 12 02:04:46 2010 -0400
-  
-    Add a strawman tcp client implementation.
-
-  commit de14455620a1df3005cd609af130780b093f126f
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Apr 10 22:45:25 2010 -0400
-  
-    Add the beginnings of a socket listener, a stream reader/writer, and
-    an example TCP server.
-
-  commit 4adc50c0afb92026836abf893eb6a904ea4125e8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Apr 9 00:14:50 2010 -0400
-  
-    Clean up Reflex.pm documentation. Update requirements with new
-    progress.
-
-  commit 6da75c74fd6c589c362a56325d94d56aa23148b4
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Apr 8 22:22:30 2010 -0400
-  
-    Get all callbacks working in an approximation of a "good" way.
-
-  commit 6ecd8c104ad1a8fb098dc3a790995b5f6abf5c9d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Apr 8 13:06:35 2010 -0400
-  
-    Oops: Programs, not modules.
-
-  commit 6457f057514d77a5ee2ae03211167a12413d4c56
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Apr 8 00:32:52 2010 -0400
-  
-    Add support for a succinct promise syntax.
-
-  commit f4f25e896e8495a404f3c8e12c9870d9b36583d5
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 7 23:52:23 2010 -0400
-  
-    Hide some of the promise awkwardness in a Promise watcher.
-
-    It's a better solution, but it's not entirely satisfying. It will
-    change as something better comes along.
-
-  commit 0d5868460b96279a7167431df801abd09c30991a
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 7 21:41:30 2010 -0400
-  
-    Get promises working. Use Reflex::Timer with a promise.
-
-  commit 3af6b5768ec50997f03def6d11f5bb64da1d4768
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Apr 7 19:56:29 2010 -0400
-  
-    Initial Reflex::Callbacks integration into Reflex at large.
-
-    I'm not satisfied with the syntax, but the functionality is all
-    there.
-
-  commit 4f548a1f7606fc590be9430165496860f9dabf70
-  Merge: f1301df 02fa379
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Apr 5 23:02:37 2010 -0400
-  
-    Merge branch 'master' of git://github.com/Poincare/reflex
-
-  commit 02fa3794dc4c649d428e8e15176435cfa0ffcce8
-  Author: dhaivat <dhaivatpandya@gmail.com>
-  Date:   Sat Apr 3 19:34:53 2010 -0400
-  
-    Added documentation for setting event name in Timer.pm
-
-  commit d1f9bc747c955480c2439afcfc5f5449a7ba61bc
-  Author: dhaivat <dhaivatpandya@gmail.com>
-  Date:   Sat Apr 3 19:04:44 2010 -0400
-  
-    Added event name choice in Timer.pm
-
-  commit d09dc17e90f53bbc7bdddad4a359ef038a1bbd82
-  Author: dhaivat <dhaivatpandya@gmail.com>
-  Date:   Sat Apr 3 18:32:11 2010 -0400
-  
-    Added documentation to Reflex::Timer
-
-  commit f1301dfc438d224faafc9e5368589558fc4dd017
-  Author: Poincare <dhaivatpandya@gmail.com>
-  Date:   Sat Apr 3 14:36:15 2010 -0700
-  
-    "Added documentation about what Reflex is"
-
-  commit 5c56d9a0855df903c8f8eedfe57f195dab61bb4a
-  Author: Poincare <dhaivatpandya@gmail.com>
-  Date:   Sat Apr 3 14:36:15 2010 -0700
-  
-    "Added documentation about what Reflex is"
-
-  commit 5869c762f094f261f26923ee9f08a8f7154d992a
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 14 03:43:29 2010 -0500
-  
-    Implement Reflex::Callbacks add_callback().
-
-    Whatever is actually holding the Reflex::Callbacks object will have
-    to call this.
-
-  commit bad68b45c86522ac9629d13779a2210137043f62
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 14 01:58:18 2010 -0500
-  
-    Take Nick Perez's suggestion to use Moose::Exporter instead of
-    Exporter.
-
-  commit afd7c10c1b56d8c88a38864670c311cda3733623
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Feb 13 03:36:06 2010 -0500
-  
-    Fix tab damage. No significant changes.
-
-  commit 701249a5d5afa35ad9bcf0fe998dcdaf8aba4177
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Feb 13 03:28:57 2010 -0500
-  
-    Initial implementation of promises, completing the callback types.
-
-  commit bc6cecff2e3bb2630b50dee9811bcce6d78e00f0
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Feb 13 02:18:37 2010 -0500
-  
-    Initial implementation of cb_role() syntax.
-
-  commit ce814c8ac75db3520d13ea18cc7ded5417d03a4c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Feb 13 01:36:51 2010 -0500
-  
-    Implement abstract class method callbacks.
-
-    Perl uses identical syntax for class and object method invocation.
-    The only difference is the invocant---either a class or an object.
-    Implemented class method callbacks in terms of object method
-    callbacks for now. The implementations may diverge in the future if
-    the semantics need to, but the interfaces should be forward
-    compatible.
-
-  commit 49d1ae16ab8185ccf1c8335d3b7d64e6a3c9bf1a
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Feb 12 12:37:43 2010 -0500
-  
-    Implement three forms of object-based callback, via rcb_object().
-
-  commit 36d2b512456d25d407f7103c897ed3a40c34a991
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Feb 12 02:37:47 2010 -0500
-  
-    Initial stab at Reflex::Callback::Method.
-
-  commit f737956c4096b40c7d84e6ca509e04dfe2a387ee
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Feb 12 02:16:14 2010 -0500
-  
-    Initial stab at Reflex::Callbacks with generic coderef callbacks.
-
-  commit d869d9f9b4e8fc9794402269a1200d02361a2283
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Feb 12 01:21:55 2010 -0500
-  
-    Document some of the new requirements.
-
-  commit 48bf91e05ecb59946ba723f465ca485d1a26f18e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Feb 12 01:21:20 2010 -0500
-  
-    Rename eg_tell() to eg_say() to be more like Perl's new say().
-
-  commit 96dcb5f791049e1a6f52ed821c4e3903a40ba01c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Feb 12 01:16:09 2010 -0500
-  
-    Documentation tweaks, including crediting Chris Fedde for
-    contributions.
-
-  commit 8777e676e1165fcf175d524438985379625ade6d
-  Author: Chris Fedde <cfedde@cpan.org>
-  Date:   Fri Jan 29 00:35:23 2010 -0500
-  
-    Documentation and comment patches. Clarifications. Typo correction.
-    Patch provided by Chris Fedde. I'm also trying out the git-commit
-    --author flag.
-
-  commit 02b94019e798c8baee691f06899b107e1cf17f5b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Jan 29 00:12:05 2010 -0500
-  
-    Document documentation requirements, and make some decisions firm.
-
-  commit 1bf38d08d77d9570389ef45a07ae410c8d21b9ad
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 28 03:27:59 2009 -0400
-  
-    Note some potential optimizations.
-
-  commit 5dad355a0f8cb01fca8cd0d16f47041c4576605a
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Sep 23 13:10:51 2009 -0400
-  
-    Create some examples where Reflex is used without Moose. 
 
 ===================================
 End of changes in the last 365 days

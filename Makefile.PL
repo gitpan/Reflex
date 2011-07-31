@@ -4,16 +4,16 @@ use warnings;
 
 
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Class library for flexible, reactive programs.',
+  'ABSTRACT' => 'A class library for flexible, reactive programming.',
   'AUTHOR' => 'Rocco Caputo <rcaputo@cpan.org>',
   'BUILD_REQUIRES' => {},
   'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+    'ExtUtils::MakeMaker' => '6.30'
   },
   'DISTNAME' => 'Reflex',
   'EXE_FILES' => [],
@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
     'Scalar::Util' => '1.23',
     'Test::More' => '0.96'
   },
-  'VERSION' => '0.088',
+  'VERSION' => '0.090',
   'test' => {
     'TESTS' => 't/*.t'
   }

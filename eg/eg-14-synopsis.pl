@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 use warnings;
 use strict;
@@ -9,9 +10,9 @@ use lib qw(../lib);
 	use Moose;
 	extends 'Reflex::Base';
 	use Reflex::Interval;
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 
-	observes ticker => (
+	watches ticker => (
 		isa   => 'Reflex::Interval',
 		setup => { interval => 1, auto_repeat => 1 },
 	);

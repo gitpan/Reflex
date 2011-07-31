@@ -1,3 +1,4 @@
+# vim: ts=2 sw=2 noexpandtab
 {
 	package Runner;
 	use Moose;
@@ -11,7 +12,7 @@
 		is => 'rw',
 		isa => 'ScalarRef',
 	);
-	
+
 	has wheel => (
 		isa => 'Reflex::POE::Wheel::Run|Undef',
 		is  => 'rw',

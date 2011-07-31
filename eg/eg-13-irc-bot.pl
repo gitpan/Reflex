@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 # Using POE::Component::IRC.  That component requires the user to
 # register for events.  The new Reflex::POE::Session watcher is used
@@ -13,7 +14,7 @@ use lib qw(../lib);
 	use Moose;
 	extends 'Reflex::Base';
 	use Reflex::POE::Session;
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 
 	use POE qw(Component::IRC);
 
@@ -22,7 +23,7 @@ use lib qw(../lib);
 		is  => 'rw',
 	);
 
-	observes poco_watcher => (
+	watches poco_watcher => (
 		isa   => 'Reflex::POE::Session',
 		role  => 'poco',
 	);
@@ -30,6 +31,8 @@ use lib qw(../lib);
 	sub BUILD {
 		my $self = shift;
 
+		# This is only really necessary because we're using
+		# POE::Component::IRC's OO interface.
 		$self->component(
 			POE::Component::IRC->spawn(
 				nick    => "reflex_$$",
@@ -38,14 +41,20 @@ use lib qw(../lib);
 			) || die "Drat: $!"
 		);
 
+		# Start a Reflex::POE::Session that will
+		# subscribe to the IRC component.
 		$self->poco_watcher(
 			Reflex::POE::Session->new(
 				sid => $self->component()->session_id(),
 			)
 		);
 
+		# run_within_session() allows the component
+		# to receive the correct $_[SENDER].
 		$self->run_within_session(
 			sub {
+				# The following two lines work because
+				# PoCo::IRC implements a yield() method.
 				$self->component()->yield(register => "all");
 				$self->component()->yield(connect  => {});
 			}

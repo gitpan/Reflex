@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 use lib qw(../lib);
 
@@ -18,9 +19,9 @@ use lib qw(../lib);
 	package Pinger;
 	use Moose;
 	extends 'Reflex::Base';
-	use Reflex::Trait::Observed;
+	use Reflex::Trait::Watched qw(watches);
 
-	observes echoer => (
+	watches echoer => (
 		isa     => 'Echoer',
 		default => sub { Echoer->new() },
 	);

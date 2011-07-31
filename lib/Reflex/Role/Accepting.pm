@@ -1,29 +1,29 @@
 package Reflex::Role::Accepting;
 BEGIN {
-  $Reflex::Role::Accepting::VERSION = '0.088';
+  $Reflex::Role::Accepting::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
+
 use Reflex::Role;
 
-attribute_parameter listener => "listener";
-
-callback_parameter  cb_accept     => qw( on listener accept );
-event_parameter     ev_accept     => qw( _  listener accept );
-
-callback_parameter  cb_error      => qw( on listener error  );
-event_parameter     ev_error      => qw( _  listener error  );
-
-method_parameter    method_pause  => qw( pause listener _ );
-method_parameter    method_resume => qw( resume listener _ );
-method_parameter    method_stop   => qw( stop listener _ );
+attribute_parameter att_active    => "active";
+attribute_parameter att_listener  => "listener";
+callback_parameter  cb_accept     => qw( on att_listener accept );
+callback_parameter  cb_error      => qw( on att_listener error  );
+method_parameter    method_pause  => qw( pause att_listener _ );
+method_parameter    method_resume => qw( resume att_listener _ );
+method_parameter    method_stop   => qw( stop att_listener _ );
 
 role {
 	my $p = shift;
 
-	my $listener  = $p->listener();
-	my $cb_accept = $p->cb_accept();
-	my $cb_error  = $p->cb_error();
+	my $att_listener = $p->att_listener();
+	my $cb_accept    = $p->cb_accept();
+	my $cb_error     = $p->cb_error();
 
-	method "on_${listener}_readable" => sub {
+	requires $att_listener, $cb_accept, $cb_error;
+
+	method "on_${att_listener}_readable" => sub {
 		my ($self, $args) = @_;
 
 		my $peer = accept(my ($socket), $args->{handle});
@@ -51,12 +51,9 @@ role {
 		return;
 	};
 
-	method_emit $cb_accept  => $p->ev_accept();
-	method_emit $cb_error   => $p->ev_error();   # TODO - Retryable ones.
-
 	with 'Reflex::Role::Readable' => {
-		handle        => $listener,
-		active        => 1,
+		att_handle    => $att_listener,
+		att_active    => $p->att_active(),
 		method_pause  => $p->method_pause(),
 		method_resume => $p->method_resume(),
 		method_stop   => $p->method_stop(),
@@ -66,7 +63,13 @@ role {
 
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -74,7 +77,7 @@ Reflex::Role::Accepting - add connection accepting to a class
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -91,10 +94,8 @@ version 0.088
 
 	with 'Reflex::Role::Accepting' => {
 		listener      => 'listener',
-		cb_accept     => 'on_accept',
-		cb_error      => 'on_error',
-		ev_accept     => 'accept',
-		ev_error      => 'error',
+		cb_accept     => make_emitter(on_accept => "accept"),
+		cb_error      => make_emitter(on_error => "error"),
 		method_pause  => 'pause',
 		method_resume => 'resume',
 		method_stop   => 'stop',
@@ -111,10 +112,7 @@ allow the consumer to customize the role's behavior.
 	listener      key - name of attribute with the listening socket
 
 	cb_accept     method to call with accepted sockets (on_${listner}_accept)
-	ev_accept     event for default cb_accept to emit (${listener}_accept)
-
 	cb_error      method to call with errors (on_${listener}_error)
-	ev_error			event for default cb_error to emit (${listener}_error)
 
 	method_pause  method to pause accepting
 	method_resume method to resume accepting
@@ -230,19 +228,122 @@ TODO - I'm sure there are some.
 
 =head1 SEE ALSO
 
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
+
 L<Reflex>
+
+=item *
+
 L<Reflex::Role::Connecting>
+
+=item *
+
 L<Reflex::Acceptor>
+
+=item *
+
 L<Reflex::Connector>
 
+=item *
+
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

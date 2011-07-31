@@ -1,7 +1,8 @@
 package Reflex::Callbacks;
 BEGIN {
-  $Reflex::Callbacks::VERSION = '0.088';
+  $Reflex::Callbacks::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
 
 # Reflex::Callbacks is a callback manager.  It encapsulates the
 # callbacks for an object.  Via deliver(), it maps event names to the
@@ -34,7 +35,15 @@ Moose::Exporter->setup_import_methods(
 			cb_role
 			gather_cb
 		)
-	]
+	],
+	with_caller => [
+		qw(
+			make_emitter
+			make_terminal_emitter
+			make_error_handler
+			make_null_handler
+		)
+	],
 );
 
 use Carp qw(croak);
@@ -180,16 +189,105 @@ sub gather_cb {
 
 sub deliver {
 	my ($self, $event, $arg) = @_;
-	$arg //= {};
+	$arg ||= {};
 
 	$event =~ s/^(on_)?/on_/;
 
 	$self->callback_map()->{$event}->deliver($event, $arg);
 }
 
+sub make_emitter {
+	my $caller = shift();
+
+	my $meta = Class::MOP::class_of($caller);
+
+	my ($method_name, $event_name) = @_;
+
+	my $method = $meta->method_metaclass->wrap(
+		package_name => $caller,
+		name         => $method_name,
+		body         => sub {
+			my ($self, $args) = @_;
+			$self->emit(event => $event_name, args => $args);
+		},
+	);
+
+	$meta->add_method($method_name => $method);
+
+	return $method_name;
+}
+
+sub make_terminal_emitter {
+	my $caller = shift();
+
+	my $meta = Class::MOP::class_of($caller);
+
+	my ($method_name, $event_name) = @_;
+
+	my $method = $meta->method_metaclass->wrap(
+		package_name => $caller,
+		name         => $method_name,
+		body         => sub {
+			my ($self, $args) = @_;
+			$self->emit(event => $event_name, args => $args);
+			$self->stopped();
+		},
+	);
+
+	$meta->add_method($method_name => $method);
+
+	return $method_name;
+}
+
+sub make_error_handler {
+	my $caller = shift();
+
+	my $meta = Class::MOP::class_of($caller);
+
+	my ($method_name, $event_name) = @_;
+
+	my $method = $meta->method_metaclass->wrap(
+		package_name => $caller,
+		name         => $method_name,
+		body         => sub {
+			my ($self, $args) = @_;
+			warn "$args->{errfun} error $args->{errnum}: $args->{errstr}\n";
+			$self->stopped();
+		},
+	);
+
+	$meta->add_method($method_name => $method);
+
+	return $method_name;
+}
+
+sub make_null_handler {
+	my $caller = shift();
+
+	my $meta = Class::MOP::class_of($caller);
+
+	my ($method_name, $event_name) = @_;
+
+	my $method = $meta->method_metaclass->wrap(
+		package_name => $caller,
+		name         => $method_name,
+		body         => sub { undef },
+	);
+
+	$meta->add_method($method_name => $method);
+
+	return $method_name;
+}
+
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -197,7 +295,7 @@ Reflex::Callbacks - Convenience functions for creating and using callbacks
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -246,7 +344,7 @@ Reflex::Callback::Method to invoke the corresponding object method.
 	my $object = bless {};
 	my @cbs = cb_object($object, "event");
 
-  # ... is equivalent to:
+	# ... is equivalent to:
 
 	use Reflex::Callback::Method;
 	my $object = bless {};
@@ -442,20 +540,126 @@ See the example for gather_cb(), which also invokes deliver().
 
 =head1 SEE ALSO
 
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
+
 L<Reflex>
+
+=item *
+
 L<Reflex::Callback::CodeRef>
+
+=item *
+
 L<Reflex::Callback::Method>
+
+=item *
+
 L<Reflex::Callback::Promise>
-L<Reflex::Callbacks> documents callback convenience functions.
+
+=item *
+
+L<L<Reflex::Callbacks> documents callback convenience functions.|L<Reflex::Callbacks> documents callback convenience functions.>
+
+=item *
 
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

@@ -4,8 +4,10 @@
 
 package Reflex::Collection;
 BEGIN {
-  $Reflex::Collection::VERSION = '0.088';
+  $Reflex::Collection::VERSION = '0.090';
 }
+# vim: ts=2 sw=2 noexpandtab
+
 use Moose;
 use Moose::Exporter;
 use Reflex::Callbacks qw(cb_method);
@@ -30,14 +32,15 @@ extends 'Reflex::Base';
 
 Moose::Exporter->setup_import_methods( with_caller => [ qw( has_many ) ]);
 
-has objects => (
+has _objects => (
 	is      => 'rw',
 	isa     => 'HashRef[Reflex::Role::Collectible]',
 	traits  => ['Hash'],
 	default => sub { {} },
 	handles => {
-		_set_object => 'set',
+		_set_object    => 'set',
 		_delete_object => 'delete',
+		get_objects    => 'values',
 	},
 );
 
@@ -57,17 +60,17 @@ sub remember {
 		result => cb_method($self->_owner, "on_result")
 	);
 
-	$self->objects()->{$object} = $object;
+	$self->_set_object($object->get_id(), $object);
 }
 
 sub forget {
 	my ($self, $object) = @_;
-	$self->_delete_object($object);
+	$self->_delete_object($object->get_id());
 }
 
 sub cb_forget {
 	my ($self, $args) = @_;
-	$self->_delete_object($args->{_sender}->get_last_emitter());
+	$self->forget($args->{_sender}->get_last_emitter());
 }
 
 sub has_many {
@@ -91,7 +94,13 @@ sub has_many {
 
 1;
 
-__END__
+
+
+=pod
+
+=for :stopwords Rocco Caputo
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -99,7 +108,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-version 0.088
+This document describes version 0.090, released on July 30, 2011.
 
 =head1 SYNOPSIS
 
@@ -124,6 +133,14 @@ version 0.088
 			)
 		);
 	}
+
+		sub broadcast {
+				my ($self, $message) = @_;
+
+				foreach my $handle ($self->get_objects) {
+						$handle->put($message);
+				}
+		}
 
 	1;
 
@@ -193,18 +210,116 @@ Forget an object, returning its reference.  You've supplied the
 reference, so the returned one is usually redundant.  forget() takes
 one parameter: the object to forget.
 
+=head2 get_objects
+
+Get the collected objects in scope. Returns a list.
+
 =head1 SEE ALSO
+
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Reflex|Reflex>
+
+=item *
 
 L<Reflex>
 
+=item *
+
 L<Reflex/ACKNOWLEDGEMENTS>
+
+=item *
+
 L<Reflex/ASSISTANCE>
+
+=item *
+
 L<Reflex/AUTHORS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/BUGS>
+
+=item *
+
 L<Reflex/CONTRIBUTORS>
+
+=item *
+
 L<Reflex/COPYRIGHT>
+
+=item *
+
 L<Reflex/LICENSE>
+
+=item *
+
 L<Reflex/TODO>
 
+=back
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 AUTHOR
+
+Rocco Caputo <rcaputo@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Rocco Caputo.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<http://search.cpan.org/dist/Reflex/>.
+
+The development version lives at L<http://github.com/rcaputo/reflex>
+and may be cloned from L<git://github.com/rcaputo/reflex.git>.
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+
+
+__END__
+

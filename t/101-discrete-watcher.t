@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# vim: ts=2 sw=2 noexpandtab
 
 # Reflex APIs are built in layers.  This test exercises Reflex's
 # low-level watcher API.  There are much more concise and convenient
@@ -45,8 +46,6 @@ ok( (defined $watcher), "started watcher object" );
 #
 # The watcher only exists so that watch() may be called.  A better
 # example would have "tick" handled by one of Reflex::Base's methods.
-# eg-02-observed-new.pl doesn't use a watcher object since no watch()
-# method is called there.
 
 my $countdown = 3;
 $watcher->watch(
