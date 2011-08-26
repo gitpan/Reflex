@@ -1,6 +1,6 @@
 package Reflex::Role;
 BEGIN {
-  $Reflex::Role::VERSION = '0.090';
+  $Reflex::Role::VERSION = '0.091';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -33,7 +33,13 @@ sub attribute_parameter {
 
 	my ($name, $default) = @_;
 
-	$meta->add_parameter($name, ( isa => 'Str', default => $default ) );
+	$meta->add_parameter(
+		$name, (
+			is      => 'rw',
+			isa     => 'Str',
+			default => $default
+		)
+	);
 }
 
 sub method_parameter {
@@ -54,6 +60,7 @@ sub method_parameter {
 	$meta->add_parameter(
 		$name,
 		(
+			is      => 'rw',
 			isa     => 'Str',
 			lazy    => 1,
 			default => sub {
@@ -88,6 +95,7 @@ sub callback_parameter {
 	$meta->add_parameter(
 		$name,
 		(
+			is      => 'rw',
 			isa     => 'Str',
 			lazy    => 1,
 			default => sub {
@@ -119,7 +127,7 @@ Reflex::Role - define a Reflex paramaterized role
 
 =head1 VERSION
 
-This document describes version 0.090, released on July 30, 2011.
+This document describes version 0.091, released on August 25, 2011.
 
 =head1 SYNOPSIS
 

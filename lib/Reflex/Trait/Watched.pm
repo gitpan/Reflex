@@ -1,6 +1,6 @@
 package Reflex::Trait::Watched;
 BEGIN {
-  $Reflex::Trait::Watched::VERSION = '0.090';
+  $Reflex::Trait::Watched::VERSION = '0.091';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -124,7 +124,7 @@ sub watches {
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Watched;
 BEGIN {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Watched::VERSION = '0.090';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Watched::VERSION = '0.091';
 }
 sub register_implementation { 'Reflex::Trait::Watched' }
 
@@ -144,7 +144,7 @@ Reflex::Trait::Watched - Automatically watch Reflex objects.
 
 =head1 VERSION
 
-This document describes version 0.090, released on July 30, 2011.
+This document describes version 0.091, released on August 25, 2011.
 
 =head1 SYNOPSIS
 

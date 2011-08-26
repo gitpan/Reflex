@@ -1,6 +1,6 @@
 package Reflex::Role::Timeout;
 BEGIN {
-  $Reflex::Role::Timeout::VERSION = '0.090';
+  $Reflex::Role::Timeout::VERSION = '0.091';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -108,7 +108,7 @@ Reflex::Role::Timeout - set a wakeup callback for a relative delay
 
 =head1 VERSION
 
-This document describes version 0.090, released on July 30, 2011.
+This document describes version 0.091, released on August 25, 2011.
 
 =head1 SYNOPSIS
 

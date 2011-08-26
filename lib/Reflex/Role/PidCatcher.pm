@@ -1,6 +1,6 @@
 package Reflex::Role::PidCatcher;
 BEGIN {
-  $Reflex::Role::PidCatcher::VERSION = '0.090';
+  $Reflex::Role::PidCatcher::VERSION = '0.091';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -161,7 +161,7 @@ Reflex::Role::PidCatcher - add async process reaping behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.090, released on July 30, 2011.
+This document describes version 0.091, released on August 25, 2011.
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Role::InStreaming;
 BEGIN {
-  $Reflex::Role::InStreaming::VERSION = '0.090';
+  $Reflex::Role::InStreaming::VERSION = '0.091';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -59,7 +59,7 @@ Reflex::Role::InStreaming - add streaming input behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.090, released on July 30, 2011.
+This document describes version 0.091, released on August 25, 2011.
 
 =head1 SYNOPSIS
 
