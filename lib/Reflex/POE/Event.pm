@@ -1,6 +1,6 @@
 package Reflex::POE::Event;
-BEGIN {
-  $Reflex::POE::Event::VERSION = '0.091';
+{
+  $Reflex::POE::Event::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -42,13 +42,13 @@ sub BUILD {
 }
 
 sub deliver {
-	my ($self, $args) = @_;
+	my ($self, $event) = @_;
 
 	$POE::Kernel::poe_kernel->post(
 		$self->object()->session_id(), "call_gate_method",
 		$self->object(), $self->method(), {
 			context   => $self->context(),
-			response  => [ @$args ],
+			response  => $event,
 		}
 	);
 }
@@ -69,7 +69,7 @@ Reflex::POE::Event - Communicate with POE components expecting events.
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -148,10 +148,10 @@ constructor.  Consider this event and its callback:
 	);
 
 	sub callback {
-		my ($self, $args) = @_;
+		my ($self, $event) = @_;
 		print(
-			"Our context: $args->{context}{abc}\n",
-			"POE args: @{$args->{response}}\n"
+			"Our context: ", $event->context()->{abc}, "\n",
+			"POE args: @{$event->response()}\n"
 		);
 	}
 

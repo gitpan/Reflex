@@ -1,10 +1,11 @@
 package Reflex::Role::Readable;
-BEGIN {
-  $Reflex::Role::Readable::VERSION = '0.091';
+{
+  $Reflex::Role::Readable::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::FileHandle;
 
 # TODO - Reflex::Role::Readable and Writable are nearly identical.
 # Can they be abstracted further?  Possibly composed as parameterized
@@ -36,8 +37,9 @@ role {
 		# Must be run in the right POE session.
 		return unless $self->call_gate($setup_name, $arg);
 
-		my $envelope = [ $self, $cb_name ];
+		my $envelope = [ $self, $cb_name, 'Reflex::Event::FileHandle' ];
 		weaken $envelope->[0];
+
 		$POE::Kernel::poe_kernel->select_read(
 			$self->$att_handle(), 'select_ready', $envelope,
 		);
@@ -102,7 +104,7 @@ Reflex::Role::Readable - add readable-watching behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

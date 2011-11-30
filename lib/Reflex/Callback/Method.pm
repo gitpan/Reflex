@@ -1,6 +1,6 @@
 package Reflex::Callback::Method;
-BEGIN {
-  $Reflex::Callback::Method::VERSION = '0.091';
+{
+  $Reflex::Callback::Method::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -14,9 +14,9 @@ has method_name => (
 );
 
 sub deliver {
-	my ($self, $event, $arg) = @_;
+	my ($self, $event) = @_;
 	my $method_name = $self->method_name();
-	$self->object()->$method_name($arg);
+	$self->object()->$method_name($event);
 }
 
 1;
@@ -35,7 +35,7 @@ Reflex::Callback::Method - Callback adapter for class and object methods
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::Role::Collectible;
-BEGIN {
-  $Reflex::Role::Collectible::VERSION = '0.091';
+{
+  $Reflex::Role::Collectible::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -11,12 +11,14 @@ use Moose::Role;
 
 sub stopped {
 	my $self = shift;
-	$self->emit( event => "stopped", args => {} );
+	$self->emit( -name => "stopped" );
 }
 
+# Experimental.
+
 sub result {
-	my ($self, $args) = @_;
-	$self->emit( event => "result", args => $args );
+	my ($self, %emit_args) = @_;
+	$self->emit(%emit_args, -name => "result");
 }
 
 1;
@@ -35,7 +37,7 @@ Reflex::Role::Collectible - add manageability by Reflex::Collection
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

@@ -1,73 +1,33 @@
-package Reflex::Sender;
-BEGIN {
-  $Reflex::Sender::VERSION = '0.091';
+package Reflex::Event::Socket;
+{
+  $Reflex::Event::Socket::VERSION = '0.092';
 }
-# vim: ts=2 sw=2 noexpandtab
-
-#ABSTRACT: The _sender access object
 
 use Moose;
-use Scalar::Util qw(weaken);
+extends 'Reflex::Event::FileHandle';
 
-has senders => (
-	is => 'ro',
-	isa => 'ArrayRef',
-	traits => ['Array'],
-	default => sub { [] },
-	handles => {
-		'get_first_emitter' => [ 'get', 0  ],
-		'get_last_emitter'  => [ 'get', -1 ],
-		'get_all_emitters'  => 'elements',
-	}
+has peer => (
+	is      => 'ro',
+	isa     => 'Str',
+	lazy    => 1,
+	default => sub {
+		my $self = shift();
+		return getpeername $self->handle();
+	},
 );
-
-sub push_emitter {
-	my ($self, $item) = @_;
-	push(@{$self->senders}, $item);
-	weaken($self->senders->[-1]);
-}
-
-no Moose;
-__PACKAGE__->meta->make_immutable;
 
 1;
 
-
-
+__END__
 =pod
 
 =for :stopwords Rocco Caputo
 
 =encoding UTF-8
 
-=head1 NAME
-
-Reflex::Sender - API to access the objects an event has passed through
-
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
-
-=head1 DESCRIPTION
-
-Reflex::Sender provides a simple API to gain access to the sources of emitted
-events.
-
-=head1 Public Methods
-
-=head2 get_first_emitter
-
-The original source of an event can be accessed with this method
-
-=head2 get_last_emitter
-
-The final emitter (the one the watcher was explicitly watching) can be
-accessed with this method
-
-=head2 get_all_emitters
-
-If the first nor the last are insufficient, the whole stack of emitters can be
-accessed (returning a list) using this method
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SEE ALSO
 
@@ -134,7 +94,4 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGES.
 
 =cut
-
-
-__END__
 

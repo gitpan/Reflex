@@ -1,6 +1,6 @@
 package Reflex::Eg::Inheritance::Moose;
-BEGIN {
-  $Reflex::Eg::Inheritance::Moose::VERSION = '0.091';
+{
+  $Reflex::Eg::Inheritance::Moose::VERSION = '0.092';
 }
 
 use Moose;
@@ -23,7 +23,7 @@ sub on_done {
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

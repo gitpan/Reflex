@@ -1,10 +1,11 @@
 package Reflex::Role::Writing;
-BEGIN {
-  $Reflex::Role::Writing::VERSION = '0.091';
+{
+  $Reflex::Role::Writing::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::Error;
 
 attribute_parameter att_handle    => "handle";
 callback_parameter  cb_error      => qw( on att_handle error );
@@ -36,11 +37,12 @@ role {
 		# Hard error.
 		unless (defined $octet_count) {
 			$self->$cb_error(
-				{
-					errnum => ($! + 0),
-					errstr => "$!",
-					errfun => "syswrite",
-				}
+				Reflex::Event::Error->new(
+					_emitters => [ $self ],
+					number    => ($! + 0),
+					string    => "$!",
+					function  => "syswrite",
+				)
 			);
 			return;
 		}
@@ -77,11 +79,12 @@ role {
 			# Hard error.
 			unless (defined $octet_count) {
 				$self->$cb_error(
-					{
-						errnum => ($! + 0),
-						errstr => "$!",
-						errfun => "syswrite",
-					}
+					Reflex::Event::Error->new(
+						_emitters => [ $self ],
+						number    => ($! + 0),
+						string    => "$!",
+						function  => "syswrite",
+					)
 				);
 				return;
 			}
@@ -118,7 +121,7 @@ Reflex::Role::Writing - add buffered non-blocking syswrite() to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

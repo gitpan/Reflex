@@ -9,26 +9,26 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'A class library for flexible, reactive programming.',
-  'AUTHOR' => 'Rocco Caputo <rcaputo@cpan.org>',
-  'BUILD_REQUIRES' => {},
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "ABSTRACT" => "A class library for flexible, reactive programming.",
+  "AUTHOR" => "Rocco Caputo <rcaputo\@cpan.org>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'Reflex',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'Reflex',
-  'PREREQ_PM' => {
-    'Moose' => '2.0203',
-    'MooseX::Role::Parameterized' => '0.23',
-    'POE' => '1.294',
-    'Scalar::Util' => '1.23',
-    'Test::More' => '0.96'
+  "DISTNAME" => "Reflex",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Reflex",
+  "PREREQ_PM" => {
+    "Moose" => "2.0203",
+    "MooseX::Role::Parameterized" => "0.23",
+    "POE" => "1.294",
+    "Scalar::Util" => "1.23",
+    "Test::More" => "0.96"
   },
-  'VERSION' => '0.091',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.092",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

@@ -1,10 +1,15 @@
 package Reflex::Role::Recving;
-BEGIN {
-  $Reflex::Role::Recving::VERSION = '0.091';
+{
+  $Reflex::Role::Recving::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+
+use Reflex::Event::Datagram;
+use Reflex::Event::Error;
+
+use Carp qw(croak);
 
 attribute_parameter att_active  => "active";
 attribute_parameter att_handle  => "socket";
@@ -49,46 +54,46 @@ role {
 
 		unless (defined $remote_address) {
 			$self->$cb_error(
-				{
-					errfun  => "recv",
-					errnum  => $! + 0,
-					errstr  => "$!",
-				},
+				Reflex::Event::Error->new(
+					_emitters => [ $self ],
+					function  => "recv",
+					number    => $! + 0,
+					string    => "$!",
+				)
 			);
 			return;
 		}
 
 		$self->$cb_datagram(
-			{
-				datagram    => $datagram,
-				remote_addr => $remote_address,
-			},
+			Reflex::Event::Datagram->new(
+				_emitters => [ $self ],
+				octets    => $datagram,
+				peer      => $remote_address,
+			)
 		);
 	};
 
 	method $p->method_send() => sub {
-		my ($self, @args) = @_;
+		my ($self, %args) = @_;
 
-		my $args = $self->check_args(
-			\@args,
-			[ 'datagram', 'remote_addr' ],
-			[ ],
-		);
+		croak "octets required" unless defined $args{octets};
+		croak "peer required" unless defined $args{peer};
 
 		# Success!
 		return if send(
 			$self->$att_handle,
-			$args->{datagram},
+			$args{octets},
 			0,
-			$args->{remote_addr},
-		) == length($args->{datagram});
+			$args{peer},
+		) == length($args{octets});
 
 		$self->$cb_error(
-			{
-				errfun  => "send",
-				errnum  => $! + 0,
-				errstr  => "$!",
-			},
+			Reflex::Event::Error->new(
+				_emitters => [ $self ],
+				function  => "send",
+				number    => $! + 0,
+				string    => "$!",
+			)
 		);
 	};
 
@@ -114,7 +119,7 @@ Reflex::Role::Recving - Mix standard send/recv code into a class.
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -128,17 +133,17 @@ TODO - New!
 	with 'Reflex::Role::UdpPeer';
 
 	sub on_udppeer_datagram {
-		my ($self, $args) = @_;
-		my $data = $args->{datagram};
+		my ($self, $datagram) = @_;
+		my $octets = $datagram->octets();
 
-		if ($data =~ /^\s*shutdown\s*$/) {
+		if ($octets =~ /^\s*shutdown\s*$/) {
 			$self->destruct();
 			return;
 		}
 
 		$self->send(
-			datagram    => $data,
-			remote_addr => $args->{remote_addr},
+			octets => $octets,
+			peer   => $args->peer(),
 		);
 	}
 

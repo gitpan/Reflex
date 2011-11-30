@@ -1,6 +1,6 @@
 package Reflex::Codec::Message;
-BEGIN {
-  $Reflex::Codec::Message::VERSION = '0.091';
+{
+  $Reflex::Codec::Message::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -27,7 +27,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SEE ALSO
 

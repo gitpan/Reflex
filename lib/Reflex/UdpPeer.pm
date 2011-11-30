@@ -1,6 +1,6 @@
 package Reflex::UdpPeer;
-BEGIN {
-  $Reflex::UdpPeer::VERSION = '0.091';
+{
+  $Reflex::UdpPeer::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -45,7 +45,7 @@ Reflex::UdpPeer - Base class for non-blocking UDP networking peers.
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -58,8 +58,8 @@ Inherit it.
 	extends 'Reflex::UdpPeer';
 
 	sub on_socket_datagram {
-		my ($self, $args) = @_;
-		my $data = $args->{datagram};
+		my ($self, $datagram) = @_;
+		my $data = $datagram->octets();
 
 		if ($data =~ /^\s*shutdown\s*$/) {
 			$self->stop_socket_readable();
@@ -67,14 +67,18 @@ Inherit it.
 		}
 
 		$self->send(
-			datagram    => $data,
-			remote_addr => $args->{remote_addr},
+			datagram => $data,
+			peer     => $datagram->peer(),
 		);
 	}
 
 	sub on_socket_error {
-		my ($self, $args) = @_;
-		warn "$args->{op} error $args->{errnum}: $args->{errstr}";
+		my ($self, $error) = @_;
+		warn(
+			$error->function(),
+			" error ", $error->number(),
+			": ", $error->string(),
+		);
 		$self->destruct();
 	}
 

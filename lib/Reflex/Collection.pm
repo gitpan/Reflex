@@ -3,8 +3,8 @@
 # Collectible/Collection contract.
 
 package Reflex::Collection;
-BEGIN {
-  $Reflex::Collection::VERSION = '0.091';
+{
+  $Reflex::Collection::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -69,8 +69,8 @@ sub forget {
 }
 
 sub cb_forget {
-	my ($self, $args) = @_;
-	$self->forget($args->{_sender}->get_last_emitter());
+	my ($self, $event) = @_;
+	$self->forget($event->get_last_emitter());
 }
 
 sub has_many {
@@ -108,7 +108,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -125,10 +125,10 @@ This document describes version 0.091, released on August 25, 2011.
 	);
 
 	sub on_listener_accepted {
-		my ($self, $args) = @_;
+		my ($self, $event) = @_;
 		$self->remember_client(
 			EchoStream->new(
-				handle => $args->{socket},
+				handle => $event->socket(),
 				rd     => 1,
 			)
 		);

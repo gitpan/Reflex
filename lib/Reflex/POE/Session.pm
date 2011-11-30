@@ -1,13 +1,15 @@
 package Reflex::POE::Session;
-BEGIN {
-  $Reflex::POE::Session::VERSION = '0.091';
+{
+  $Reflex::POE::Session::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Moose;
 extends 'Reflex::Base';
+
 use Scalar::Util qw(weaken);
 use POE::Session; # for ARG0
+use Reflex::Event::POE;
 
 my %session_id_to_object;
 
@@ -32,15 +34,16 @@ sub DEMOLISH {
 }
 
 sub deliver {
-	my ($class, $sender_id, $event, $args) = @_;
+	my ($class, $sender_id, $event_name, $args) = @_;
 
 	# Not a session anyone is interested in.
 	return unless exists $session_id_to_object{$sender_id};
 
 	foreach my $self (values %{$session_id_to_object{$sender_id}}) {
 		$self->emit(
-			event => $event,
-			args  => { map { $_ => $args->[$_] } (0..$#$args) },
+			-name => $event_name,
+			-type => 'Reflex::Event::POE',
+			args  => [ @$args ],
 		);
 	}
 }
@@ -61,7 +64,7 @@ Reflex::POE::Session - Watch events from a POE::Session object.
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -128,14 +131,8 @@ Refex::POE::Session:
 	...;
 
 	sub callback {
-		my ($self, $args) = @_;
-		print(
-			"$args->{0}\n",
-			"$args->{1}\n",
-			"$args->{2}\n",
-			"$args->{3}\n",
-			"$args->{4}\n",
-		);
+		my ($self, $event) = @_;
+		print "$_\n" foreach $event->args_list();
 	}
 
 The callback will print five lines:

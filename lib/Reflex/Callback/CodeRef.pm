@@ -1,6 +1,6 @@
 package Reflex::Callback::CodeRef;
-BEGIN {
-  $Reflex::Callback::CodeRef::VERSION = '0.091';
+{
+  $Reflex::Callback::CodeRef::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -14,8 +14,8 @@ has code_ref => (
 );
 
 sub deliver {
-	my ($self, $event, $arg) = @_;
-	$self->code_ref()->($self->object(), $arg);
+	my ($self, $event) = @_;
+	$self->code_ref()->($self->object(), $event);
 }
 
 1;
@@ -34,7 +34,7 @@ Reflex::Callback::CodeRef - Callback adapter for plain code references
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

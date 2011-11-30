@@ -1,10 +1,12 @@
 package Reflex::Role::Accepting;
-BEGIN {
-  $Reflex::Role::Accepting::VERSION = '0.091';
+{
+  $Reflex::Role::Accepting::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::Socket;
+use Reflex::Event::Error;
 
 attribute_parameter att_active    => "active";
 attribute_parameter att_listener  => "listener";
@@ -24,26 +26,28 @@ role {
 	requires $att_listener, $cb_accept, $cb_error;
 
 	method "on_${att_listener}_readable" => sub {
-		my ($self, $args) = @_;
+		my ($self, $event) = @_;
 
-		my $peer = accept(my ($socket), $args->{handle});
+		my $peer = accept(my ($socket), $event->handle());
 
 		if ($peer) {
 			$self->$cb_accept(
-				{
-					peer    => $peer,
-					socket  => $socket,
-				}
+				Reflex::Event::Socket->new(
+					_emitters => [ $self ],
+					handle    => $socket,
+					peer      => $peer,
+				)
 			);
 			return;
 		}
 
 		$self->$cb_error(
-			{
-				errnum => ($! + 0),
-				errstr => "$!",
-				errfun => "accept",
-			}
+			Reflex::Event::Error->new(
+				_emitters => [ $self ],
+				number    => ($! + 0),
+				string    => "$!",
+				operation => "accept",
+			)
 		);
 
 		# TODO - Stop accepting connections?
@@ -77,7 +81,7 @@ Reflex::Role::Accepting - add connection accepting to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

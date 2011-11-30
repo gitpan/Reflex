@@ -1,10 +1,11 @@
 package Reflex::Role::SigCatcher;
-BEGIN {
-  $Reflex::Role::SigCatcher::VERSION = '0.091';
+{
+  $Reflex::Role::SigCatcher::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::Signal;
 
 use Scalar::Util qw(weaken);
 
@@ -26,29 +27,12 @@ method_parameter    method_stop   => qw( stop att_signal _ );
 my %callbacks;
 my %signal_param_names;
 
-sub _register_signal_params {
-	my ($class, @names) = @_;
-	$signal_param_names{$class->meta->get_attribute("signal")->default()} = (
-		\@names
-	);
-}
-
 sub deliver {
-	my ($class, $signal_name, @signal_args) = @_;
+	my ($class, $signal_name) = @_;
 
 	# If nobody's watching us, then why did we do it in the road?
 	# TODO - Diagnostic warning/error?
 	return unless exists $callbacks{$signal_name};
-
-	# Calculate the event arguments based on the signal name.
-	my %event_args = ( signal => $signal_name );
-	if (exists $signal_param_names{$signal_name}) {
-		my $i = 0;
-		%event_args = (
-			map { $_ => $signal_args[$i++] }
-			@{$signal_param_names{$signal_name}}
-		);
-	}
 
 	# Deliver the signal.
 	# TODO - map() magic to speed this up?
@@ -56,7 +40,12 @@ sub deliver {
 	foreach my $callback_recs (values %{$callbacks{$signal_name}}) {
 		foreach my $callback_rec (values %$callback_recs) {
 			my ($object, $method) = @$callback_rec;
-			$object->$method(\%event_args);
+			$object->$method(
+				Reflex::Event::Signal->new(
+					_emitters => [ $object ],
+					signal    => $signal_name,
+				)
+			);
 		}
 	}
 }
@@ -179,7 +168,7 @@ Reflex::Role::SigCatcher - add signal catching behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

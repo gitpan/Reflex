@@ -1,6 +1,6 @@
 package Reflex::Acceptor;
-BEGIN {
-  $Reflex::Acceptor::VERSION = '0.091';
+{
+  $Reflex::Acceptor::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -37,7 +37,7 @@ Reflex::Acceptor - a non-blocking server (client socket acceptor)
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -51,18 +51,23 @@ This document describes version 0.091, released on August 25, 2011.
 	has_many clients => ( handles => { remember_client => "remember" } );
 
 	sub on_accept {
-		my ($self, $args) = @_;
+		my ($self, $event) = @_;
 		$self->remember_client(
 			EchoStream->new(
-				handle => $args->{socket},
+				handle => $event->socket(),
 				rd     => 1,
 			)
 		);
 	}
 
 	sub on_error {
-		my ($self, $args) = @_;
-		warn "$args->{errfun} error $args->{errnum}: $args->{errstr}\n";
+		my ($self, $event) = @_;
+		warn(
+			$event->error_function(),
+			" error ", $event->error_number(),
+			": ", $event->error_string(),
+			"\n"
+		);
 		$self->stop();
 	}
 

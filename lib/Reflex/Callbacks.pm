@@ -1,6 +1,6 @@
 package Reflex::Callbacks;
-BEGIN {
-  $Reflex::Callbacks::VERSION = '0.091';
+{
+  $Reflex::Callbacks::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -188,12 +188,12 @@ sub gather_cb {
 }
 
 sub deliver {
-	my ($self, $event, $arg) = @_;
-	$arg ||= {};
+	my ($self, $event) = @_;
 
-	$event =~ s/^(on_)?/on_/;
+	my $event_name = $event->_name();
+	$event_name =~ s/^(on_)?/on_/;
 
-	$self->callback_map()->{$event}->deliver($event, $arg);
+	$self->callback_map()->{$event_name}->deliver($event);
 }
 
 sub make_emitter {
@@ -207,8 +207,8 @@ sub make_emitter {
 		package_name => $caller,
 		name         => $method_name,
 		body         => sub {
-			my ($self, $args) = @_;
-			$self->emit(event => $event_name, args => $args);
+			my ($self, $event) = @_;
+			$self->re_emit( $event, -name => $event_name );
 		},
 	);
 
@@ -228,8 +228,8 @@ sub make_terminal_emitter {
 		package_name => $caller,
 		name         => $method_name,
 		body         => sub {
-			my ($self, $args) = @_;
-			$self->emit(event => $event_name, args => $args);
+			my ($self, $event) = @_;
+			$self->re_emit( $event, -name => $event_name );
 			$self->stopped();
 		},
 	);
@@ -295,7 +295,7 @@ Reflex::Callbacks - Convenience functions for creating and using callbacks
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

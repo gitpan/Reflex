@@ -1,10 +1,12 @@
 package Reflex::Role::Timeout;
-BEGIN {
-  $Reflex::Role::Timeout::VERSION = '0.091';
+{
+  $Reflex::Role::Timeout::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::Timeout;
+
 use Scalar::Util qw(weaken);
 
 attribute_parameter att_auto_start => "auto_start";
@@ -59,7 +61,7 @@ role {
 		# Put a weak $self in an envelope that can be passed around
 		# without strenghtening the object.
 
-		my $envelope = [ $self, $cb_timeout ];
+		my $envelope = [ $self, $cb_timeout, 'Reflex::Event::Timeout' ];
 		weaken $envelope->[0];
 
 		$self->$timer_id_name(
@@ -108,7 +110,7 @@ Reflex::Role::Timeout - set a wakeup callback for a relative delay
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

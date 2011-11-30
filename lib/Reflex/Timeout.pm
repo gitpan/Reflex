@@ -1,6 +1,6 @@
 package Reflex::Timeout;
-BEGIN {
-  $Reflex::Timeout::VERSION = '0.091';
+{
+  $Reflex::Timeout::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -36,7 +36,7 @@ Reflex::Timeout - A stand-alone single-shot delayed callback
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

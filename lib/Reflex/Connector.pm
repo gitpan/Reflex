@@ -1,6 +1,6 @@
 package Reflex::Connector;
-BEGIN {
-  $Reflex::Connector::VERSION = '0.091';
+{
+  $Reflex::Connector::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -8,10 +8,10 @@ use Moose;
 extends 'Reflex::Base';
 use Reflex::Callbacks qw(make_emitter);
 
-has active => ( is => 'ro', isa => 'Bool', default => 1 );
-has address => ( is => 'ro', isa => 'Str', default => '127.0.0.1',);
-has port => ( is => 'ro', isa => 'Int',);
-has socket => ( is => 'rw', isa => 'FileHandle' );
+has active  => ( is => 'ro', isa => 'Bool', default => 1 );
+has address => ( is => 'ro', isa => 'Str', default  => '127.0.0.1' );
+has port    => ( is => 'ro', isa => 'Int' );
+has socket  => ( is => 'rw', isa => 'FileHandle' );
 
 with 'Reflex::Role::Connecting' => {
 	att_connector => 'socket',      # Default!
@@ -37,7 +37,7 @@ Reflex::Connector - non-blocking client socket connector
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

@@ -1,10 +1,12 @@
 package Reflex::Role::Interval;
-BEGIN {
-  $Reflex::Role::Interval::VERSION = '0.091';
+{
+  $Reflex::Role::Interval::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::Interval;
+
 use Scalar::Util qw(weaken);
 
 attribute_parameter att_auto_repeat => "auto_repeat";
@@ -60,7 +62,7 @@ role {
 		# Put a weak $self in an envelope that can be passed around
 		# without strenghtening the object.
 
-		my $envelope = [ $self, $cb_tick ];
+		my $envelope = [ $self, $cb_tick, 'Reflex::Event::Interval' ];
 		weaken $envelope->[0];
 
 		$self->$timer_id_name(
@@ -88,7 +90,7 @@ role {
 	};
 
 	after $cb_tick => sub {
-		my ($self, $args) = @_;
+		my ($self, $event) = @_;
 		$self->$method_repeat() if $self->$att_auto_repeat();
 	};
 };
@@ -109,7 +111,7 @@ Reflex::Role::Interval - set a periodic, recurring timer
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

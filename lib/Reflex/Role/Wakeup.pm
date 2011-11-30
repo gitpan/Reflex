@@ -1,10 +1,12 @@
 package Reflex::Role::Wakeup;
-BEGIN {
-  $Reflex::Role::Wakeup::VERSION = '0.091';
+{
+  $Reflex::Role::Wakeup::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+use Reflex::Event::Wakeup;
+
 use Scalar::Util qw(weaken);
 
 attribute_parameter att_when      => "when";
@@ -55,7 +57,7 @@ role {
 		# Put a weak $self in an envelope that can be passed around
 		# without strenghtening the object.
 
-		my $envelope = [ $self, $cb_wakeup ];
+		my $envelope = [ $self, $cb_wakeup, 'Reflex::Event::Wakeup' ];
 		weaken $envelope->[0];
 
 		$self->$timer_id_name(
@@ -103,7 +105,7 @@ Reflex::Role::Wakeup - set a wakeup callback for a particular UNIX time
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

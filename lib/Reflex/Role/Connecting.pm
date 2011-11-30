@@ -1,6 +1,6 @@
 package Reflex::Role::Connecting;
-BEGIN {
-  $Reflex::Role::Connecting::VERSION = '0.091';
+{
+  $Reflex::Role::Connecting::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -8,6 +8,9 @@ use Reflex::Role;
 
 use Errno qw(EWOULDBLOCK EINPROGRESS);
 use Socket qw(SOL_SOCKET SO_ERROR inet_aton pack_sockaddr_in);
+
+use Reflex::Event::Error;
+use Reflex::Event::Socket;
 
 attribute_parameter att_address => "address";
 attribute_parameter att_port    => "port";
@@ -69,12 +72,12 @@ role {
 		unless (connect($att_handle, $packed_address)) {
 			if ($! and ($! != EINPROGRESS) and ($! != EWOULDBLOCK)) {
 				$self->$cb_error(
-					{
-						socket  => undef,
-						errnum  => ($!+0),
-						errstr  => "$!",
-						errfun  => "connect",
-					},
+					Reflex::Event::Error->new(
+						_emitters => [ $self ],
+						number    => ($!+0),
+						string    => "$!",
+						function  => "connect",
+					)
 				);
 
 				$self->$internal_stop();
@@ -84,29 +87,30 @@ role {
 	};
 
 	method $internal_writable => sub {
-		my ($self, $args) = @_;
+		my ($self, $socket) = @_;
 
 		# Not watching anymore.
 		$self->$internal_stop();
 
 		# Throw a failure if the connection failed.
-		$! = unpack('i', getsockopt($args->{handle}, SOL_SOCKET, SO_ERROR));
+		$! = unpack('i', getsockopt($socket->handle(), SOL_SOCKET, SO_ERROR));
 		if ($!) {
 			$self->$cb_error(
-				{
-					socket  => undef,
-					errnum  => ($!+0),
-					errstr  => "$!",
-					errfun  => "connect",
-				},
+				Reflex::Event::Error->(
+					_emitters => [ $self ],
+					number    => ($!+0),
+					string    => "$!",
+					function  => "connect",
+				)
 			);
 			return;
 		}
 
 		$self->$cb_success(
-			{
-				socket  => $args->{handle},
-			}
+			Reflex::Event::Socket->new(
+				_emitters => [ $self ],
+				handle    => $socket->handle(),
+			)
 		);
 		return;
 	};
@@ -132,7 +136,7 @@ Reflex::Role::Connecting - add non-blocking client connecting to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

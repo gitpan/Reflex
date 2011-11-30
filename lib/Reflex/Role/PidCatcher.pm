@@ -1,12 +1,13 @@
 package Reflex::Role::PidCatcher;
-BEGIN {
-  $Reflex::Role::PidCatcher::VERSION = '0.091';
+{
+  $Reflex::Role::PidCatcher::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
 
 use Scalar::Util qw(weaken);
+use Reflex::Event::SigChild;
 
 attribute_parameter att_active    => "active";
 attribute_parameter att_pid       => "pid";
@@ -32,20 +33,21 @@ sub deliver {
 	# TODO - Diagnostic warning/error?
 	return unless exists $callbacks{$pid};
 
-	# Calculate the event arguments based on the signal name.
-	my %event_args = (
-		signal	=> $signal_name,
-		pid			=> $pid,
-		exit		=> $exit,
-	);
-
 	# Deliver the signal.
 	# TODO - map() magic to speed this up?
 
 	foreach my $callback_recs (values %{$callbacks{$pid}}) {
 		foreach my $callback_rec (values %$callback_recs) {
 			my ($object, $method) = @$callback_rec;
-			$object->$method(\%event_args);
+
+			$object->$method(
+				Reflex::Event::SigChild->new(
+					_emitters => [ $object ],
+					signal    => $signal_name,
+					pid       => $pid,
+					exit      => $exit,
+				)
+			);
 		}
 	}
 }
@@ -161,7 +163,7 @@ Reflex::Role::PidCatcher - add async process reaping behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

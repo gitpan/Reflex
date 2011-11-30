@@ -1,6 +1,6 @@
 package Reflex::Wakeup;
-BEGIN {
-  $Reflex::Wakeup::VERSION = '0.091';
+{
+  $Reflex::Wakeup::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -33,7 +33,7 @@ Reflex::Wakeup - A stand-alone single-shot callback at an absolute time
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

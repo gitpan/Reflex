@@ -1,10 +1,14 @@
 package Reflex::Role::Reading;
-BEGIN {
-  $Reflex::Role::Reading::VERSION = '0.091';
+{
+  $Reflex::Role::Reading::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
 use Reflex::Role;
+
+use Reflex::Event::Octets;
+use Reflex::Event::EOF;
+use Reflex::Event::Error;
 
 # The method_read parameter matches Reflex::Role::Readable's default
 # callback.
@@ -29,31 +33,35 @@ role {
 	requires $att_handle, $cb_closed, $cb_data, $cb_error;
 
 	method $method_read => sub {
-		my ($self, $arg) = @_;
+		my ($self, $event) = @_;
 
 		# TODO - Hardcoding this at 65536 isn't very flexible.
-		my $octet_count = sysread($arg->{handle}, my $buffer = "", 65536);
+		my $octet_count = sysread($event->handle(), my $buffer = "", 65536);
 
 		# Got data.
 		if ($octet_count) {
-			$self->$cb_data({ data => $buffer });
+			$self->$cb_data(
+				Reflex::Event::Octets->new( _emitters => [ $self ], octets => $buffer )
+			);
 			return $octet_count;
 		}
 
 		# EOF
 		if (defined $octet_count) {
-			$self->$cb_closed({ });
+			$self->$cb_closed(Reflex::Event::EOF->new( _emitters => [ $self ]));
 			return $octet_count;
 		}
 
 		# Quelle erreur!
 		$self->$cb_error(
-			{
-				errnum => ($! + 0),
-				errstr => "$!",
-				errfun => "sysread",
-			}
+			Reflex::Event::Error->new(
+				_emitters => $self,
+				number    => ($! + 0),
+				string    => "$!",
+				function  => "sysread",
+			)
 		);
+
 		return; # Nothing.
 	};
 };
@@ -74,7 +82,7 @@ Reflex::Role::Reading - add standard sysread() behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 

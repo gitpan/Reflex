@@ -1,6 +1,6 @@
 package Reflex;
-BEGIN {
-  $Reflex::VERSION = '0.091';
+{
+  $Reflex::VERSION = '0.092';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -55,7 +55,7 @@ Reflex - Class library for flexible, reactive programs.
 
 =head1 VERSION
 
-This document describes version 0.091, released on August 25, 2011.
+This document describes version 0.092, released on November 29, 2011.
 
 =head1 SYNOPSIS
 
@@ -117,7 +117,7 @@ method from Reflex::Role::Reactive.
 	sub ping {
 		my ($self, $args) = @_;
 		print "Echoer was pinged!\n";
-		$self->emit( event => "pong" );
+		$self->emit( -name => "pong" );
 	}
 
 The next object uses Echoer.  It creates an Echoer and pings it to get

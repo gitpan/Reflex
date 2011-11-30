@@ -1,108 +1,144 @@
-=================================
-2011-08-25 23:21:01 -0400 v0_0901
-=================================
+==================================================
+Changes from 2010-11-30 00:00:00 +0000 to present.
+==================================================
 
-  commit 56ac1a4b853043e258dfcc052e954c4afbfd4d0d
+------------------------------------------
+version 0_092 at 2011-11-03 03:00:49 +0000
+------------------------------------------
+
+  Change: bb83b47a7898077b0e6edf943cd469a9bbc71deb
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Aug 25 23:21:01 2011 -0400
-  
+  Date : 2011-11-02 23:00:49 +0000
+
+    Add a simple example of using a POE::Session alongside Reflex. 
+
+  Change: 5c57d49f9a64a781af8eb0c91cb2fffb20252353
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-10-27 21:30:23 +0000
+
+    !!! Experiment with Reflex events being objects.
+
+    Introduces a compatibility breakage in emit(), and all callbacks
+    receive an event object rather than a hash of key/value pairs. 
+
+  Change: afe420ce335688f6eb5cb7e6ea17030ff1cecc94
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-10-19 13:28:11 +0000
+
+    Add Reflex::Filehandle for times when you just want to know if
+    there's readability and/or writability and don't need a stream. 
+
+  Change: 0a497450b346210b6bfb2bf8b8c6c920314c39d3
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-09-15 16:25:09 +0000
+
+    eg/Runner.pm works with other open3()-like things. Very nice! 
+
+-------------------------------------------
+version 0_0901 at 2011-08-26 03:21:01 +0000
+-------------------------------------------
+
+  Change: 56ac1a4b853043e258dfcc052e954c4afbfd4d0d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-08-25 23:21:01 +0000
+
     Update to work with recent Moose. Fixes a bug reported by Tyler
     Riddle on irc.perl.org #reflex. 
 
-================================
-2011-07-30 22:41:53 -0400 v0_090
-================================
+------------------------------------------
+version 0_090 at 2011-07-31 02:41:53 +0000
+------------------------------------------
 
-  commit 98db344273bd63e97283aef4690f1147ebd26e05
+  Change: 98db344273bd63e97283aef4690f1147ebd26e05
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 30 22:41:53 2011 -0400
-  
-    Bump the version for release.
+  Date : 2011-07-30 22:41:53 +0000
 
-  commit e9fb8dd2b684c2332cfa914f737f20a263b03c41
+    Bump the version for release. 
+
+  Change: e9fb8dd2b684c2332cfa914f737f20a263b03c41
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 30 22:36:46 2011 -0400
-  
+  Date : 2011-07-30 22:36:46 +0000
+
     Apply Sébastien Aperghis-Tramoni's patch to allow Reflex to compile
-    on Perl 5.8.8. Resolves rt.cpan.org ticket 66275.
+    on Perl 5.8.8. Resolves rt.cpan.org ticket 66275. 
 
-  commit fc48064961e2bc9a85b83eb41d80a20a33fc3ae9
+  Change: fc48064961e2bc9a85b83eb41d80a20a33fc3ae9
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 30 22:33:53 2011 -0400
-  
+  Date : 2011-07-30 22:33:53 +0000
+
     Remove PodPlexus plugin for now. That's a bigger yak than will fit in
-    any recent release.
+    any recent release. 
 
-  commit a94504ff16cdb05c11469e20c4dcd38b5eab9832
+  Change: a94504ff16cdb05c11469e20c4dcd38b5eab9832
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 30 22:33:17 2011 -0400
-  
-    Commit experimental things for others to consider.
+  Date : 2011-07-30 22:33:17 +0000
 
-  commit 4dba6022a1d977f170c21a4d4efb01a3d38a47bf
+    Commit experimental things for others to consider. 
+
+  Change: 4dba6022a1d977f170c21a4d4efb01a3d38a47bf
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 30 22:29:03 2011 -0400
-  
+  Date : 2011-07-30 22:29:03 +0000
+
     Reorganize to make a little more accessible, based on feedback from
-    YAPC::NA.
+    YAPC::NA. 
 
-  commit 000a5036fd9342f67b51c77e3dd59f5d6853f471
+  Change: 000a5036fd9342f67b51c77e3dd59f5d6853f471
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 16 20:18:06 2011 -0400
-  
+  Date : 2011-07-16 20:18:06 +0000
+
     Implement a non-Moose inheritance example. Test the new Pod::Plexus
-    "=include" directive.
+    "=include" directive. 
 
-  commit b72e530173db48f39ca2bee0a410ddb34411cb84
+  Change: b72e530173db48f39ca2bee0a410ddb34411cb84
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 16 15:07:27 2011 -0400
-  
-    Begin using Pod::Plexus and Pod::Weaver.
+  Date : 2011-07-16 15:07:27 +0000
 
-  commit 30bfa45994926534e5c94bc0dd83edf980edd8d6
+    Begin using Pod::Plexus and Pod::Weaver. 
+
+  Change: 30bfa45994926534e5c94bc0dd83edf980edd8d6
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jul 5 23:13:55 2011 -0400
-  
+  Date : 2011-07-05 23:13:55 +0000
+
     Implement a couple prototypes for injecting event loops into
     Reflex::Base. Heavily leaning on confound's advice from irc.perl.org
-    #moose.
+    #moose. 
 
-  commit 8b5146ac2e8090a0190ded77039f61b00a2950e8
+  Change: 8b5146ac2e8090a0190ded77039f61b00a2950e8
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jul 5 22:22:37 2011 -0400
-  
+  Date : 2011-07-05 22:22:37 +0000
+
     Prototype a Reflexive ZeroMQ socket, with basic publish and subscribe
-    examples.
+    examples. 
 
-  commit 9479f27167e894e18f36a4a7fbbb72155549156a
+  Change: 9479f27167e894e18f36a4a7fbbb72155549156a
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Jun 28 02:16:14 2011 -0400
-  
-    Experimentally coerce callbacks from contextual parameters.
+  Date : 2011-06-28 02:16:14 +0000
 
-  commit 4dcae463a99d85c05d2cb03356bb721e3c84fc3a
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue May 31 01:10:20 2011 -0400
-  
-    Whitespace fixes.
+    Experimentally coerce callbacks from contextual parameters. 
 
-  commit e0d6b992e52a4f93e58bd96f985f82896d563ce4
+  Change: 4dcae463a99d85c05d2cb03356bb721e3c84fc3a
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue May 31 01:04:43 2011 -0400
-  
+  Date : 2011-05-31 01:10:20 +0000
+
+    Whitespace fixes. 
+
+  Change: e0d6b992e52a4f93e58bd96f985f82896d563ce4
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-05-31 01:04:43 +0000
+
     Explicitly export watches() and emits() from their corresponding
-    Reflex traits.
+    Reflex traits. 
 
-  commit 71a77f8dbcbc35125b1e7ee3238a740746da57e6
+  Change: 71a77f8dbcbc35125b1e7ee3238a740746da57e6
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue May 31 01:03:56 2011 -0400
-  
-    Revise documentation.
+  Date : 2011-05-31 01:03:56 +0000
 
-  commit 5b0127b4bad48d1b5a48f39309859e693a8738d8
+    Revise documentation. 
+
+  Change: 5b0127b4bad48d1b5a48f39309859e693a8738d8
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun May 29 22:17:46 2011 -0400
-  
+  Date : 2011-05-30 22:02:06 +0000
+
     Remove emit() from roles.
 
     Roles are all about static composition, and events are for dynamic
@@ -118,450 +154,267 @@
     convenient, but it's a lot cleaner.
 
     Also add vim format lines so I stop dealing with whitespace
-    inconsistencies.
+    inconsistencies. 
 
-  commit 18c07d9577fb4e77d0bef4ecb680c31277a6beea
+  Change: 18c07d9577fb4e77d0bef4ecb680c31277a6beea
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu May 26 09:46:28 2011 -0400
-  
+  Date : 2011-05-26 09:51:06 +0000
+
     Avoid breaking code that uses Reflex::Trait::Observed.
 
     Add a Reflex::Trait::Observed that's implemented by
     Reflex::Trait::Watched. This is a temporary plceholder to avoid
-    upgrade awkwardness. It'll go away in a few releases of Reflex.
+    upgrade awkwardness. It'll go away in a few releases of Reflex. 
 
-  commit 354b571ef2509485a2cc4f3a660738dcec20bcc9
+  Change: 354b571ef2509485a2cc4f3a660738dcec20bcc9
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu May 26 00:55:38 2011 -0400
-  
-    Remove the "Empty" message. undef is just fine for this purpose.
+  Date : 2011-05-26 00:56:43 +0000
 
-  commit 9513af3bd7026db10548a3071870be7a2e21749f
+    Remove the "Empty" message. undef is just fine for this purpose. 
+
+  Change: 9513af3bd7026db10548a3071870be7a2e21749f
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed May 25 23:05:52 2011 -0400
-  
+  Date : 2011-05-26 00:51:44 +0000
+
     Rename "observe" to "watch".
 
     It's shorter, and it aligns the names of things with what node.js
-    people understand.
+    people understand. 
 
-  commit 20c1bb9c51c40c519dd311f1932b47be926972c5
+  Change: 20c1bb9c51c40c519dd311f1932b47be926972c5
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed May 18 01:09:03 2011 -0400
-  
+  Date : 2011-05-18 01:09:03 +0000
+
     Experimental queued I/O model, like a pared down STREAMS system.
     Meant to address ordering issues when I/O races with notifications
-    like EOF and SIGCHLD, which can happen in pipe/fork/exec situations.
+    like EOF and SIGCHLD, which can happen in pipe/fork/exec situations. 
 
-  commit 8cbeb92e5b2a9833a40cf7496b9c082a32838666
+  Change: 8cbeb92e5b2a9833a40cf7496b9c082a32838666
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat May 7 19:12:58 2011 -0400
-  
-    Outline more multiprocess and ransparent RPC considerations.
+  Date : 2011-05-07 19:12:58 +0000
 
-  commit 3d7a5058b539fa631a3f894e6aa95122ee81c7a2
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Apr 16 03:24:43 2011 -0400
-  
-    "Lifeguard" was confusing, so call it "Pool Manager" for now.
+    Outline more multiprocess and ransparent RPC considerations. 
 
-  commit b0db25334d1592fdefe2ebd8bd7e04824d7afb2d
+  Change: 3d7a5058b539fa631a3f894e6aa95122ee81c7a2
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Mar 26 04:19:02 2011 -0400
-  
+  Date : 2011-04-16 03:24:43 +0000
+
+    "Lifeguard" was confusing, so call it "Pool Manager" for now. 
+
+  Change: b0db25334d1592fdefe2ebd8bd7e04824d7afb2d
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-03-26 04:19:02 +0000
+
     Add Andy Gorman's requirements for worker management. Begin generic
-    worker management requirements.
+    worker management requirements. 
 
-  commit 9ee64987571c3734d03c6de6215dd52ccdc49af2
+  Change: 9ee64987571c3734d03c6de6215dd52ccdc49af2
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Mar 20 00:20:15 2011 -0400
-  
+  Date : 2011-03-20 00:20:15 +0000
+
     Add experimental support to merge promise queues, but I think this
     isn't flexible enough to be generic. Expect it to be replaced by...
-    better.
+    better. 
 
-  commit 97fe645e9ad687b414a9983774d9abd25da1c42b
+  Change: 97fe645e9ad687b414a9983774d9abd25da1c42b
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Mar 20 00:18:42 2011 -0400
-  
+  Date : 2011-03-20 00:18:42 +0000
+
     Reflex objects seem to interact in ways similar to the Enterprise
     Integration Patterns. Summarize some of those patterns in the TODO
-    outline, and add tasks to investigate more.
+    outline, and add tasks to investigate more. 
 
-  commit c5a86a1985c373e3ef0f96d71692a83acaa5d1e9
+  Change: c5a86a1985c373e3ef0f96d71692a83acaa5d1e9
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Mar 19 14:02:34 2011 -0400
-  
+  Date : 2011-03-19 14:02:34 +0000
+
     Add ability to wait for the next() occurrence of a particular event.
     Using it in my rx-firmata work: $uno->put_handle("\xF0\x6B\xF7");
-    $uno->next('initialized');
+    $uno->next('initialized'); 
 
-  commit f279d0812b7e19acd87a0b24befb23b443e25b66
+  Change: f279d0812b7e19acd87a0b24befb23b443e25b66
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Mar 15 23:05:37 2011 -0400
-  
+  Date : 2011-03-15 23:05:37 +0000
+
     Braindump Erlang inspiration for distributed Reflex. New tasks set
-    the project back 3%. :(
+    the project back 3%. :( 
 
-  commit 49fbf78c1626e65d6ce158b5a643732888b43396
+  Change: 49fbf78c1626e65d6ce158b5a643732888b43396
   Author: Dylan William Hardison <dylan@hardison.net>
-  Date:   Fri Mar 4 22:09:06 2011 -0500
-  
-    Don't assume handle is named handle.
+  Date : 2011-03-04 23:55:44 +0000
 
-  commit fb03bf2b03759d781c92b3d3f5d8ca9ff3da6642
+    Don't assume handle is named handle. 
+
+  Change: fb03bf2b03759d781c92b3d3f5d8ca9ff3da6642
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 13 13:02:31 2011 -0500
-  
+  Date : 2011-02-13 13:02:31 +0000
+
     Add get_id() to Reflex::Role::Reactive. Rekey all object-keyed data
     on object ID instead, improving iThread-safety and fork()-safety on
-    Windows.
+    Windows. 
 
-  commit f56955440e184f5377840040974ae871505a288c
+  Change: f56955440e184f5377840040974ae871505a288c
   Author: Jason May <jason.a.may@gmail.com>
-  Date:   Sat Feb 12 15:22:08 2011 -0500
-  
-    Add objects() trait delegate.
+  Date : 2011-02-13 12:41:32 +0000
 
-  commit 1d07a7687db51ceefffc94d2fa7688d8382b58e6
+    Add objects() trait delegate. 
+
+  Change: 1d07a7687db51ceefffc94d2fa7688d8382b58e6
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 13 11:43:38 2011 -0500
-  
+  Date : 2011-02-13 11:43:38 +0000
+
     Reweaken the sender. While it would be nice to keep the sender
-    around, it was causing resource deadlocks in example programs.
+    around, it was causing resource deadlocks in example programs. 
 
-  commit 8e6117cfc8beaab82bd73d0c4c13ea6965a8d0db
+  Change: 8e6117cfc8beaab82bd73d0c4c13ea6965a8d0db
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 13 11:42:27 2011 -0500
-  
+  Date : 2011-02-13 11:42:27 +0000
+
     Start each Reflex object with a Promise. Previously the call to
     next() would trigger creation of a Promise. Messages delivered before
-    next() could be called would be discarded.
+    next() could be called would be discarded. 
 
-  commit da49313800ae599d5e4d290c83bc0f80f782419c
+  Change: da49313800ae599d5e4d290c83bc0f80f782419c
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 13 11:41:41 2011 -0500
-  
+  Date : 2011-02-13 11:41:41 +0000
+
     Doc fix. Make it explicit that input that input streams are
-    asynchronous.
+    asynchronous. 
 
-  commit 048f18992504b5e149bab77e75ee5f6ee94cd1b1
+  Change: 048f18992504b5e149bab77e75ee5f6ee94cd1b1
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Feb 13 11:40:18 2011 -0500
-  
-    Don't allow events to enqueue forever in a Promise callback.
+  Date : 2011-02-13 11:40:18 +0000
 
-  commit 3bd9acb1e815ed4966afaa56baf932331e6b09ba
+    Don't allow events to enqueue forever in a Promise callback. 
+
+  Change: 3bd9acb1e815ed4966afaa56baf932331e6b09ba
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jan 24 19:27:14 2011 -0500
-  
+  Date : 2011-01-24 19:27:14 +0000
+
     Explain that request() is a convenience method to gloss over the
-    details of $poe_kernel->post().
+    details of $poe_kernel->post(). 
 
-  commit f32ece5c9228d31ab73f6c4182b5fae2bcbcaf0c
+  Change: f32ece5c9228d31ab73f6c4182b5fae2bcbcaf0c
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Jan 24 18:45:21 2011 -0500
-  
+  Date : 2011-01-24 18:45:21 +0000
+
     Improve the comments in the POE component examples. Rob Bloodgood
-    pointed out that the code's not self-explanatory.
+    pointed out that the code's not self-explanatory. 
 
-  commit 94eb8a53c1c60525aa4d782c5ef6b68e62f3d754
+  Change: 94eb8a53c1c60525aa4d782c5ef6b68e62f3d754
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jan 6 18:32:53 2011 -0500
-  
+  Date : 2011-01-06 18:36:14 +0000
+
     Forgot to document a couple newish classes. 
 
-================================
-2011-01-06 18:32:53 -0500 v0_088
-================================
+------------------------------------------
+version 0_088 at 2011-01-06 23:32:53 +0000
+------------------------------------------
 
-  commit 67a5a537be32ac2475e8a6bc245faa1167c9ee51
+  Change: 67a5a537be32ac2475e8a6bc245faa1167c9ee51
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jan 6 18:32:53 2011 -0500
-  
-    Forgot to document a couple newish classes.
+  Date : 2011-01-06 18:32:53 +0000
 
-  commit 96596b2d80d6e143a16407cc8aa6e8b1db341cb9
+    Forgot to document a couple newish classes. 
+
+  Change: 96596b2d80d6e143a16407cc8aa6e8b1db341cb9
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Jan 6 17:43:37 2011 -0500
-  
+  Date : 2011-01-06 17:43:37 +0000
+
     Update experimental promise collection to use Sender.
 
     Make promise collections (Reflex::Collections that propagate events
-    from their contents) work with Nick Perez's Reflex::Sender.
+    from their contents) work with Nick Perez's Reflex::Sender. 
 
-  commit 4a78509d41f54a9777377898738256653803aa08
+  Change: 4a78509d41f54a9777377898738256653803aa08
   Author: nperez <nperez@cpan.org>
-  Date:   Tue Jan 4 10:27:23 2011 -0600
-  
-    Implement Reflex::Sender and basic test for it.
+  Date : 2011-01-06 16:41:24 +0000
 
-  commit eeef1bcd5874252083f6829c6ed8a86351786dad
+    Implement Reflex::Sender and basic test for it. 
+
+  Change: eeef1bcd5874252083f6829c6ed8a86351786dad
   Author: nperez <nperez@cpan.org>
-  Date:   Thu Dec 16 12:48:05 2010 -0600
-  
-    Implement _sender as a stack
+  Date : 2011-01-02 21:17:56 +0000
 
-  commit 3af0b450fdb7cc79a6fdaaaa65103c8ed41a8ef8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jan 2 20:38:20 2011 -0500
-  
-    Promote some of the eg files to tests.
+    Implement _sender as a stack 
 
-  commit 80a2572fbd0b46bfbdc94f3680144fc73a487310
-  Merge: b454d6c 3d79c43
+  Change: 3af0b450fdb7cc79a6fdaaaa65103c8ed41a8ef8
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jan 2 19:26:03 2011 -0500
-  
-    Merge branch 'agorman'
+  Date : 2011-01-02 20:38:20 +0000
 
-  commit 3d79c43cd73061ff7ee18fc1ecb81f320e21386e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Jan 2 19:06:54 2011 -0500
-  
-    Update dist.ini and add MANIFEST.SKIP.
+    Promote some of the eg files to tests. 
 
-  commit b454d6c2c1786a2f8e83bacc15f7d91f4f9d2c94
+  Change: 80a2572fbd0b46bfbdc94f3680144fc73a487310
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Tue Dec 7 01:55:14 2010 -0500
-  
+  Date : 2011-01-02 19:26:03 +0000
+
+    Merge branch 'agorman' 
+
+  Change: 3d79c43cd73061ff7ee18fc1ecb81f320e21386e
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-01-02 19:06:54 +0000
+
+    Update dist.ini and add MANIFEST.SKIP. 
+
+  Change: b454d6c2c1786a2f8e83bacc15f7d91f4f9d2c94
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2010-12-07 01:55:14 +0000
+
     Fix Reflex::Role::Streaming's implementation and docs, a bug found by
-    Nick Perez.
+    Nick Perez. 
 
-  commit 3b760a4e15053ab5c4a894243f0984bde5f0ccf3
+  Change: 3b760a4e15053ab5c4a894243f0984bde5f0ccf3
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Fri Nov 26 02:08:14 2010 -0500
-  
+  Date : 2010-11-26 02:08:14 +0000
+
     Document why emit() is bad inside Reflex roles and the plan to
-    replace them.
+    replace them. 
 
-  commit 2c8c01acbfd922a69ebb0fdbce8ec309e4a0dcc3
+  Change: 2c8c01acbfd922a69ebb0fdbce8ec309e4a0dcc3
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Nov 22 12:58:52 2010 -0500
-  
+  Date : 2010-11-22 12:58:52 +0000
+
     Document "Reflexive" namespace as the preferred sandbox. Document the
-    alternatives that were considered, pros and cons.
+    alternatives that were considered, pros and cons. 
 
-  commit f68bbe4830fc41ae468a6b796c16b44dc9584596
+  Change: f68bbe4830fc41ae468a6b796c16b44dc9584596
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Nov 8 13:15:55 2010 -0500
-  
-    Fix an example error discovered out by Matt S. Trout.
+  Date : 2010-11-08 13:15:55 +0000
 
-  commit 12580b3daaf62955af4c81ee556c70936f315074
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Oct 18 11:42:31 2010 -0400
-  
-    Add the one-way streaming roles needed for IPC::Run integration.
+    Fix an example error discovered out by Matt S. Trout. 
 
-  commit 0ccc7a7966119cc83266c6dee8fc8ef2d755e133
+  Change: 12580b3daaf62955af4c81ee556c70936f315074
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Oct 18 11:42:05 2010 -0400
-  
-    Skip installing some really crufty files.
+  Date : 2010-10-18 11:42:31 +0000
 
-  commit 6bd0de8fade38ee84c4f2cf5d8df370406c86477
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Oct 14 12:49:35 2010 -0400
-  
-    Note why Reflex::Types might be needed in the future.
+    Add the one-way streaming roles needed for IPC::Run integration. 
 
-  commit 5585824f2e2022ba646b9fec665322fe137dbb2c
+  Change: 0ccc7a7966119cc83266c6dee8fc8ef2d755e133
   Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Sep 29 12:00:34 2010 -0400
-  
+  Date : 2010-10-18 11:42:05 +0000
+
+    Skip installing some really crufty files. 
+
+  Change: 6bd0de8fade38ee84c4f2cf5d8df370406c86477
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2010-10-14 12:49:35 +0000
+
+    Note why Reflex::Types might be needed in the future. 
+
+  Change: 5585824f2e2022ba646b9fec665322fe137dbb2c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2010-10-03 13:43:19 +0000
+
     Explore a couple of agorman's questions about collections emitting
-    events.
+    events. 
 
-  commit 541a1f6120bf13dae2294a47e99a05224fd8b575
+  Change: 541a1f6120bf13dae2294a47e99a05224fd8b575
   Author: Andy Gorman <himura@sonic.net>
-  Date:   Tue Sep 28 20:30:28 2010 -0700
-  
+  Date : 2010-10-03 13:43:19 +0000
+
     Added functionality that provides a callback interface for elements
     in the Collection 
 
-================================
-2010-10-14 11:14:38 -0400 v0_085
-================================
-
-  commit 98811eeeb1bf80793be3d0c807c0fbc898a1f3b8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Oct 14 11:14:38 2010 -0400
-  
-    Fix Reflex handling of terminal POE signals. The presence of a Reflex
-    signal handler should imply POE::Kernel->sig_handled(). Fixes a bug
-    found by confound in irc.perl.org #poe.
-
-  commit 971a7acf28cd095b8947d1ab54cbd13a3c9e2ed7
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Oct 14 11:13:17 2010 -0400
-  
-    Fix Reflex::Role::Collectible's use of type constraints. HDP pointed
-    out that it was bypassing type constraints by using its objects hash
-    directly and explained how to do it correctly.
-
-  commit b4f2d1952b5b404ae951b63cb844568555cad42d
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Oct 13 23:09:18 2010 -0400
-  
-    Add Acceptor and Connector role events.
-
-  commit 2ea8fb890f7eec4bdfe31124e059bab4aebd1dcf
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Oct 3 05:08:33 2010 -0400
-  
-    Parameterize events the roles can emit. Create eg-15-ipc-run.pl and a
-    supporting role and class.
-
-  commit 5b2d561d9f51493d4d4189918a70679a2a67c352
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 27 01:50:19 2010 -0400
-  
-    Send parameters to cross-session callbacks. Agorman (irc.perl.org
-    #reflex) discovered that they weren't being received.
-
-  commit ade0cdc6b6ebf1a7ab31c217d8c86d37fef55bf0
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Sep 23 13:30:10 2010 -0400
-  
-    Close a hole where the singleton session goes away and isn't rebuilt
-    as needed. Fixes agorman's test case from irc.perl.org #reflex. 
-
-================================
-2010-09-08 22:33:44 -0400 v0_081
-================================
-
-  commit 1b7423a2c48f6137ed8c01c3fe94f293a967f164
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Wed Sep 8 22:33:44 2010 -0400
-  
-    Add agorman's test for run_all() called twice, and fix the problem.
-
-    Agorman (irc.perl.org #reflex) discovered that run_all() called more
-    than once asplodes ugly-like. He provided a nice test case, which
-    I've added to Reflex's tests. It uses Reflex::POE::Wheel::Run, and
-    that might need to be removed to make the test more portable. 
-
-================================
-2010-09-06 22:10:35 -0400 v0_080
-================================
-
-  commit 02cbace86c93007760218a9ad6dbfe3a07f6eacc
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 6 22:10:35 2010 -0400
-  
-    Fix emitting/observing attributes in the weak TTL examples. They
-    still don't work, however.
-
-  commit 6eae87cc7b55520bb6803d6ce52176927611b8b4
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 6 21:50:10 2010 -0400
-  
-    Add "emits" and "observes" attribute declarations.
-
-    "emits" is a shortcut for Reflex::Trait::EmitsOnChange. "observes" is
-    a shortcut for Reflex::Trait::Observed. Names and locations may
-    change.
-
-  commit 134c7e07d5a25f8006f822137c319d8773df7424
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 6 15:47:39 2010 -0400
-  
-    Add simpler has_many syntax for Reflex::Collection.
-
-  commit aeb38523e9c6c6dc1a19ae0af0eee4753c1ad86b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 6 12:18:07 2010 -0400
-  
-    Document another urgent TODO and expand upon the less urgent one.
-
-  commit 253508c3e1acf0308a648ad4cd885439bf6d4d17
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Mon Sep 6 04:31:27 2010 -0400
-  
-    New example using Reflex within Bot::BasicBot. Incomplete, per TODO
-    notes within this commit.
-
-  commit c3ae474440a5a6eefaf05561e5411402d0675761
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Sep 5 17:31:02 2010 -0400
-  
-    Document a new example idea: Using Reflex from POE programs.
-
-    If this can be made to work, it represents an incremental migration
-    path from POE to Reflex. Begin with a POE program, and gradually
-    incorporate Reflex code. Eventually (har) port everything over.
-
-  commit 394ca1407078520763ca8e72a190feb5f4d2d1d1
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Sep 4 15:21:32 2010 -0400
-  
-    Require cutting edge POE.
-
-  commit 344d969e7647059de8a988d18b1eb01d4bc7b885
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Sep 4 15:13:16 2010 -0400
-  
-    Deliver PID exit noficiations only to interested objects.
-
-    Agorman in irc.perl.org #reflex discovered that multiple PID watchers
-    receive notification of all exiting child processes. This commit
-    limits notification to just those PIDs that are watched.
-
-  commit fc6cbf2d1428249cd70e2be12f2e178a13da8b34
-  Author: Chris Prather <chris@prather.org>
-  Date:   Sat Sep 4 13:34:30 2010 -0400
-  
-    Fix BUILD usage in Reflex::Role::Reactive.
-
-  commit db1a28d896d4bdfdb0b30427f036a671821eb4e2
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Sep 2 12:48:59 2010 -0400
-  
-    Bump version and dependencies for a new release.
-
-  commit 948a8725f927bffaca5ba328c86d5c52394d7461
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Sep 2 12:29:59 2010 -0400
-  
-    Fix the method_parameter key attribute. Was "name"; should be
-    "delay". Thanks to "batman" in irc.perl.org #reflex.
-
-  commit a5308ee78fa2e2da7db44aba3d95ca94bf721cd5
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Sep 2 12:26:13 2010 -0400
-  
-    Make a note of SIGCHLD delivery problem before I forget. Reported by
-    agorman in irc.perl.org #reflex.
-
-  commit 57d7de0172a6e026780660d0170a1fd1a851cc48
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sun Aug 8 23:03:05 2010 -0400
-  
-    Add MooseX::Role::Parameterized dependency. Chris Fedde pointed out
-    its absence in freenode #perl.
-
-  commit 5f76cdde13f1d633db7024a93c064168f25de67b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Aug 5 01:58:41 2010 -0400
-  
-    requirements.otl becomes TODO.otl, as it ought to be.
-
-  commit d1e2210e3c08c76e69515d0d6e7fb722e63bdf1b
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Thu Aug 5 01:50:39 2010 -0400
-  
-    The Great Renaming is complete.
-
-  commit e5e89df56a11e066e7a4dcde5d8ef49d8953e9fe
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date:   Sat Jul 31 23:50:04 2010 -0400
-  
-    Hoist writability callback management from Writing to Streaming.
-
-    It's up to the Writing role's consumer to decide how flushes are to
-    be triggered. The Writing role is only to be concerned with writing. 
-
-===================================
-End of changes in the last 365 days
-===================================
+=================================================
+Plus 12 releases after 2010-11-30 00:00:00 +0000.
+=================================================
