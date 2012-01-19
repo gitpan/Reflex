@@ -1,6 +1,30 @@
 ==================================================
-Changes from 2010-11-30 00:00:00 +0000 to present.
+Changes from 2011-01-19 00:00:00 +0000 to present.
 ==================================================
+
+------------------------------------------
+version 0_093 at 2012-01-19 12:47:05 +0000
+------------------------------------------
+
+  Change: 4d51f5f052041b4f29e75a1c31fdb9c4119d0d03
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-01-19 07:47:05 +0000
+
+    Bump version for release. 
+
+  Change: eeb7232cccbe44746fe822930bb44701469caf62
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2011-12-16 00:16:27 +0000
+
+    Merge pull request #2 from jasonmay/master
+
+    Pass the object as an emitter properly on an error event 
+
+  Change: 78134ee84c693a6820371f4bbd12a3ea80851325
+  Author: Jason May <jason.a.may@gmail.com>
+  Date : 2011-12-14 21:47:33 +0000
+
+    Pass the object as an emitter properly on an error event 
 
 ------------------------------------------
 version 0_092 at 2011-11-03 03:00:49 +0000
@@ -307,114 +331,6 @@ version 0_090 at 2011-07-31 02:41:53 +0000
 
     Forgot to document a couple newish classes. 
 
-------------------------------------------
-version 0_088 at 2011-01-06 23:32:53 +0000
-------------------------------------------
-
-  Change: 67a5a537be32ac2475e8a6bc245faa1167c9ee51
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2011-01-06 18:32:53 +0000
-
-    Forgot to document a couple newish classes. 
-
-  Change: 96596b2d80d6e143a16407cc8aa6e8b1db341cb9
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2011-01-06 17:43:37 +0000
-
-    Update experimental promise collection to use Sender.
-
-    Make promise collections (Reflex::Collections that propagate events
-    from their contents) work with Nick Perez's Reflex::Sender. 
-
-  Change: 4a78509d41f54a9777377898738256653803aa08
-  Author: nperez <nperez@cpan.org>
-  Date : 2011-01-06 16:41:24 +0000
-
-    Implement Reflex::Sender and basic test for it. 
-
-  Change: eeef1bcd5874252083f6829c6ed8a86351786dad
-  Author: nperez <nperez@cpan.org>
-  Date : 2011-01-02 21:17:56 +0000
-
-    Implement _sender as a stack 
-
-  Change: 3af0b450fdb7cc79a6fdaaaa65103c8ed41a8ef8
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2011-01-02 20:38:20 +0000
-
-    Promote some of the eg files to tests. 
-
-  Change: 80a2572fbd0b46bfbdc94f3680144fc73a487310
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2011-01-02 19:26:03 +0000
-
-    Merge branch 'agorman' 
-
-  Change: 3d79c43cd73061ff7ee18fc1ecb81f320e21386e
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2011-01-02 19:06:54 +0000
-
-    Update dist.ini and add MANIFEST.SKIP. 
-
-  Change: b454d6c2c1786a2f8e83bacc15f7d91f4f9d2c94
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-12-07 01:55:14 +0000
-
-    Fix Reflex::Role::Streaming's implementation and docs, a bug found by
-    Nick Perez. 
-
-  Change: 3b760a4e15053ab5c4a894243f0984bde5f0ccf3
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-11-26 02:08:14 +0000
-
-    Document why emit() is bad inside Reflex roles and the plan to
-    replace them. 
-
-  Change: 2c8c01acbfd922a69ebb0fdbce8ec309e4a0dcc3
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-11-22 12:58:52 +0000
-
-    Document "Reflexive" namespace as the preferred sandbox. Document the
-    alternatives that were considered, pros and cons. 
-
-  Change: f68bbe4830fc41ae468a6b796c16b44dc9584596
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-11-08 13:15:55 +0000
-
-    Fix an example error discovered out by Matt S. Trout. 
-
-  Change: 12580b3daaf62955af4c81ee556c70936f315074
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-10-18 11:42:31 +0000
-
-    Add the one-way streaming roles needed for IPC::Run integration. 
-
-  Change: 0ccc7a7966119cc83266c6dee8fc8ef2d755e133
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-10-18 11:42:05 +0000
-
-    Skip installing some really crufty files. 
-
-  Change: 6bd0de8fade38ee84c4f2cf5d8df370406c86477
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-10-14 12:49:35 +0000
-
-    Note why Reflex::Types might be needed in the future. 
-
-  Change: 5585824f2e2022ba646b9fec665322fe137dbb2c
-  Author: Rocco Caputo <rcaputo@cpan.org>
-  Date : 2010-10-03 13:43:19 +0000
-
-    Explore a couple of agorman's questions about collections emitting
-    events. 
-
-  Change: 541a1f6120bf13dae2294a47e99a05224fd8b575
-  Author: Andy Gorman <himura@sonic.net>
-  Date : 2010-10-03 13:43:19 +0000
-
-    Added functionality that provides a callback interface for elements
-    in the Collection 
-
 =================================================
-Plus 12 releases after 2010-11-30 00:00:00 +0000.
+Plus 13 releases after 2011-01-19 00:00:00 +0000.
 =================================================

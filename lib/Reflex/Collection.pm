@@ -4,7 +4,7 @@
 
 package Reflex::Collection;
 {
-  $Reflex::Collection::VERSION = '0.092';
+  $Reflex::Collection::VERSION = '0.093';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -108,7 +108,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-This document describes version 0.092, released on November 29, 2011.
+This document describes version 0.093, released on January 19, 2012.
 
 =head1 SYNOPSIS
 
@@ -279,7 +279,7 @@ Rocco Caputo <rcaputo@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Rocco Caputo.
+This software is copyright (c) 2012 by Rocco Caputo.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
