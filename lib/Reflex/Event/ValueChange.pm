@@ -1,6 +1,6 @@
 package Reflex::Event::ValueChange;
 {
-  $Reflex::Event::ValueChange::VERSION = '0.093';
+  $Reflex::Event::ValueChange::VERSION = '0.095';
 }
 
 use Moose;
@@ -29,7 +29,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.093, released on January 19, 2012.
+This document describes version 0.095, released on March 02, 2012.
 
 =head1 SEE ALSO
 

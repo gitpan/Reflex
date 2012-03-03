@@ -1,6 +1,6 @@
 package Reflex::Role::Reactive;
 {
-  $Reflex::Role::Reactive::VERSION = '0.093';
+  $Reflex::Role::Reactive::VERSION = '0.095';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -689,7 +689,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-This document describes version 0.093, released on January 19, 2012.
+This document describes version 0.095, released on March 02, 2012.
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Reflex::POE::Wheel::Run;
 {
-  $Reflex::POE::Wheel::Run::VERSION = '0.093';
+  $Reflex::POE::Wheel::Run::VERSION = '0.095';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -118,7 +118,7 @@ Reflex::POE::Wheel::Run - Represent POE::Wheel::Run as a Reflex class.
 
 =head1 VERSION
 
-This document describes version 0.093, released on January 19, 2012.
+This document describes version 0.095, released on March 02, 2012.
 
 =head1 SYNOPSIS
 

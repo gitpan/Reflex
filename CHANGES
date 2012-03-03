@@ -1,6 +1,61 @@
 ==================================================
-Changes from 2011-01-19 00:00:00 +0000 to present.
+Changes from 2011-03-04 00:00:00 +0000 to present.
 ==================================================
+
+------------------------------------------
+version 0_095 at 2012-03-03 01:41:53 +0000
+------------------------------------------
+
+  Change: 65eb070c98ad1aa98c1f9707771028db56ec2297
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-02 20:41:53 +0000
+
+    Modernize ZeroMQ examples to use event objects. 
+
+  Change: 6d4b0137c5c9abb8edab3c8f048d6c53993ff478
+  Author: Chris Prather <chris@prather.org>
+  Date : 2012-03-02 03:19:12 +0000
+
+    add TODO doc 
+
+  Change: bd9dae0e29312617b8a721460a06c99998b70518
+  Author: Chris Prather <chris@prather.org>
+  Date : 2012-03-02 03:16:01 +0000
+
+    temporary work around for a meta_lookup bug in Moose 
+
+  Change: e22a087d249e3fcf9456b521baced4295c180d6f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-02-29 07:21:23 +0000
+
+    Merge branch 'master' of github.com:rcaputo/reflex 
+
+  Change: 17c77bc2d22244719b246efec097c332b42cc979
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-02-29 07:18:16 +0000
+
+    Work around a known issue in Moose::Exporter.
+
+    This partly solves problems introduced by updates to Moose and/or
+    MooseX::Role::Parameterized. 
+
+  Change: e9350990ebbbe07eb7f4e6bf1d79df0b61f784e3
+  Author: Chris Prather <chris@prather.org>
+  Date : 2012-02-21 21:13:43 +0000
+
+    fix the dist.ini so that it builds cleaner for submitters
+
+    * Add a bunch of hidden dependencies for POD::Weaver * Fix the
+    configuration for the [Repository] plugin so it works more
+    generically (I think) 
+
+  Change: 2514c80798f6c469f641c13697fe905a3ce8f494
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-01-25 16:55:03 +0000
+
+    Create an example that uses POE::Component::Client::HTTP.
+
+    Requires a version of POE::Component::Client::HTTP newer than 0.944. 
 
 ------------------------------------------
 version 0_093 at 2012-01-19 12:47:05 +0000
@@ -332,5 +387,5 @@ version 0_090 at 2011-07-31 02:41:53 +0000
     Forgot to document a couple newish classes. 
 
 =================================================
-Plus 13 releases after 2011-01-19 00:00:00 +0000.
+Plus 13 releases after 2011-03-04 00:00:00 +0000.
 =================================================

@@ -4,7 +4,7 @@
 
 package Reflex::Collection;
 {
-  $Reflex::Collection::VERSION = '0.093';
+  $Reflex::Collection::VERSION = '0.095';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -108,7 +108,7 @@ Reflex::Collection - Autmatically manage a collection of collectible objects
 
 =head1 VERSION
 
-This document describes version 0.093, released on January 19, 2012.
+This document describes version 0.095, released on March 02, 2012.
 
 =head1 SYNOPSIS
 

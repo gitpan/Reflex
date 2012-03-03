@@ -1,6 +1,6 @@
 package Reflex::Role;
 {
-  $Reflex::Role::VERSION = '0.093';
+  $Reflex::Role::VERSION = '0.095';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -18,7 +18,20 @@ Moose::Exporter->setup_import_methods(
 		attribute_parameter method_parameter callback_parameter
 	) ],
 	also => 'MooseX::Role::Parameterized',
+	# TODO - Work around a known issue in Moose::Exporter 
+	# where the meta_lookup isn't propegated properly
+	meta_lookup => sub { MooseX::Role::Parameterized::current_metaclass || Class::MOP::class_of(shift) },
 );
+
+
+# TODO - Work around a known issue in Moose::Exporter, which may be
+# https://rt.cpan.org/Public/Bug/Display.html?id=51561
+
+sub init_meta {
+	my $self = shift;
+	return MooseX::Role::Parameterized->init_meta(@_);
+}
+
 
 sub attribute_parameter {
 	my $caller = shift();
@@ -127,7 +140,7 @@ Reflex::Role - define a Reflex paramaterized role
 
 =head1 VERSION
 
-This document describes version 0.093, released on January 19, 2012.
+This document describes version 0.095, released on March 02, 2012.
 
 =head1 SYNOPSIS
 

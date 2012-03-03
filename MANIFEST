@@ -32,6 +32,7 @@ eg/Proxy.pm
 eg/ReflexPromise.pm
 eg/Runner.pm
 eg/RunnerRole.pm
+eg/ZmqMessage.pm
 eg/ZmqSocket.pm
 eg/eg-02-encoding.pl
 eg/eg-04-inheritance.pl
@@ -49,6 +50,7 @@ eg/eg-17-inheritance-no-moose.pl
 eg/eg-18-synopsis-no-moose.pl
 eg/eg-19-net-ssh.pl
 eg/eg-20-mysql.pl
+eg/eg-21-poco-client-http.pl
 eg/eg-30-promise-timer.pl
 eg/eg-31-promise-object.pl
 eg/eg-32-promise-tiny.pl

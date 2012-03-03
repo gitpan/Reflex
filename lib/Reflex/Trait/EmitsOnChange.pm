@@ -1,6 +1,6 @@
 package Reflex::Trait::EmitsOnChange;
 {
-  $Reflex::Trait::EmitsOnChange::VERSION = '0.093';
+  $Reflex::Trait::EmitsOnChange::VERSION = '0.095';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -98,7 +98,7 @@ sub emits {
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange;
 {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.093';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::EmitsOnChange::VERSION = '0.095';
 }
 sub register_implementation { 'Reflex::Trait::EmitsOnChange' }
 
@@ -118,7 +118,7 @@ Reflex::Trait::EmitsOnChange - Emit an event when an attribute's value changes.
 
 =head1 VERSION
 
-This document describes version 0.093, released on January 19, 2012.
+This document describes version 0.095, released on March 02, 2012.
 
 =head1 SYNOPSIS
 
