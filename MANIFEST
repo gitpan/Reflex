@@ -65,6 +65,7 @@ eg/eg-40-proxy.pl
 eg/eg-41-signal-twice.pl
 eg/eg-42-reflex-in-poe.pl
 eg/eg-43-promise-and-session.pl
+eg/eg-45-sigdie.pl
 eg/eg-50-timeout.pl
 eg/eg-51-wakeup.pl
 eg/eg-60-collection-promise.pl

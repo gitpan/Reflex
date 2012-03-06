@@ -1,6 +1,6 @@
 package Reflex::Eg::Inheritance::Moose;
 {
-  $Reflex::Eg::Inheritance::Moose::VERSION = '0.095';
+  $Reflex::Eg::Inheritance::Moose::VERSION = '0.096';
 }
 
 use Moose;
@@ -23,7 +23,7 @@ sub on_done {
 
 =head1 VERSION
 
-This document describes version 0.095, released on March 02, 2012.
+This document describes version 0.096, released on March 06, 2012.
 
 =head1 SYNOPSIS
 
@@ -67,7 +67,7 @@ L<Reflex|Reflex>
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 

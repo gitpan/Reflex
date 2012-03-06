@@ -1,6 +1,6 @@
 package Reflex::Event;
 {
-  $Reflex::Event::VERSION = '0.095';
+  $Reflex::Event::VERSION = '0.096';
 }
 
 use Moose;
@@ -77,8 +77,8 @@ sub _clone {
 	my @override_keys = keys %override_args;
 	@clone_args{ map { s/^-/_/; $_ } @override_keys } = values %override_args;
 
-	my $new_type = delete($clone_args{_type}) // ref($self);
-	my $emitters = delete($clone_args{_emitters}) // confess "no -emitters";
+	my $new_type = delete($clone_args{_type}) || ref($self);
+	my $emitters = delete($clone_args{_emitters}) || confess "no -emitters";
 
 	my $new_event = $new_type->new(%clone_args, _emitters => [ @$emitters ]);
 
@@ -118,7 +118,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.095, released on March 02, 2012.
+This document describes version 0.096, released on March 06, 2012.
 
 =head1 SEE ALSO
 
@@ -137,7 +137,7 @@ L<Reflex|Reflex>
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 

@@ -1,6 +1,6 @@
 package Reflex;
 {
-  $Reflex::VERSION = '0.095';
+  $Reflex::VERSION = '0.096';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -55,7 +55,7 @@ Reflex - Class library for flexible, reactive programs.
 
 =head1 VERSION
 
-This document describes version 0.095, released on March 02, 2012.
+This document describes version 0.096, released on March 06, 2012.
 
 =head1 SYNOPSIS
 
@@ -553,7 +553,7 @@ The code is open to the world, and available for you to hack on. Please feel fre
 with it, or whatever. If you want to contribute patches, please send me a diff or prod me to pull
 from your repository :)
 
-L<https://github.com/rcaputo/reflex>
+L<http://github.com/rcaputo/reflex>
 
   git clone git://github.com/rcaputo/reflex.git
 
@@ -562,7 +562,7 @@ L<https://github.com/rcaputo/reflex>
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 

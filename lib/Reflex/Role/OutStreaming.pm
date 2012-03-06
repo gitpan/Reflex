@@ -1,6 +1,6 @@
 package Reflex::Role::OutStreaming;
 {
-  $Reflex::Role::OutStreaming::VERSION = '0.095';
+  $Reflex::Role::OutStreaming::VERSION = '0.096';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -75,7 +75,7 @@ Reflex::Role::OutStreaming - add streaming input behavior to a class
 
 =head1 VERSION
 
-This document describes version 0.095, released on March 02, 2012.
+This document describes version 0.096, released on March 06, 2012.
 
 =head1 SYNOPSIS
 
@@ -202,7 +202,7 @@ L<Reflex/TODO>
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 

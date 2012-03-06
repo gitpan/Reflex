@@ -1,6 +1,34 @@
 ==================================================
-Changes from 2011-03-04 00:00:00 +0000 to present.
+Changes from 2011-03-07 00:00:00 +0000 to present.
 ==================================================
+
+------------------------------------------
+version 0.096 at 2012-03-06 16:29:41 +0000
+------------------------------------------
+
+  Change: 8538e37f0e988f730590dbd5a1153d98df25fa97
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-06 11:29:31 +0000
+
+    Make version self-bumping and releases self-tagging. 
+
+  Change: c65f2650b26af8f09b9c40b0c8dc1a117f63e597
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-06 07:23:14 +0000
+
+    Remove // because CPAN testers still test Perl predating that
+    feature. 
+
+  Change: 5a5072e0c97e23e4f8713e5cb45b5507a2bc1243
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-04 13:50:53 +0000
+
+    Add an example of handling POE sig('DIE') from Reflex.
+
+    This is adapted from fREW Schmidt's test program posted to
+    irc.perl.org #poe. He asked whether a timer could handle exceptions
+    from its own callbacks, and this is an attempt to implement it in
+    terms of POE's SIGDIE exception handling. 
 
 ------------------------------------------
 version 0_095 at 2012-03-03 01:41:53 +0000
@@ -387,5 +415,5 @@ version 0_090 at 2011-07-31 02:41:53 +0000
     Forgot to document a couple newish classes. 
 
 =================================================
-Plus 13 releases after 2011-03-04 00:00:00 +0000.
+Plus 13 releases after 2011-03-07 00:00:00 +0000.
 =================================================

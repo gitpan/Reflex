@@ -1,6 +1,6 @@
 package Reflex::Eg;
 {
-  $Reflex::Eg::VERSION = '0.095';
+  $Reflex::Eg::VERSION = '0.096';
 }
 
 1;
@@ -17,7 +17,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.095, released on March 02, 2012.
+This document describes version 0.096, released on March 06, 2012.
 
 =abstract Index of Reflex Examples
 
@@ -46,7 +46,7 @@ L<Reflex|Reflex>
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 
