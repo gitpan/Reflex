@@ -1,6 +1,6 @@
 package Reflex::Event::Signal;
 {
-  $Reflex::Event::Signal::VERSION = '0.096';
+  $Reflex::Event::Signal::VERSION = '0.097';
 }
 
 use Moose;
@@ -23,7 +23,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =head1 SEE ALSO
 

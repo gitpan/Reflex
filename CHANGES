@@ -1,9 +1,53 @@
 ==================================================
-Changes from 2011-03-07 00:00:00 +0000 to present.
+Changes from 2011-03-17 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.096 at 2012-03-06 16:29:41 +0000
+version 0.097 at 2012-03-16 01:21:47 +0000
+------------------------------------------
+
+  Change: fc8b82a46d8ed471a98bb483e6855cf870bdcd97
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-15 21:21:26 +0000
+
+    Bump the version for release. I shouldn't need to do this. 
+
+  Change: f1cda55d18b80f20eb2e1d5c74e22e16655e2ed7
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-09 12:27:22 +0000
+
+    Fix a warning due to strange destruction order.
+
+    Object destruction can be deferred until after POE::Kernel stops,
+    through nasties like circular references. Diagnostic messages are
+    thrown when they try to unregister their handles too late. Detect
+    that POE::Kernel has stopped, and avoid the moot unregistering.
+
+    I'm not sure I like this. It feels sloppy. Like it's supporting
+    applications that insist on leaking memory, or something. 
+
+  Change: 1a177092921c125b21696c6d0d5e3017583c8d45
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-09 12:25:57 +0000
+
+    Allow Reflex::Filehandle to be used with handle instead of
+    descriptor.
+
+    Sometimes you're working with a file handle, and sometimes all you
+    have is a descriptor. Fix a bug in the code to support either. 
+
+  Change: 34b639506f2904cd13200b5041cd1cea26b9c9b1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-08 16:50:07 +0000
+
+    Pass att_active through from RR::Streaming to RR::Writable.
+
+    Jason May provided a test case proving that att_active wasn't being
+    passed through to Reflex::Role::Writable. This fixes the issue he
+    reported on irc.perl.org #reflex. 
+
+------------------------------------------
+version 0_096 at 2012-03-06 16:29:31 +0000
 ------------------------------------------
 
   Change: 8538e37f0e988f730590dbd5a1153d98df25fa97
@@ -415,5 +459,5 @@ version 0_090 at 2011-07-31 02:41:53 +0000
     Forgot to document a couple newish classes. 
 
 =================================================
-Plus 13 releases after 2011-03-07 00:00:00 +0000.
+Plus 13 releases after 2011-03-17 00:00:00 +0000.
 =================================================

@@ -1,6 +1,6 @@
 package Reflex::Eg;
 {
-  $Reflex::Eg::VERSION = '0.096';
+  $Reflex::Eg::VERSION = '0.097';
 }
 
 1;
@@ -17,7 +17,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =abstract Index of Reflex Examples
 

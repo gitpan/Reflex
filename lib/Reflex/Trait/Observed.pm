@@ -1,6 +1,6 @@
 package Reflex::Trait::Observed;
 {
-  $Reflex::Trait::Observed::VERSION = '0.096';
+  $Reflex::Trait::Observed::VERSION = '0.097';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -19,7 +19,7 @@ sub observes { goto \&watches }
 
 package Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed;
 {
-  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.096';
+  $Moose::Meta::Attribute::Custom::Trait::Reflex::Trait::Observed::VERSION = '0.097';
 }
 sub register_implementation { 'Reflex::Trait::Observed' }
 
@@ -39,7 +39,7 @@ Reflex::Trait::Observed - Automaticall watch Reflex objects.
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =head1 DESCRIPTION
 

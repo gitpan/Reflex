@@ -1,6 +1,6 @@
 package Reflex::Role::Reactive;
 {
-  $Reflex::Role::Reactive::VERSION = '0.096';
+  $Reflex::Role::Reactive::VERSION = '0.097';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -613,6 +613,9 @@ sub ignore {
 sub call_gate {
 	my ($self, $method) = @_;
 
+	# POE::Kernel has already gone away.
+	return 0 unless $POE::Kernel::poe_kernel;
+
 	return 1 if (
 		$self->session_id() eq $POE::Kernel::poe_kernel->get_active_session()->ID()
 	);
@@ -689,7 +692,7 @@ Reflex::Role::Reactive - Make an object reactive (aka, event driven).
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =head1 SYNOPSIS
 

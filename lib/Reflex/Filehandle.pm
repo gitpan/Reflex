@@ -1,6 +1,6 @@
 package Reflex::Filehandle;
 {
-  $Reflex::Filehandle::VERSION = '0.096';
+  $Reflex::Filehandle::VERSION = '0.097';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -9,7 +9,7 @@ extends 'Reflex::Base';
 use Reflex::Callbacks qw(make_emitter);
 use Carp qw(croak);
 
-has descriptor => ( is => 'rw', isa => 'Int', default => undef );
+has descriptor => ( is => 'rw', isa => 'Maybe[Int]', default => undef );
 
 has handle => (
   is      => 'rw',
@@ -60,7 +60,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =head1 SEE ALSO
 

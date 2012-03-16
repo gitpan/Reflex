@@ -1,6 +1,6 @@
 package Reflex::Role::Wakeup;
 {
-  $Reflex::Role::Wakeup::VERSION = '0.096';
+  $Reflex::Role::Wakeup::VERSION = '0.097';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -105,7 +105,7 @@ Reflex::Role::Wakeup - set a wakeup callback for a particular UNIX time
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =head1 SYNOPSIS
 

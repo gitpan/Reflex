@@ -21,4 +21,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex
   repository: git://github.com/rcaputo/reflex.git
-version: 0.096
+version: 0.097

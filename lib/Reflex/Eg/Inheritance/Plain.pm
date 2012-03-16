@@ -1,6 +1,6 @@
 package Reflex::Eg::Inheritance::Plain;
 {
-  $Reflex::Eg::Inheritance::Plain::VERSION = '0.096';
+  $Reflex::Eg::Inheritance::Plain::VERSION = '0.097';
 }
 
 use warnings;
@@ -24,7 +24,7 @@ sub on_done {
 
 =head1 VERSION
 
-This document describes version 0.096, released on March 06, 2012.
+This document describes version 0.097, released on March 15, 2012.
 
 =head1 SYNOPSIS
 
