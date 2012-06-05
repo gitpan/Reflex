@@ -2,7 +2,7 @@ NAME
     Reflex - Class library for flexible, reactive programs.
 
 VERSION
-    This document describes version 0.097, released on March 15, 2012.
+    This document describes version 0.098, released on June 05, 2012.
 
 SYNOPSIS
     The distribution includes a few different versions of this synopsis. See
@@ -242,8 +242,7 @@ ASSISTANCE
     See irc.perl.org #moose for help with Moose.
 
     Support is officially available from POE's mailing list as well. Send a
-    blank message to poe-subscribe@perl.org <mailto:poe-subscribe@perl.org>
-    to join.
+    blank message to poe-subscribe@perl.org to join.
 
     The Reflex package also has helpful examples which may serve as a
     tutorial until Reflex is documented more.
@@ -253,8 +252,7 @@ BUGS
     kudos. You may enter them into our request tracker by following the
     instructions at <https://rt.cpan.org/Dist/Display.html?&Queue=Reflex>.
 
-    We also accept e-mail at bug-Reflex@rt.cpan.org
-    <mailto:bug-Reflex@rt.cpan.org>.
+    We also accept e-mail at bug-Reflex@rt.cpan.org.
 
 AUTHORS
     Rocco Caputo, RCAPUTO on CPAN.
@@ -305,6 +303,13 @@ SUPPORT
     be of help to you. As always, in addition to those websites please use
     your favorite search engine to discover more resources.
 
+    *   MetaCPAN
+
+        A modern, open-source CPAN search engine, useful to view POD in HTML
+        format.
+
+        <http://metacpan.org/release/Reflex>
+
     *   Search CPAN
 
         The default CPAN search engine, useful to view POD in HTML format.
@@ -320,7 +325,7 @@ SUPPORT
 
     *   AnnoCPAN
 
-        The AnnoCPAN is a website that allows community annonations of Perl
+        The AnnoCPAN is a website that allows community annotations of Perl
         module documentation.
 
         <http://annocpan.org/dist/Reflex>
@@ -354,8 +359,8 @@ SUPPORT
 
     *   CPAN Testers Matrix
 
-        The CPAN Testers Matrix is a website that provides a visual way to
-        determine what Perls/platforms PASSed for a distribution.
+        The CPAN Testers Matrix is a website that provides a visual overview
+        of the test results for a distribution on various Perls/platforms.
 
         <http://matrix.cpantesters.org/?dist=Reflex>
 
@@ -399,20 +404,17 @@ SUPPORT
       git clone git://github.com/rcaputo/reflex.git
 
 BUGS AND LIMITATIONS
-    No bugs have been reported.
-
-    Please report any bugs or feature requests through the web interface at
-    <http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
+    You can make new bug reports, and view existing ones, through the web
+    interface at <http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 AUTHOR
     Rocco Caputo <rcaputo@cpan.org>
 
 ACKNOWLEDGEMENTS
-    irc.perl.org channel #moose <irc://irc.perl.org/moose> and #poe
-    <irc://irc.perl.org/poe>. The former for assisting in learning their
-    fine libraries, sometimes against everyone's better judgement. The
-    latter for putting up with lengthy and sometimes irrelevant design
-    discussion for oh so long.
+    irc.perl.org channel #moose and #poe. The former for assisting in
+    learning their fine libraries, sometimes against everyone's better
+    judgement. The latter for putting up with lengthy and sometimes
+    irrelevant design discussion for oh so long.
 
 COPYRIGHT AND LICENSE
     This software is copyright (c) 2012 by Rocco Caputo.
@@ -423,12 +425,7 @@ COPYRIGHT AND LICENSE
 AVAILABILITY
     The latest version of this module is available from the Comprehensive
     Perl Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a
-    CPAN site near you, or see <http://search.cpan.org/dist/Reflex/>.
-
-    The development version lives at <http://github.com/rcaputo/reflex> and
-    may be cloned from <git://github.com/rcaputo/reflex.git>. Instead of
-    sending patches, please fork this project using the standard git and
-    github infrastructure.
+    CPAN site near you, or see <https://metacpan.org/module/Reflex/>.
 
 DISCLAIMER OF WARRANTY
     BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY

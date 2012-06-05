@@ -1,9 +1,97 @@
 ==================================================
-Changes from 2011-03-17 00:00:00 +0000 to present.
+Changes from 2011-06-06 00:00:00 +0000 to present.
 ==================================================
 
 ------------------------------------------
-version 0.097 at 2012-03-16 01:21:47 +0000
+version 0.098 at 2012-06-05 15:29:25 +0000
+------------------------------------------
+
+  Change: 6232da8fc427b5a90573130cab1746d11583a91c
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-06-05 11:27:46 +0000
+
+    Fix dist.ini for better release automation. 
+
+  Change: 9fe808025575ec51014250617dbad08785d685e1
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-06-04 01:47:15 +0000
+
+    Generate _clone() methods at class compile time.
+
+    The attributes being cloned don't change at runtime. A dynamic loop
+    over the attributes in a class is more flexibility than we need right
+    now. Build the code for _clone() at compile time, string-eval it into
+    existence, and then use meta add_method() to put it into place.
+
+    Future self, please forgive me. 
+
+  Change: 8854a8610491ec04d9d654782993529abde32862
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-06-04 01:46:29 +0000
+
+    Add a benchmark for re_emit(), which helps profile event cloning. 
+
+  Change: ec4a1817922d759c599bfd0bf7998a64db22c824
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-06-03 22:39:49 +0000
+
+    Memoize Reflex::Event attribute names by class.
+
+    Class attribute names don't change at runtime, so call it only once
+    and memoize them. 
+
+  Change: 5bc706912d4072d64c3b64fdb63bdb0adffe6c47
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-06-03 22:33:57 +0000
+
+    Make classes immutable. Mutable classes are a lot slower. 
+
+  Change: 55385547d6508b2aa44b740969a6409c1cb6eb65
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-06-03 22:26:09 +0000
+
+    Add the first benchmarking/profiling program: event creation &
+    destruction. 
+
+  Change: 9dc4b344cc9a041d46492fd26d97cc3f9d3b06df
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-05-17 05:17:10 +0000
+
+    Merge pull request #3 from yanick/patch-1
+
+    SYMOPSIS? :-) 
+
+  Change: 517a0e8fc54a6a0cd323f88c8448b25f9bbee3a1
+  Author: Yanick Champoux <yanick@babyl.dyndns.org>
+  Date : 2012-05-16 18:03:22 +0000
+
+    SYMOPSIS? :-) 
+
+  Change: a5a26bf9a098ed3f1d9bcf9d78ab26f2c2763a6f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-04-17 09:27:47 +0000
+
+    Document how to plug in new event loops without crazy shenanigans. 
+
+  Change: 789a130f73138ba063b59fccd4b05700d040ad32
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-04-17 09:25:37 +0000
+
+    Fix make_error_handler() to use event objects.
+
+    Nick Perez pointed out that make_error_hanler() was using the old
+    style events. I fixed that and a typo invoked by the error condition
+    in Reflex::Role::Connecting. 
+
+  Change: 8c5b88149fd2beba7b18521c23283d0d4653cf9f
+  Author: Rocco Caputo <rcaputo@cpan.org>
+  Date : 2012-03-26 01:32:07 +0000
+
+    Reserve MooseX::Role::Reactive for the event-loop agnostic part of
+    Reflex. 
+
+------------------------------------------
+version 0.097 at 2012-03-16 01:21:26 +0000
 ------------------------------------------
 
   Change: fc8b82a46d8ed471a98bb483e6855cf870bdcd97
@@ -459,5 +547,5 @@ version 0_090 at 2011-07-31 02:41:53 +0000
     Forgot to document a couple newish classes. 
 
 =================================================
-Plus 13 releases after 2011-03-17 00:00:00 +0000.
+Plus 13 releases after 2011-06-06 00:00:00 +0000.
 =================================================

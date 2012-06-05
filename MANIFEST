@@ -34,6 +34,8 @@ eg/Runner.pm
 eg/RunnerRole.pm
 eg/ZmqMessage.pm
 eg/ZmqSocket.pm
+eg/bench-event.pl
+eg/bench-re-emit.pl
 eg/eg-02-encoding.pl
 eg/eg-04-inheritance.pl
 eg/eg-05-composition.pl
@@ -104,6 +106,7 @@ eg/ttl/fail-ttl-counter.pl
 eg/ttl/fail-ttl-simple.pl
 eg/zmq-publish.pl
 eg/zmq-subscriber.pl
+lib/MooseX/Role/Reactive.pm
 lib/Reflex.pm
 lib/Reflex/Acceptor.pm
 lib/Reflex/Base.pm

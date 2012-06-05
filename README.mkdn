@@ -4,7 +4,7 @@ Reflex - Class library for flexible, reactive programs.
 
 # VERSION
 
-This document describes version 0.097, released on March 15, 2012.
+This document describes version 0.098, released on June 05, 2012.
 
 # SYNOPSIS
 
@@ -387,6 +387,14 @@ in addition to those websites please use your favorite search engine to discover
 
 - *
 
+MetaCPAN
+
+A modern, open-source CPAN search engine, useful to view POD in HTML format.
+
+[http://metacpan.org/release/Reflex](http://metacpan.org/release/Reflex)
+
+- *
+
 Search CPAN
 
 The default CPAN search engine, useful to view POD in HTML format.
@@ -405,7 +413,7 @@ The RT ( Request Tracker ) website is the default bug/issue tracking system for 
 
 AnnoCPAN
 
-The AnnoCPAN is a website that allows community annonations of Perl module documentation.
+The AnnoCPAN is a website that allows community annotations of Perl module documentation.
 
 [http://annocpan.org/dist/Reflex](http://annocpan.org/dist/Reflex)
 
@@ -445,7 +453,7 @@ The CPAN Testers is a network of smokers who run automated tests on uploaded CPA
 
 CPAN Testers Matrix
 
-The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
+The CPAN Testers Matrix is a website that provides a visual overview of the test results for a distribution on various Perls/platforms.
 
 [http://matrix.cpantesters.org/?dist=Reflex](http://matrix.cpantesters.org/?dist=Reflex)
 
@@ -492,10 +500,8 @@ from your repository :)
 
 # BUGS AND LIMITATIONS
 
-No bugs have been reported.
-
-Please report any bugs or feature requests through the web interface at
-[http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex](http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex).
+You can make new bug reports, and view existing ones, through the
+web interface at [http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex](http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex).
 
 # AUTHOR
 
@@ -522,12 +528,7 @@ the same terms as the Perl 5 programming language system itself.
 
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit [http://www.perl.com/CPAN/](http://www.perl.com/CPAN/) to find a CPAN
-site near you, or see [http://search.cpan.org/dist/Reflex/](http://search.cpan.org/dist/Reflex/).
-
-The development version lives at [http://github.com/rcaputo/reflex](http://github.com/rcaputo/reflex)
-and may be cloned from L<git://github.com/rcaputo/reflex.git>.
-Instead of sending patches, please fork this project using the standard
-git and github infrastructure.
+site near you, or see [https://metacpan.org/module/Reflex/](https://metacpan.org/module/Reflex/).
 
 # DISCLAIMER OF WARRANTY
 

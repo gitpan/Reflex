@@ -1,6 +1,6 @@
 package Reflex::Interval;
 {
-  $Reflex::Interval::VERSION = '0.097';
+  $Reflex::Interval::VERSION = '0.098';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -22,6 +22,8 @@ with 'Reflex::Role::Interval' => {
 	method_stop     => "stop",
 };
 
+__PACKAGE__->meta->make_immutable;
+
 1;
 
 
@@ -38,7 +40,7 @@ Reflex::Interval - A stand-alone multi-shot periodic callback
 
 =head1 VERSION
 
-This document describes version 0.097, released on March 15, 2012.
+This document describes version 0.098, released on June 05, 2012.
 
 =head1 SYNOPSIS
 
@@ -204,10 +206,8 @@ L<Reflex/TODO>
 
 =head1 BUGS AND LIMITATIONS
 
-No bugs have been reported.
-
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
+You can make new bug reports, and view existing ones, through the
+web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 
@@ -224,12 +224,7 @@ the same terms as the Perl 5 programming language system itself.
 
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
-site near you, or see L<http://search.cpan.org/dist/Reflex/>.
-
-The development version lives at L<http://github.com/rcaputo/reflex>
-and may be cloned from L<git://github.com/rcaputo/reflex.git>.
-Instead of sending patches, please fork this project using the standard
-git and github infrastructure.
+site near you, or see L<https://metacpan.org/module/Reflex/>.
 
 =head1 DISCLAIMER OF WARRANTY
 

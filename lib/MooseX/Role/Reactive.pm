@@ -1,19 +1,10 @@
-package Reflex::Event::FileHandle;
-{
-  $Reflex::Event::FileHandle::VERSION = '0.098';
-}
+pacakage MooseX::Role::Reactive;
 
-use Moose;
-extends 'Reflex::Event';
+use Moose::Role;
 
-has handle => (
-	is       => 'ro',
-	isa      => 'FileHandle',
-	required => 1,
-);
-
-__PACKAGE__->make_event_cloner;
-__PACKAGE__->meta->make_immutable();
+# This is a namespace reservation for the emit/watch part of
+# Reflex::Role::Reactive.  The MooseX::Role should be event-loop
+# agnostic somehow.  See docs/TODO.otl in Reflex's repository.
 
 1;
 

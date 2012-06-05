@@ -1,10 +1,15 @@
 package Reflex::Event;
 {
-  $Reflex::Event::VERSION = '0.097';
+  $Reflex::Event::VERSION = '0.098';
 }
 
 use Moose;
 use Scalar::Util qw(weaken);
+
+# Class scoped storage.
+# Each event class has a set of attribute names.
+# There's no reason to calculate them every _clone() call.
+my %attribute_names;
 
 has _name => (
 	is      => 'ro',
@@ -24,13 +29,23 @@ has _emitters => (
 	}
 );
 
-sub BUILD {
+sub _get_attribute_names {
 	my $self = shift();
-
-	# After build, weaken any emitters passed in.
-	#my $emitters = $self->_emitters();
-	#weaken($_) foreach @$emitters;
+	return(
+		$attribute_names{ ref $self } ||= [
+			map { $_->name() }
+			$self->meta()->get_all_attributes()
+		]
+	);
 }
+
+#sub BUILD {
+#	my $self = shift();
+#
+#	# After build, weaken any emitters passed in.
+#	#my $emitters = $self->_emitters();
+#	#weaken($_) foreach @$emitters;
+#}
 
 sub push_emitter {
 	my ($self, $item) = @_;
@@ -46,9 +61,8 @@ sub _headers {
 	my $self = shift();
 	return (
 		map  { "-" . substr($_,1), $self->$_() }
-		grep { /^_/            }
-		map  { $_->name()      }
-		Class::MOP::Class->initialize(ref($self))->get_all_attributes()
+		grep /^_/,
+		@{ $self->_get_attribute_names() },
 	);
 }
 
@@ -56,33 +70,57 @@ sub _body {
 	my $self = shift();
 	return (
 		map  { $_, $self->$_() }
-		grep { !/^_/           }
-		map  { $_->name()      }
-		Class::MOP::Class->initialize(ref($self))->get_all_attributes()
+		grep /^[^_]/,
+		@{ $self->_get_attribute_names() },
 	);
 }
 
-sub _clone {
-	my ($self, %override_args) = @_;
+sub make_event_cloner {
+	my $class = shift();
 
-	my %clone_args;
+	my $class_meta = $class->meta();
 
-	my @attribute_names = (
-		map { $_->name() }
-		Class::MOP::Class->initialize(ref($self))->get_all_attributes()
+	my @fetchers;
+	foreach my $attribute_name (
+		map { $_->name } $class_meta->get_all_attributes
+	) {
+		my $override_name = $attribute_name;
+		$override_name =~ s/^_/-/;
+
+		next if $attribute_name eq '_emitters';
+
+		push @fetchers, (
+			join ' ', (
+				"\"$attribute_name\" => (",
+				"(exists \$override_args{\"$override_name\"})",
+				"? \$override_args{\"$override_name\"}",
+				": \$self->$attribute_name()",
+				")",
+			)
+		);
+	}
+
+	my $cloner_code = join ' ', (
+		'sub {',
+		'my ($self, %override_args) = @_;',
+		'my %clone_args = ( ',
+		join(',', @fetchers),
+		');',
+		'my $type = $override_args{"-type"} || ref($self);',
+		'my $emitters = $self->_emitters() || [];',
+		'$type->new(%clone_args, _emitters => [ @$emitters ]);',
+		'}'
 	);
 
-	@clone_args{@attribute_names} = map { $self->$_() } @attribute_names;
+	my $cloner = eval $cloner_code;
+	if ($@) {
+		die(
+			"cloner compile error: $@\n",
+			"cloner: $cloner_code\n"
+		);
+	}
 
-	my @override_keys = keys %override_args;
-	@clone_args{ map { s/^-/_/; $_ } @override_keys } = values %override_args;
-
-	my $new_type = delete($clone_args{_type}) || ref($self);
-	my $emitters = delete($clone_args{_emitters}) || confess "no -emitters";
-
-	my $new_event = $new_type->new(%clone_args, _emitters => [ @$emitters ]);
-
-	return $new_event;
+	$class_meta->add_method( _clone => $cloner );
 }
 
 # Override Moose's dump().
@@ -107,6 +145,9 @@ sub dump {
 	return $dump;
 }
 
+__PACKAGE__->make_event_cloner;
+__PACKAGE__->meta->make_immutable;
+
 1;
 
 __END__
@@ -118,7 +159,7 @@ __END__
 
 =head1 VERSION
 
-This document describes version 0.097, released on March 15, 2012.
+This document describes version 0.098, released on June 05, 2012.
 
 =head1 SEE ALSO
 
@@ -134,10 +175,8 @@ L<Reflex|Reflex>
 
 =head1 BUGS AND LIMITATIONS
 
-No bugs have been reported.
-
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
+You can make new bug reports, and view existing ones, through the
+web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Reflex>.
 
 =head1 AUTHOR
 
@@ -154,12 +193,7 @@ the same terms as the Perl 5 programming language system itself.
 
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
-site near you, or see L<http://search.cpan.org/dist/Reflex/>.
-
-The development version lives at L<http://github.com/rcaputo/reflex>
-and may be cloned from L<git://github.com/rcaputo/reflex.git>.
-Instead of sending patches, please fork this project using the standard
-git and github infrastructure.
+site near you, or see L<https://metacpan.org/module/Reflex/>.
 
 =head1 DISCLAIMER OF WARRANTY
 
