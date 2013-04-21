@@ -7,9 +7,17 @@ Makefile.PL
 README
 README.mkdn
 TODO
+bench.pl
+bench/lib/EventBench/Reflex/Event.pm
+bench/method-array.pl
+bench/method-hash.pl
+bench/objectmethod-array.pm
+bench/objectmethod-cbmanager.pm
+bench/objectmethod-hash.pm
 dist.ini
 docs/TODO.otl
 docs/continuation-passing.otl
+docs/intro.otl
 docs/intro/AfterAwhileClass.pm
 docs/intro/AfterAwhileRole.pm
 docs/intro/AfterAwhileSubclass.pm
@@ -26,6 +34,8 @@ docs/patterns.otl
 docs/syntax.pm
 eg/EchoStream.pm
 eg/ExampleHelpers.pm
+eg/HttpClient.pm
+eg/HttpResponseEvent.pm
 eg/PoCoEvent.pm
 eg/PoCoPostback.pm
 eg/Proxy.pm
@@ -53,6 +63,9 @@ eg/eg-18-synopsis-no-moose.pl
 eg/eg-19-net-ssh.pl
 eg/eg-20-mysql.pl
 eg/eg-21-poco-client-http.pl
+eg/eg-22-multiple-http-requests.pl
+eg/eg-23-multiple-http-subclass.pl
+eg/eg-24-client-http-callbacks.pl
 eg/eg-30-promise-timer.pl
 eg/eg-31-promise-object.pl
 eg/eg-32-promise-tiny.pl

@@ -1,6 +1,6 @@
 package Reflex::Role::Interval;
 {
-  $Reflex::Role::Interval::VERSION = '0.098';
+  $Reflex::Role::Interval::VERSION = '0.099';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -30,6 +30,7 @@ role {
 	has $att_auto_repeat => ( is => 'ro', isa => 'Bool', default => 1 );
 	has $att_auto_start  => ( is => 'ro', isa => 'Bool', default => 1 );
 
+	my $method_start    = $p->method_start();
 	my $method_repeat   = $p->method_repeat();
 	my $method_stop     = $p->method_stop();
 
@@ -58,6 +59,35 @@ role {
 
 		# Stop a previous alarm.
 		$self->$method_stop() if defined $self->$timer_id_name();
+
+		# Put a weak $self in an envelope that can be passed around
+		# without strenghtening the object.
+
+		my $envelope = [ $self, $cb_tick, 'Reflex::Event::Interval' ];
+		weaken $envelope->[0];
+
+		$self->$timer_id_name(
+			$POE::Kernel::poe_kernel->delay_set(
+				'timer_due',
+				$self->$att_interval(),
+				$envelope,
+			)
+		);
+	};
+
+	method $method_start => sub {
+		my ($self, $args) = @_;
+
+		# Nothing to start if the timer is already going.
+		if ($self->$timer_id_name()) {
+			carp($method_start . "() called on a running timer");
+			return;
+		}
+
+		# Switch to the proper session.
+		return unless (
+			defined $self->$att_interval() and $self->call_gate($method_repeat)
+		);
 
 		# Put a weak $self in an envelope that can be passed around
 		# without strenghtening the object.
@@ -111,7 +141,7 @@ Reflex::Role::Interval - set a periodic, recurring timer
 
 =head1 VERSION
 
-This document describes version 0.098, released on June 05, 2012.
+This document describes version 0.099, released on April 21, 2013.
 
 =head1 SYNOPSIS
 
@@ -300,7 +330,7 @@ Rocco Caputo <rcaputo@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Rocco Caputo.
+This software is copyright (c) 2013 by Rocco Caputo.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

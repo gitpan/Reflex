@@ -1,6 +1,6 @@
 package Reflex::Wakeup;
 {
-  $Reflex::Wakeup::VERSION = '0.098';
+  $Reflex::Wakeup::VERSION = '0.099';
 }
 # vim: ts=2 sw=2 noexpandtab
 
@@ -35,7 +35,7 @@ Reflex::Wakeup - A stand-alone single-shot callback at an absolute time
 
 =head1 VERSION
 
-This document describes version 0.098, released on June 05, 2012.
+This document describes version 0.099, released on April 21, 2013.
 
 =head1 SYNOPSIS
 
@@ -180,7 +180,7 @@ Rocco Caputo <rcaputo@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Rocco Caputo.
+This software is copyright (c) 2013 by Rocco Caputo.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
